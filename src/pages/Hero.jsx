@@ -423,7 +423,7 @@ return (
   <div className="absolute top-0 left-0 w-72 h-72 bg-rose-200/30 rounded-full blur-3xl" />
   <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-200/30 rounded-full blur-3xl" />
 
-  <div className="max-w-7xl mx-auto px-6 py-8">
+  <div className="max-w-[85%] mx-auto px-6 py-8">
 
     <div className="grid lg:grid-cols-2 gap-16 items-center">
 
