@@ -10,6 +10,8 @@ import {
 } from "lucide-react";
 
 const navLinks = [
+
+  { name: "Home", path: "/" },
   { name: "Categories", path: "/category" },
   { name: "Occasions", path: "/occasions" },
   { name: "Decor", path: "/decor" },
