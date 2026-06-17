@@ -45,6 +45,7 @@ import image10 from "../assets/s10.png";
 import image11 from "../assets/s11.png";
 import image12 from "../assets/s12.png";
 import image13 from "../assets/s13.png";
+import image26 from "../assets/s26.png"
 
 const Home = () => {
   const [email, setEmail] = useState("");
@@ -389,7 +390,7 @@ const Home = () => {
               </div>
 
               {/* Rating Card */}
-              <div className="hidden lg:flex absolute -top-6 -right-6 bg-white rounded-2xl shadow-xl px-5 py-4 items-center gap-3 z-20">
+              {/* <div className="hidden lg:flex absolute -top-6 -right-6 bg-white rounded-2xl shadow-xl px-5 py-4 items-center gap-3 z-20">
                 <div className="flex -space-x-3">
                   <div className="w-9 h-9 rounded-full bg-rose-400 border-2 border-white flex items-center justify-center text-white text-xs font-bold">
                     A
@@ -408,7 +409,7 @@ const Home = () => {
                   </div>
                   <p className="text-xs text-gray-400">2,400+ reviews</p>
                 </div>
-              </div>
+              </div> */}
 
               {/* Floating Small Images */}
               <img
@@ -565,9 +566,9 @@ const Home = () => {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative">
               <img
-                src={image13}
+                src={image26}
                 alt="Deal of the day"
-                className="rounded-[40px] w-full h-[420px] object-cover shadow-2xl"
+                className="rounded-[20px] w-full h-[550px] object-cover shadow-2xl"
               />
               <div className="absolute -top-6 -left-6 bg-rose-500 text-white rounded-2xl px-6 py-4 shadow-xl -rotate-6">
                 <p className="text-xs uppercase tracking-widest font-semibold flex items-center gap-1">

@@ -24,6 +24,8 @@ import image22 from "../assets/s22.png";
 import image23 from "../assets/s23.png";
 import image24 from "../assets/s24.png";
 import image25 from "../assets/s25.png";
+import image26 from "../assets/s26.png";
+
 
 
 
@@ -403,6 +405,21 @@ const allProducts = [
     isFavorite: false,
     desc: "Premium preserved red roses in a velvet box",
   },
+  {
+    id: 26,
+    name: "100 Red Roses Luxury Box",
+    price: 4299,
+    originalPrice: 3799,
+    rating: 5.0,
+    reviews: 81,
+    image: image26,
+    category: "Forever Flowers",
+    tag: "Bestseller",
+    tagColor: "rose",
+    isNew: false,
+    isFavorite: false,
+    desc: "Premium preserved red roses in a velvet box",
+  }
 
  
 ];
