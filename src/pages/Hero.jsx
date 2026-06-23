@@ -45,7 +45,9 @@ import image10 from "../assets/s10.png";
 import image11 from "../assets/s11.png";
 import image12 from "../assets/s12.png";
 import image13 from "../assets/s13.png";
-import image26 from "../assets/s26.png"
+import image26 from "../assets/s26.png";
+import image27 from "../assets/s27.png";
+
 
 const Home = () => {
   const [email, setEmail] = useState("");
@@ -368,7 +370,7 @@ const Home = () => {
               {/* Main Image */}
               <div className="relative">
                 <img
-                  src={image1}
+                  src={image26}
                   alt="flowers"
                   className="rounded-[40px] shadow-2xl w-full object-cover"
                 />
@@ -566,7 +568,7 @@ const Home = () => {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative">
               <img
-                src={image26}
+                src={image27}
                 alt="Deal of the day"
                 className="rounded-[20px] w-full h-[550px] object-cover shadow-2xl"
               />
