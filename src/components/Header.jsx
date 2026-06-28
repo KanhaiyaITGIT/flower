@@ -1,27 +1,23 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import {
-  Flower2,
-  Search,
-  User,
-  ShoppingCart,
-  Menu,
-  X,
-} from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Flower2, ShoppingCart, Menu, X } from "lucide-react";
+import { useSelector } from "react-redux";
+import { selectCartCount } from "../redux/cartSlice";
 
 const navLinks = [
-
   { name: "Home", path: "/" },
   { name: "Categories", path: "/category" },
   { name: "Occasions", path: "/occasions" },
   { name: "Decor", path: "/decor" },
-  { name: "About Us", path: "/about" },
+  { name: "About", path: "/about" },
   { name: "Gallery", path: "/gallery" },
 ];
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const cartCount = useSelector(selectCartCount);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -34,9 +30,9 @@ export default function Header() {
     return () => { document.body.style.overflow = ""; };
   }, [isOpen]);
 
-  // Close sidebar on resize to desktop
   useEffect(() => {
-    const onResize = () => { if (window.innerWidth >= 768) setIsOpen(false); };
+    // 950px se upar = desktop/laptop = drawer band karo
+    const onResize = () => { if (window.innerWidth >= 1280) setIsOpen(false); };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
@@ -44,320 +40,327 @@ export default function Header() {
   return (
     <>
       <style>{`
-        /* Announcement bar: truncate on tiny screens, allow wrapping on medium */
-        .announcement-bar {
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@500;600;700&display=swap');
+
+        .hdr-announce {
+          background: #0D1F0F;
+          color: #C8A882;
+          font-family: 'Inter', sans-serif;
           font-size: 11px;
-          letter-spacing: 0.06em;
-          padding: 8px 12px;
-          line-height: 1.5;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-        @media (min-width: 480px) {
-          .announcement-bar {
-            white-space: normal;
-            overflow: visible;
-            text-overflow: unset;
-          }
+          font-weight: 600;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          text-align: center;
+          padding: 9px 16px;
         }
 
-        /* Nav height: slightly shorter on small phones */
-        .nav-inner {
-          height: 64px;
-          padding: 0 16px;
-        }
-        @media (min-width: 480px) {
-          .nav-inner { padding: 0 24px; }
-        }
-        @media (min-width: 768px) {
-          .nav-inner { height: 80px; padding: 0 32px; }
-        }
-
-        /* Logo text: always visible but smaller on tiny screens */
-        .logo-text {
-          font-size: clamp(1rem, 4vw, 1.25rem);
-        }
-
-        /* Right actions: tighter gaps on small screens */
-        .right-actions {
+        .hdr-bar {
+          max-width: 1440px;
+          margin: 0 auto;
+          height: 70px;
+          padding: 0 20px;
           display: flex;
           align-items: center;
-          gap: 4px;
+          justify-content: space-between;
         }
-        @media (min-width: 400px) {
-          .right-actions { gap: 6px; }
-        }
-        @media (min-width: 640px) {
-          .right-actions { gap: 8px; }
+        @media (min-width: 950px) {
+          .hdr-bar { height: 82px; padding: 0 48px; }
         }
 
-        /* Icon buttons: slightly smaller tap target on very small screens */
-        .icon-btn {
-          padding: 7px;
-          color: #4b5563;
-          background: none;
-          border: none;
-          cursor: pointer;
+        /* Logo */
+        .hdr-logo {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          text-decoration: none;
+          flex-shrink: 0;
+          transition: transform 0.2s;
+        }
+        .hdr-logo:hover { transform: scale(1.03); }
+
+        .hdr-logo-icon {
+          width: 40px;
+          height: 40px;
           border-radius: 50%;
+          background: #0D1F0F;
           display: flex;
           align-items: center;
           justify-content: center;
-          transition: color 0.2s, background 0.15s;
+          box-shadow: 0 4px 16px rgba(13,31,15,0.25);
+          flex-shrink: 0;
         }
-        .icon-btn:hover { color: #f43f5e; background: #fff1f2; }
 
-        /* Cart button */
-        .cart-btn {
-          display: flex;
+        .hdr-logo-text {
+          font-family: 'Playfair Display', serif;
+          font-weight: 900;
+          font-size: clamp(1rem, 3vw, 1.45rem);
+          color: #0D1F0F;
+          margin: 0;
+          line-height: 1;
+          letter-spacing: -0.01em;
+        }
+        .hdr-logo-text span { color: #e11d48; }
+
+        /* Desktop nav — sirf 950px+ pe dikhega */
+        .hdr-nav {
+          display: none;
           align-items: center;
-          gap: 6px;
-          border-radius: 9999px;
-          background: linear-gradient(to right, #fb7185, #e11d48);
-          color: #fff;
-          font-size: 11px;
-          font-weight: 700;
-          letter-spacing: 0.08em;
-          border: none;
-          cursor: pointer;
-          box-shadow: 0 4px 14px rgba(244,63,94,0.3);
-          transition: transform 0.2s, box-shadow 0.2s;
-          padding: 9px 11px;
+          gap: 2px;
         }
-        .cart-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(244,63,94,0.35); }
-        @media (min-width: 768px) {
-          .cart-btn { padding: 10px 20px; }
-        }
-        .cart-label { display: none; }
-        @media (min-width: 768px) {
-          .cart-label { display: inline; }
-        }
+        @media (min-width: 950px) { .hdr-nav { display: flex; } }
 
-        /* Underline nav link animation */
-        .nav-link {
-          position: relative;
-          font-size: 14px;
-          font-weight: 600;
+        .hdr-nav-link {
+          font-family: 'Inter', sans-serif;
+          font-size: 13px;
+          font-weight: 700;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
           color: #374151;
           text-decoration: none;
-          transition: color 0.2s;
+          padding: 8px 14px;
+          border-radius: 8px;
+          transition: color 0.2s, background 0.2s;
         }
-        .nav-link::after {
-          content: '';
-          position: absolute;
-          left: 0; bottom: -4px;
-          height: 2px; width: 0;
-          background: #f43f5e;
-          transition: width 0.25s ease;
-        }
-        .nav-link:hover { color: #f43f5e; }
-        .nav-link:hover::after { width: 100%; }
+        .hdr-nav-link:hover { color: #0D1F0F; background: #f3f4f6; }
 
-        /* Sidebar mobile link */
-        .sidebar-link {
-          font-size: 16px;
-          font-weight: 600;
+        /* Right actions */
+        .hdr-actions { display: flex; align-items: center; gap: 8px; }
+
+        /* Cart button */
+        .hdr-cart {
+          position: relative;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 10px 14px;
+          border-radius: 12px;
+          background: #0D1F0F;
+          color: #F7F0E8;
+          font-family: 'Inter', sans-serif;
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          border: none;
+          cursor: pointer;
+          box-shadow: 0 4px 16px rgba(13,31,15,0.2);
+          transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+        }
+        .hdr-cart:hover {
+          background: #1a3320;
+          transform: translateY(-1px);
+          box-shadow: 0 8px 24px rgba(13,31,15,0.3);
+        }
+        @media (min-width: 950px) { .hdr-cart { padding: 10px 22px; } }
+
+        /* Cart label — desktop pe dikhega */
+        .hdr-cart-label { display: none; }
+        @media (min-width: 950px) { .hdr-cart-label { display: inline; } }
+
+        .hdr-cart-badge {
+          position: absolute;
+          top: -7px; right: -7px;
+          background: #e11d48;
+          color: #fff;
+          font-family: 'Inter', sans-serif;
+          font-size: 9px; font-weight: 800;
+          width: 19px; height: 19px;
+          border-radius: 50%;
+          display: flex; align-items: center; justify-content: center;
+          border: 2px solid #fff;
+          animation: badgePop 0.25s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        @keyframes badgePop { from { transform: scale(0); } to { transform: scale(1); } }
+
+        /* Hamburger — desktop pe chhupega */
+        .hdr-hamburger {
+          display: flex;
+          padding: 9px;
+          background: #f3f4f6;
+          border: none;
+          border-radius: 10px;
+          cursor: pointer;
+          color: #0D1F0F;
+          transition: background 0.2s;
+        }
+        .hdr-hamburger:hover { background: #e5e7eb; }
+        @media (min-width: 950px) { .hdr-hamburger { display: none; } }
+
+        /* Drawer */
+        .hdr-drawer {
+          position: fixed;
+          top: 0; right: 0; bottom: 0;
+          width: min(320px, 88vw);
+          z-index: 70;
+          background: #fff;
+          box-shadow: -8px 0 40px rgba(0,0,0,0.12);
+          display: flex;
+          flex-direction: column;
+          will-change: transform;
+          overflow-y: auto;
+          transition: transform 0.3s cubic-bezier(0.32,0,0.67,0);
+        }
+
+        .hdr-drawer-link {
+          font-family: 'Inter', sans-serif;
+          font-size: 14px;
+          font-weight: 700;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
           color: #1f2937;
           text-decoration: none;
-          padding: 10px 0;
+          padding: 15px 0;
           border-bottom: 1px solid #f3f4f6;
           display: block;
           transition: color 0.2s, padding-left 0.2s;
         }
-        .sidebar-link:last-child { border-bottom: none; }
-        .sidebar-link:hover { color: #f43f5e; padding-left: 6px; }
+        .hdr-drawer-link:last-child { border-bottom: none; }
+        .hdr-drawer-link:hover { color: #e11d48; padding-left: 8px; }
       `}</style>
 
-      <nav
-        style={{
-          position: "sticky", top: 0, zIndex: 50,
-          transition: "box-shadow 0.3s, background 0.3s",
-          background: scrolled ? "rgba(255,255,255,0.96)" : "#fff",
-          backdropFilter: scrolled ? "blur(12px)" : "none",
-          WebkitBackdropFilter: scrolled ? "blur(12px)" : "none",
-          boxShadow: scrolled ? "0 2px 24px rgba(0,0,0,0.09)" : "none",
-          borderBottom: scrolled ? "none" : "1px solid #f3f4f6",
-        }}
-      >
+      <nav style={{
+        position: "sticky", top: 0, zIndex: 50,
+        background: scrolled ? "rgba(255,255,255,0.97)" : "#fff",
+        backdropFilter: scrolled ? "blur(14px)" : "none",
+        boxShadow: scrolled ? "0 2px 24px rgba(0,0,0,0.08)" : "none",
+        borderBottom: scrolled ? "none" : "1px solid #f3f4f6",
+        transition: "box-shadow 0.3s, background 0.3s",
+      }}>
+
         {/* Announcement bar */}
-        <div
-          className="announcement-bar"
-          style={{
-            background: "linear-gradient(to right, #0f172a, #1e3a8a, #0f172a)",
-            color: "#fff",
-            textAlign: "center",
-          }}
-        >
-          FOR SAME DAY DELIVERY, PLEASE CALL / WHATSAPP US →
+        <div className="hdr-announce">
+          🌸 Same Day Delivery Available — Call or WhatsApp Us Now
         </div>
 
-        {/* Main bar */}
-        <div
-          className="nav-inner"
-          style={{
-            maxWidth: "1280px",
-            margin: "0 auto",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
+        <div className="hdr-bar">
+
           {/* Logo */}
-          <Link
-            to="/"
-            style={{
-              display: "flex", alignItems: "center", gap: "10px",
-              textDecoration: "none", flexShrink: 0,
-              transition: "transform 0.2s",
-            }}
-            onMouseEnter={e => e.currentTarget.style.transform = "scale(1.04)"}
-            onMouseLeave={e => e.currentTarget.style.transform = ""}
-          >
-            <div style={{
-              width: "38px", height: "38px", borderRadius: "50%", flexShrink: 0,
-              background: "linear-gradient(135deg, #fb7185, #e11d48)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              boxShadow: "0 4px 12px rgba(244,63,94,0.3)",
-            }}>
-              <Flower2 size={18} color="#fff" />
+          <Link to="/" className="hdr-logo">
+            <div className="hdr-logo-icon">
+              <Flower2 size={20} color="#C8A882" />
             </div>
-            <h1 className="logo-text" style={{
-              fontFamily: "Georgia, serif",
-              fontWeight: 700, color: "#f43f5e",
-              margin: 0, lineHeight: 1,
-            }}>
-              flowers
+            <h1 className="hdr-logo-text">
+              Shivam <span>Florist</span>
             </h1>
           </Link>
 
-          {/* Desktop nav links */}
-          <div style={{ display: "flex", alignItems: "center", gap: "2rem" }} className="hidden md:flex">
+          {/* Desktop nav links — 950px+ only */}
+          <div className="hdr-nav">
             {navLinks.map((link) => (
-              <Link key={link.name} to={link.path} className="nav-link">
+              <Link key={link.name} to={link.path} className="hdr-nav-link">
                 {link.name}
               </Link>
             ))}
           </div>
 
-          {/* Right actions */}
-          <div className="right-actions">
-            <button className="icon-btn" aria-label="Search">
-              <Search size={20} />
-            </button>
-
-            {/* User icon: hide on very small screens to save space */}
-            <button className="icon-btn" aria-label="Account" style={{ display: "flex" }}
-              onMouseEnter={e => e.currentTarget.style.cssText += ";color:#f43f5e;background:#fff1f2;"}
-              onMouseLeave={e => { e.currentTarget.style.color = "#4b5563"; e.currentTarget.style.background = ""; }}
-            >
-              <User size={20} />
-            </button>
-
-            <button className="cart-btn" aria-label="Cart">
+          {/* Right: Cart + Hamburger */}
+          <div className="hdr-actions">
+            <button className="hdr-cart" onClick={() => navigate("/cart")} aria-label="Cart">
               <ShoppingCart size={16} />
-              <span className="cart-label">CART</span>
+              <span className="hdr-cart-label">Cart</span>
+              {cartCount > 0 && (
+                <span className="hdr-cart-badge" key={cartCount}>
+                  {cartCount > 99 ? "99+" : cartCount}
+                </span>
+              )}
             </button>
 
-            {/* Hamburger — mobile only */}
-            <button
-              onClick={() => setIsOpen(true)}
-              className="icon-btn"
-              aria-label="Open menu"
-              style={{ display: "flex" }}
-            >
+            {/* Hamburger — tablet + mobile + small laptop */}
+            <button className="hdr-hamburger" onClick={() => setIsOpen(true)} aria-label="Open menu">
               <Menu size={22} />
             </button>
           </div>
         </div>
       </nav>
 
-      {/* Desktop hides hamburger via CSS */}
-      <style>{`
-        @media (min-width: 768px) {
-          button[aria-label="Open menu"] { display: none !important; }
-          div.hidden.md\\:flex { display: flex !important; }
-        }
-        @media (max-width: 767px) {
-          div.hidden.md\\:flex { display: none !important; }
-          button[aria-label="Account"] { display: none; }
-        }
-        @media (max-width: 360px) {
-          button[aria-label="Search"] { display: none; }
-        }
-      `}</style>
-
-      {/* ── Mobile Sidebar ── */}
       {/* Backdrop */}
       <div
         onClick={() => setIsOpen(false)}
         style={{
           position: "fixed", inset: 0, zIndex: 60,
-          background: "rgba(0,0,0,0.45)",
+          background: "rgba(0,0,0,0.4)",
           backdropFilter: "blur(3px)",
-          WebkitBackdropFilter: "blur(3px)",
           opacity: isOpen ? 1 : 0,
           pointerEvents: isOpen ? "auto" : "none",
-          transition: "opacity 0.3s ease",
+          transition: "opacity 0.3s",
         }}
       />
 
-      {/* Drawer */}
+      {/* Drawer — tablet + mobile */}
       <div
-        style={{
-          position: "fixed", top: 0, right: 0, bottom: 0,
-          width: "min(300px, 85vw)",
-          zIndex: 70,
-          background: "#fff",
-          boxShadow: "-8px 0 40px rgba(0,0,0,0.15)",
-          display: "flex", flexDirection: "column",
-          transform: isOpen ? "translateX(0)" : "translateX(100%)",
-          transition: "transform 0.32s cubic-bezier(0.32,0,0.67,0)",
-          willChange: "transform",
-          overflowY: "auto",
-        }}
+        className="hdr-drawer"
+        style={{ transform: isOpen ? "translateX(0)" : "translateX(100%)" }}
         aria-hidden={!isOpen}
       >
         {/* Drawer header */}
         <div style={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
-          padding: "20px 20px 16px",
-          borderBottom: "1px solid #f3f4f6",
+          padding: "20px 24px 16px",
+          background: "#0D1F0F",
+          borderBottom: "2px solid rgba(200,168,130,0.3)",
         }}>
-          <span style={{ fontFamily: "Georgia, serif", fontWeight: 700, color: "#f43f5e", fontSize: "18px" }}>
-            Menu
+          <span style={{
+            fontFamily: "'Playfair Display', serif",
+            fontWeight: 900, color: "#F7F0E8", fontSize: "20px",
+          }}>
+            Shivam <span style={{ color: "#C8A882" }}>Florist</span>
           </span>
           <button
             onClick={() => setIsOpen(false)}
-            className="icon-btn"
             aria-label="Close menu"
-            style={{ padding: "8px" }}
+            style={{
+              background: "rgba(255,255,255,0.1)", border: "none",
+              borderRadius: "8px", padding: "8px", cursor: "pointer",
+              color: "#F7F0E8", display: "flex",
+            }}
           >
             <X size={20} />
           </button>
         </div>
 
         {/* Nav links */}
-        <nav style={{ padding: "12px 20px", flex: 1 }}>
+        <nav style={{ padding: "8px 24px", flex: 1 }}>
           {navLinks.map((link) => (
             <Link
               key={link.name}
               to={link.path}
-              className="sidebar-link"
+              className="hdr-drawer-link"
               onClick={() => setIsOpen(false)}
             >
               {link.name}
             </Link>
           ))}
+
+          {/* Cart link */}
+          <Link
+            to="/cart"
+            className="hdr-drawer-link"
+            onClick={() => setIsOpen(false)}
+            style={{ color: "#e11d48", display: "flex", alignItems: "center", gap: "10px" }}
+          >
+            <ShoppingCart size={16} />
+            Cart
+            {cartCount > 0 && (
+              <span style={{
+                background: "#e11d48", color: "#fff", borderRadius: "999px",
+                fontSize: "11px", padding: "2px 8px", fontWeight: 700,
+              }}>
+                {cartCount}
+              </span>
+            )}
+          </Link>
         </nav>
 
         {/* Drawer footer */}
         <div style={{
-          padding: "16px 20px",
+          padding: "16px 24px",
           borderTop: "1px solid #f3f4f6",
           textAlign: "center",
-          fontSize: "12px", color: "#9ca3af",
+          fontSize: "11px",
+          color: "#9ca3af",
+          fontFamily: "'Inter', sans-serif",
         }}>
-          © {new Date().getFullYear()} Bring My Flowers
+          © {new Date().getFullYear()} Shivam Florist
         </div>
       </div>
     </>

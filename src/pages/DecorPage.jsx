@@ -38,7 +38,7 @@ const decoreThemes = [
   { label: "Baby Shower", emoji: "👶", color: "#93c5fd" },
   { label: "Haldi & Mehendi", emoji: "🌼", color: "#f59e0b" },
   { label: "Birthday", emoji: "🎂", color: "#a78bfa" },
-  { label: "Corporate", emoji: "🏢", color: "#6b7280" },
+  { label: "Anniversary", emoji: "🏢", color: "#6b7280" },
   { label: "House Party", emoji: "🏠", color: "#34d399" },
   { label: "Reception", emoji: "✨", color: "#e8667a" },
 ];
@@ -1063,7 +1063,7 @@ const DecorPage = () => {
                   Send Request
                 </button>
                 <a
-                  href="https://wa.me/919999999999"
+                  href="https://wa.me/919540849659"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{

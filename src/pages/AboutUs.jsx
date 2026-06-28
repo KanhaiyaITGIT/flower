@@ -286,11 +286,7 @@ const AboutUs = () => {
         }
       `}</style>
 
-      <div className="abp">
-
-        {/* ══════════════════════════════════════════════ */}
-        {/* HERO                                          */}
-        {/* ══════════════════════════════════════════════ */}
+      <div className="abp">     
         <section style={{
           background: "linear-gradient(135deg,#0d0805 0%,#1a0f0a 40%,#120c08 100%)",
           position: "relative", overflow: "hidden",
@@ -855,7 +851,7 @@ const AboutUs = () => {
               <a href="/decor" className="cta-pri" style={{padding:"15px 28px"}}>
                 <Sparkles size={15}/> Plan Your Décor
               </a>
-              <a href="https://wa.me/919999999999" target="_blank" rel="noopener noreferrer"
+              <a href="https://wa.me/919540849659" target="_blank" rel="noopener noreferrer"
                 className="cta-ghost"
                 style={{
                   color:"#25d366",padding:"14px 26px",fontSize:"14px",
@@ -865,7 +861,7 @@ const AboutUs = () => {
               >
                 <MessageCircle size={15}/> WhatsApp Us
               </a>
-              <a href="tel:+919999999999"
+              <a href="tel:+919540849659"
                 className="cta-ghost"
                 style={{
                   color:"rgba(255,255,255,0.6)",padding:"14px 24px",fontSize:"14px",
