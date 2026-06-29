@@ -23,13 +23,13 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { FaInstagram, FaFacebookF } from "react-icons/fa";
-import image1 from "../assets/s1.png";
+import image1 from "../assets/f4.png";
 import image42 from "../assets/s42.png";
 import image16 from "../assets/s16.png";
-import image4 from "../assets/s4.png";
-import image5 from "../assets/s5.png";
-import image6 from "../assets/s6.png";
-import image7 from "../assets/s7.png";
+import image4 from "../assets/f3.png";
+import image5 from "../assets/f24.png";
+import image6 from "../assets/f20.png";
+import image7 from "../assets/f10.png";
 import image8 from "../assets/s8.png";
 import image9 from "../assets/s9.png";
 import image10 from "../assets/s10.png";
@@ -92,8 +92,8 @@ const Home = () => {
   const categories = [
     { title: "Bouquets", image: image1, products: "120+ Products" },
     { title: "Floral Arrangements", image: image42, products: "80+ Products" },
-    { title: "Premium Flowers", image: image16, products: "150+ Products" },
-    { title: "Subscriptions", image: image4, products: "30+ Products" },
+    { title: "Premium Baloons Decor", image: image16, products: "150+ Products" },
+    { title: "For Love", image: image4, products: "30+ Products" },
   ];
 
   const bestSellers = [
@@ -101,7 +101,7 @@ const Home = () => {
       id: 1,
       title: "Pink Rhapsody Bouquet",
       image: image5,
-      price: "₹1,599",
+      price: "acceptable",
       originalPrice: "₹1,999",
       rating: 4.8,
       badge: "Bestseller",
@@ -110,7 +110,7 @@ const Home = () => {
       id: 2,
       title: "Lily Blush Symphony",
       image: image6,
-      price: "₹2,099",
+      price: "acceptable",
       originalPrice: "₹2,499",
       rating: 4.9,
       badge: "New",
@@ -119,7 +119,7 @@ const Home = () => {
       id: 3,
       title: "Red Velvet Bouquet",
       image: image7,
-      price: "₹1,349",
+      price: "acceptable",
       originalPrice: null,
       rating: 4.7,
       badge: null,
@@ -128,7 +128,7 @@ const Home = () => {
       id: 4,
       title: "Wildflower Melody",
       image: image8,
-      price: "₹1,999",
+      price: "acceptable",
       originalPrice: "₹2,399",
       rating: 4.6,
       badge: "Limited",
