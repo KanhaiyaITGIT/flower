@@ -873,7 +873,7 @@ const DecorPage = () => {
           </div>
 
           <div style={{ textAlign: "center", marginTop: "2rem" }}>
-            <button style={{
+            {/* <button style={{
               display: "inline-flex", alignItems: "center", gap: "8px",
               border: "2px solid #e8667a", color: "#e8667a",
               borderRadius: "9999px", padding: "11px 28px",
@@ -884,7 +884,7 @@ const DecorPage = () => {
               onMouseLeave={e => e.currentTarget.style.transform = ""}
             >
               Load More Work <ArrowRight size={14} />
-            </button>
+            </button> */}
           </div>
         </div>
       </section>
