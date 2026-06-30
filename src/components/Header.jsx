@@ -251,9 +251,15 @@ export default function Header() {
       }}>
 
         {/* Announcement bar */}
-        <div className="hdr-announce">
-          🌸 Same Day Delivery Available — Call or WhatsApp Us Now
-        </div>
+       <div className="hdr-announce">
+  <a
+    href="https://wa.me/919540849659?text=Hi,%20I'm%20interested%20in%20your%20flowers."
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    🌸 Fast Delivery Available — Call or WhatsApp Us Now: <strong>9540849659</strong>
+  </a>
+</div>
 
         <div className="hdr-bar">
 

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
@@ -46,6 +47,7 @@ const occasions = [
     products: "48 arrangements",
     size: "large", // tall card
     emoji: "💍",
+    category: "Wedding",
   },
   {
     id: 2,
@@ -61,6 +63,7 @@ const occasions = [
     products: "34 bouquets",
     size: "medium",
     emoji: "🎂",
+    category: "Birthday",
   },
   {
     id: 3,
@@ -76,6 +79,7 @@ const occasions = [
     products: "29 arrangements",
     size: "medium",
     emoji: "❤️",
+    category: "Anniversary",
   },
   {
     id: 4,
@@ -91,6 +95,7 @@ const occasions = [
     products: "22 bouquets",
     size: "small",
     emoji: "🎉",
+    category: "Bouquets",
   },
   {
     id: 5,
@@ -106,6 +111,7 @@ const occasions = [
     products: "18 arrangements",
     size: "small",
     emoji: "🕊️",
+    category: "All",
   },
   {
     id: 6,
@@ -121,6 +127,7 @@ const occasions = [
     products: "41 bouquets",
     size: "large",
     emoji: "✨",
+    category: "Bouquets",
   },
   {
     id: 7,
@@ -136,6 +143,7 @@ const occasions = [
     products: "16 collections",
     size: "medium",
     emoji: "🏢",
+    category: "Candles & More",
   },
   {
     id: 8,
@@ -151,6 +159,7 @@ const occasions = [
     products: "14 bouquets",
     size: "small",
     emoji: "👶",
+    category: "Bouquets",
   },
   {
     id: 9,
@@ -166,6 +175,7 @@ const occasions = [
     products: "19 arrangements",
     size: "small",
     emoji: "🌻",
+    category: "Bouquets",
   },
 ];
 
@@ -188,13 +198,14 @@ const steps = [
 
 // ─── Featured Products (quick picks) ───
 const featured = [
-  { id: 1, name: "Red Rose Eternity Box", price: 2499, occasion: "Anniversary", image: image10, rating: 5.0 },
-  { id: 2, name: "Sunshine Birthday Bunch", price: 699, occasion: "Birthday", image: image11, rating: 4.8 },
-  { id: 3, name: "White Orchid Sympathy", price: 1299, occasion: "Sympathy", image: image12, rating: 4.9 },
-  { id: 4, name: "Bridal Pastel Bouquet", price: 3499, occasion: "Wedding", image: image13, rating: 5.0 },
+  { id: 1, name: "Red Rose Eternity Box", price: 2499, occasion: "Anniversary", category: "Anniversary", image: image10, rating: 5.0 },
+  { id: 2, name: "Sunshine Birthday Bunch", price: 699, occasion: "Birthday", category: "Birthday", image: image11, rating: 4.8 },
+  { id: 3, name: "White Orchid Sympathy", price: 1299, occasion: "Sympathy", category: "All", image: image12, rating: 4.9 },
+  { id: 4, name: "Bridal Pastel Bouquet", price: 3499, occasion: "Wedding", category: "Wedding", image: image13, rating: 5.0 },
 ];
 
 const OccasionsPage = () => {
+  const navigate = useNavigate();
   const [hoveredCard, setHoveredCard] = useState(null);
   const [addedToCart, setAddedToCart] = useState({});
 
@@ -216,31 +227,37 @@ const OccasionsPage = () => {
     label: "For Her",
     image:
       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300",
+    category: "Bouquets",
   },
   {
     label: "For Him",
     image:
       "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300",
+    category: "Balloon",
   },
   {
     label: "Mom",
     image:
       "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300",
+    category: "Devotional",
   },
   {
     label: "Dad",
     image:
       "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300",
+    category: "Candles & More",
   },
   {
     label: "Friends",
     image:
       "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=300",
+    category: "Bouquets",
   },
   {
     label: "Colleagues",
     image:
       "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300",
+    category: "Candles & More",
   },
 ];
   return (
@@ -342,6 +359,7 @@ const OccasionsPage = () => {
                 className={`relative rounded-2xl overflow-hidden cursor-pointer group ${gridClasses[occ.size]}`}
                 onMouseEnter={() => setHoveredCard(occ.id)}
                 onMouseLeave={() => setHoveredCard(null)}
+                onClick={() => navigate(`/category?cat=${encodeURIComponent(occ.category)}`)}
               >
                 {/* Background image */}
                 <img
@@ -399,7 +417,9 @@ const OccasionsPage = () => {
                       {occ.products}
                     </span>
 
-                    <button
+                    <Link
+                      to={`/category?cat=${encodeURIComponent(occ.category)}`}
+                      onClick={(e) => e.stopPropagation()}
                       className={`flex items-center gap-1.5 bg-white text-gray-900 text-xs font-bold rounded-full px-3.5 py-1.5 transition-all duration-300 shadow-md ${
                         hoveredCard === occ.id
                           ? "opacity-100 translate-x-0"
@@ -408,7 +428,7 @@ const OccasionsPage = () => {
                     >
                       Shop Now
                       <ChevronRight size={12} />
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -500,6 +520,7 @@ const OccasionsPage = () => {
 
         <div
           key={index}
+          onClick={() => navigate(`/category?cat=${encodeURIComponent(item.category)}`)}
           className="group relative overflow-hidden rounded-3xl bg-white shadow-md hover:shadow-2xl transition-all duration-500 cursor-pointer hover:-translate-y-2"
         >
 
@@ -558,16 +579,17 @@ const OccasionsPage = () => {
                 Most-loved gifts
               </h2>
             </div>
-            <button className="flex items-center gap-1.5 text-sm font-bold text-rose-500 hover:text-rose-700 transition-colors">
+            <Link to="/category" className="flex items-center gap-1.5 text-sm font-bold text-rose-500 hover:text-rose-700 transition-colors">
               View all products
               <ArrowRight size={15} />
-            </button>
+            </Link>
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {featured.map((item) => (
               <div
                 key={item.id}
+                onClick={() => navigate(`/category?cat=${encodeURIComponent(item.category)}`)}
                 className="group bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer"
               >
                 <div className="aspect-square overflow-hidden bg-rose-50 relative">
@@ -593,7 +615,7 @@ const OccasionsPage = () => {
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-gray-900 text-base">₹{item.price.toLocaleString()}</span>
                     <button
-                      onClick={() => handleCart(item.id)}
+                      onClick={(e) => { e.stopPropagation(); handleCart(item.id); }}
                       className={`w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 shadow-md ${
                         addedToCart[item.id]
                           ? "bg-green-500 shadow-green-200"
