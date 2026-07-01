@@ -47,6 +47,53 @@ import hero from "../assets/hero.png";
 import image28 from "../assets/f1.png";
 import imagef20 from "../assets/f20.png";
 
+// ─── Premium Variants ───
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.3,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+};
+
+const imageVariants = {
+  hidden: { opacity: 0, scale: 0.92 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 1.2,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+};
+
+const floatingVariants = {
+  animate: {
+    y: [0, -12, 0],
+    transition: {
+      duration: 6,
+      ease: "easeInOut",
+      repeat: Infinity,
+    },
+  },
+};
+
 const Home = () => {
   const navigate = useNavigate();
   const categorySliderRef = useRef(null);
@@ -288,103 +335,241 @@ const Home = () => {
 
   return (
     <div className="w-full overflow-hidden bg-[#fafaf9]">
-      {/* ─── Hero Section ─── */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-rose-50/70 via-pink-50/50 to-[#F7F0E8]/40 pt-10 pb-20 lg:py-28">
-        <div className="absolute top-0 left-0 w-72 h-72 bg-rose-200/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-200/20 rounded-full blur-3xl" />
+      {/* ═══════════════════════════════════════════════════════════════════ */}
+      {/* ─── HERO SECTION: WORLD-CLASS PREMIUM DESIGN ─── */}
+      {/* ═══════════════════════════════════════════════════════════════════ */}
+      <section className="relative w-full overflow-hidden bg-white min-h-screen lg:min-h-[120vh] flex items-center justify-center pt-20 lg:pt-0">
+        {/* ─── Animated Background Gradients ─── */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {/* Top-right gradient orb */}
+          <motion.div
+            animate={{
+              x: [0, 40, 0],
+              y: [0, -60, 0],
+            }}
+            transition={{
+              duration: 20,
+              ease: "easeInOut",
+              repeat: Infinity,
+            }}
+            className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-rose-200/30 via-pink-100/20 to-transparent rounded-full blur-3xl"
+          />
 
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* LEFT */}
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="relative z-10 order-2 lg:order-none"
+          {/* Bottom-left gradient orb */}
+          <motion.div
+            animate={{
+              x: [0, -40, 0],
+              y: [0, 60, 0],
+            }}
+            transition={{
+              duration: 25,
+              ease: "easeInOut",
+              repeat: Infinity,
+              delay: 1,
+            }}
+            className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-amber-100/20 via-rose-100/15 to-transparent rounded-full blur-3xl"
+          />
+
+          {/* Center accent */}
+          <motion.div
+            animate={{
+              scale: [1, 1.1, 1],
+              opacity: [0.3, 0.5, 0.3],
+            }}
+            transition={{
+              duration: 8,
+              ease: "easeInOut",
+              repeat: Infinity,
+            }}
+            className="absolute top-1/3 left-1/4 w-96 h-96 bg-gradient-to-br from-rose-100/10 to-transparent rounded-full blur-3xl"
+          />
+        </div>
+
+        {/* ─── Content Container ─── */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-screen lg:min-h-auto py-20 lg:py-0"
+          >
+            {/* ─── LEFT COLUMN: CONTENT ─── */}
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-col justify-center space-y-8 order-2 lg:order-1"
             >
-              <div className="inline-flex items-center gap-2 bg-white border border-gray-100 shadow-sm px-4 py-2 rounded-full text-xs font-semibold tracking-wider text-rose-500 uppercase font-inter">
-                <Leaf size={12} className="animate-pulse" />
-                Handpicked Fresh, Every Morning
-              </div>
+              {/* Micro-copy Badge */}
+              <motion.div
+                variants={itemVariants}
+                className="inline-flex items-center gap-2 w-fit"
+              >
+                <div className="flex items-center gap-2 bg-gradient-to-r from-rose-50 to-pink-50 border border-rose-200/50 backdrop-blur-sm px-4 py-2.5 rounded-full hover:border-rose-300/80 transition-all duration-300 group cursor-default">
+                  <motion.div
+                    animate={{ rotate: [0, 20, 0] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                  >
+                    <Leaf size={14} className="text-rose-500" />
+                  </motion.div>
+                  <span className="text-xs font-semibold tracking-wider text-rose-700 uppercase group-hover:text-rose-800 transition-colors">
+                    Handpicked Fresh, Every Morning
+                  </span>
+                </div>
+              </motion.div>
 
-              <h1 className="mt-8 text-4xl sm:text-5xl lg:text-7xl font-serif-display font-black leading-[1.08] text-slate-900">
-                Delivering
-                <span className="block text-rose-500 italic font-medium font-serif-display">Happiness</span>
-                With Fresh Flowers
-              </h1>
+              {/* Main Headline */}
+              <motion.div variants={itemVariants} className="space-y-3 lg:space-y-4">
+                <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-serif-display font-black leading-[1.08] tracking-tight">
+                  <span className="block text-slate-950">Delivering</span>
+                  <span className="block bg-gradient-to-r from-rose-600 via-rose-500 to-pink-500 bg-clip-text text-transparent italic">
+                    Happiness
+                  </span>
+                  <span className="block text-slate-950">With Fresh Flowers</span>
+                </h1>
+              </motion.div>
 
-              <p className="mt-6 text-sm sm:text-base text-gray-500 max-w-xl leading-relaxed font-light">
+              {/* Subheading */}
+              <motion.p
+                variants={itemVariants}
+                className="text-lg sm:text-xl text-slate-600 max-w-lg leading-relaxed font-light"
+              >
                 Bespoke bouquets, luxury floral arrangements and meaningful gifts designed to elevate your moments into unforgettable memories.
-              </p>
+              </motion.p>
 
-              <div className="flex flex-wrap gap-4 mt-8">
+              {/* CTA Buttons */}
+              <motion.div
+                variants={itemVariants}
+                className="flex flex-col sm:flex-row gap-4 pt-4"
+              >
                 <Link
                   to="/category"
-                  className="inline-flex items-center gap-2 bg-rose-500 hover:bg-rose-600 text-white px-8 py-4 rounded-full font-bold text-xs tracking-widest uppercase shadow-lg shadow-rose-200 hover:-translate-y-0.5 transition-all duration-300"
+                  className="group relative inline-flex items-center justify-center gap-2 px-8 lg:px-10 py-4 lg:py-5 bg-gradient-to-r from-rose-600 to-rose-500 text-white font-bold text-sm lg:text-base tracking-wider uppercase rounded-full shadow-lg shadow-rose-200 hover:shadow-xl hover:shadow-rose-300 hover:-translate-y-1 transition-all duration-300 overflow-hidden"
                 >
-                  <ShoppingBag size={14} />
-                  Shop Collection
+                  <div className="absolute inset-0 bg-gradient-to-r from-rose-700 to-rose-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
+                  <ShoppingBag size={18} className="relative z-10 group-hover:scale-110 transition-transform" />
+                  <span className="relative z-10">Shop Collection</span>
                 </Link>
 
                 <Link
                   to="/occasions"
-                  className="inline-flex items-center gap-2 bg-white border border-gray-200 text-[#0D1F0F] px-8 py-4 rounded-full font-bold text-xs tracking-widest uppercase hover:bg-gray-50 hover:border-gray-300 hover:-translate-y-0.5 transition-all duration-300"
+                  className="group inline-flex items-center justify-center gap-2 px-8 lg:px-10 py-4 lg:py-5 bg-slate-100 hover:bg-slate-200 text-slate-900 font-bold text-sm lg:text-base tracking-wider uppercase rounded-full border-2 border-slate-200 hover:border-slate-300 transition-all duration-300 hover:-translate-y-1"
                 >
-                  <Flower2 size={14} className="text-rose-500" />
-                  Explore Occasions
+                  <Flower2 size={18} className="text-rose-500 group-hover:rotate-12 transition-transform" />
+                  <span>Explore Occasions</span>
                 </Link>
-              </div>
+              </motion.div>
 
-              {/* Trust Row */}
-              <div className="flex items-center gap-10 mt-12 pt-8 border-t border-gray-200/50">
-                <div>
-                  <h3 className="text-3xl font-black text-slate-900 tracking-tight font-serif-display">10K+</h3>
-                  <p className="text-xs text-gray-400 uppercase tracking-widest font-semibold font-inter mt-1">Customers</p>
-                </div>
-                <div className="w-px h-10 bg-gray-200" />
-                <div>
-                  <h3 className="text-3xl font-black text-slate-900 tracking-tight font-serif-display">500+</h3>
-                  <p className="text-xs text-gray-400 uppercase tracking-widest font-semibold font-inter mt-1">Designs</p>
-                </div>
-                <div className="w-px h-10 bg-gray-200" />
-                <div>
-                  <h3 className="text-3xl font-black text-rose-500 tracking-tight font-serif-display">4.9★</h3>
-                  <p className="text-xs text-gray-400 uppercase tracking-widest font-semibold font-inter mt-1">Rating</p>
-                </div>
-              </div>
+              {/* Trust Metrics */}
+              <motion.div
+                variants={itemVariants}
+                className="grid grid-cols-3 gap-6 lg:gap-10 pt-8 border-t border-slate-200/50"
+              >
+                {[
+                  { number: "10K+", label: "Customers" },
+                  { number: "500+", label: "Designs" },
+                  { number: "4.9★", label: "Rating" },
+                ].map((stat, idx) => (
+                  <motion.div
+                    key={idx}
+                    whileHover={{ y: -4 }}
+                    className="flex flex-col"
+                  >
+                    <span className="text-3xl lg:text-4xl font-serif-display font-black text-slate-950 tracking-tight">
+                      {stat.number}
+                    </span>
+                    <span className="text-xs lg:text-sm text-slate-500 uppercase tracking-widest font-semibold mt-1">
+                      {stat.label}
+                    </span>
+                  </motion.div>
+                ))}
+              </motion.div>
             </motion.div>
 
-            {/* RIGHT */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="relative order-1 lg:order-none"
+            {/* ─── RIGHT COLUMN: VISUALS ─── */}
+            <motion.div
+              variants={imageVariants}
+              className="relative order-1 lg:order-2 flex items-center justify-center"
             >
-              <div className="relative overflow-hidden rounded-[32px] shadow-2xl">
-                <img
-                  src={hero}
-                  alt="Luxurious flower arrangements"
-                  className="w-full object-cover aspect-[4/3] transform hover:scale-102 transition duration-700"
-                />
-                <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-md px-6 py-4 rounded-2xl shadow-xl border border-white/40">
-                  <p className="font-serif-display font-black text-xl text-[#0D1F0F]">100% Fresh</p>
-                  <p className="text-gray-500 text-xs mt-0.5">Satisfaction Guaranteed</p>
-                </div>
-              </div>
-              <div className="hidden lg:block absolute -left-10 top-20 w-28 h-28 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transition-transform hover:scale-105 duration-300">
-                <img src={image42} alt="floral decor option 1" className="w-full h-full object-cover" />
-              </div>
-              <div className="hidden lg:block absolute -right-8 bottom-16 w-24 h-24 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transition-transform hover:scale-105 duration-300">
-                <img src={image16} alt="balloon decoration option" className="w-full h-full object-cover" />
-              </div>
-            </motion.div>
-          </div>
+              {/* Main Hero Image */}
+              <motion.div
+                className="relative w-full max-w-md lg:max-w-none aspect-square lg:aspect-auto"
+                variants={floatingVariants}
+                animate="animate"
+              >
+                <div className="relative rounded-3xl lg:rounded-4xl overflow-hidden shadow-2xl">
+                  <LazyImage
+                    src={hero}
+                    alt="Luxurious fresh flower bouquet arrangement - Premium floral delivery"
+                    className="w-full h-96 lg:h-[500px] object-cover"
+                  />
 
-          <div className="hidden lg:flex flex-col items-center gap-1.5 text-slate-400 mt-12">
-            <span className="text-[10px] uppercase tracking-widest font-bold font-inter">Scroll</span>
-            <ChevronDown size={14} className="animate-bounce" />
-          </div>
+                  {/* Overlay gradient for depth */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-slate-900/5 via-transparent to-white/5" />
+
+                  {/* Premium Badge */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                    className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-md px-5 lg:px-7 py-4 rounded-2xl shadow-xl border border-white/60"
+                  >
+                    <p className="font-serif-display font-black text-base lg:text-lg text-slate-950">
+                      100% Fresh
+                    </p>
+                    <p className="text-slate-500 text-xs lg:text-sm mt-1">
+                      Satisfaction Guaranteed
+                    </p>
+                  </motion.div>
+                </div>
+
+                {/* Floating Side Images - Desktop Only */}
+                <motion.div
+                  initial={{ opacity: 0, x: -40, y: -40 }}
+                  animate={{ opacity: 1, x: 0, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                  whileHover={{ scale: 1.08, rotate: -2 }}
+                  className="hidden lg:block absolute -left-16 top-20 w-32 h-32 rounded-3xl overflow-hidden shadow-2xl border-4 border-white"
+                >
+                  <LazyImage
+                    src={image42}
+                    alt="Floral arrangement showcase"
+                    className="w-full h-full object-cover"
+                  />
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, x: 40, y: 40 }}
+                  animate={{ opacity: 1, x: 0, y: 0 }}
+                  transition={{ delay: 0.6 }}
+                  whileHover={{ scale: 1.08, rotate: 2 }}
+                  className="hidden lg:block absolute -right-12 -bottom-8 w-28 h-28 rounded-3xl overflow-hidden shadow-2xl border-4 border-white"
+                >
+                  <LazyImage
+                    src={image16}
+                    alt="Balloon decoration option"
+                    className="w-full h-full object-cover"
+                  />
+                </motion.div>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+
+          {/* ─── Scroll Indicator ─── */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1 }}
+            className="hidden lg:flex flex-col items-center gap-2 justify-center pt-12 absolute bottom-12 left-1/2 -translate-x-1/2"
+          >
+            <span className="text-xs uppercase tracking-widest font-bold text-slate-400">
+              Scroll
+            </span>
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <ChevronDown size={18} className="text-slate-400" />
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
@@ -392,22 +577,26 @@ const Home = () => {
       <section className="py-24 bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">Curated Collections</span>
-            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[#0d1f0f] mt-3">Shop By Category</h2>
-            <p className="text-gray-400 text-sm mt-3 font-light">Find the perfect arrangements designed for your special moments</p>
+            <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">
+              Curated Collections
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[#0d1f0f] mt-3">
+              Shop By Category
+            </h2>
+            <p className="text-gray-400 text-sm mt-3 font-light">
+              Find the perfect arrangements designed for your special moments
+            </p>
           </div>
 
           <div className="relative">
-            {/* Left Arrow */}
             <button
               onClick={() => scrollSlider(categorySliderRef, "left")}
-              className="absolute -left-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white border border-gray-100 shadow-md flex items-center justify-center text-slate-700 hover:bg-[#0D1F0F] hover:text-white transition-all duration-200"
+              className="absolute -left-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white border border-gray-100 shadow-md flex items-center justify-center text-slate-700 hover:bg-gray-50 hover:shadow-lg transition-all"
               aria-label="Scroll left"
             >
               <ChevronLeft size={18} />
             </button>
 
-            {/* Slider track */}
             <div
               ref={categorySliderRef}
               className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 scrollbar-hide"
@@ -417,7 +606,7 @@ const Home = () => {
                   key={index}
                   data-slide-card
                   onClick={() => navigate(`/category?cat=${encodeURIComponent(item.category)}`)}
-                  className="group rounded-3xl overflow-hidden bg-white border border-gray-100/80 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer shrink-0 w-[80vw] sm:w-[280px] snap-start"
+                  className="group rounded-3xl overflow-hidden bg-white border border-gray-100/80 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer shrink-0 w-[80vw] sm:w-[280px]"
                 >
                   <div className="h-64 overflow-hidden relative bg-rose-50/20">
                     <LazyImage
@@ -426,22 +615,23 @@ const Home = () => {
                       className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300" />
-                    <span className="absolute bottom-4 left-1/2 -translate-x-1/2 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 bg-white text-[#0D1F0F] font-bold px-5 py-2.5 rounded-full text-xs tracking-wider uppercase flex items-center gap-1.5 shadow-md whitespace-nowrap">
+                    <span className="absolute bottom-4 left-1/2 -translate-x-1/2 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 bg-white text-xs font-bold text-slate-900 px-4 py-2 rounded-full flex items-center gap-1">
                       Shop Now <ArrowRight size={12} />
                     </span>
                   </div>
                   <div className="p-6">
-                    <h3 className="font-serif-display font-bold text-lg text-slate-900">{item.title}</h3>
+                    <h3 className="font-serif-display font-bold text-lg text-slate-900">
+                      {item.title}
+                    </h3>
                     <p className="text-gray-400 text-xs mt-1">{item.products}</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            {/* Right Arrow */}
             <button
               onClick={() => scrollSlider(categorySliderRef, "right")}
-              className="absolute -right-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white border border-gray-100 shadow-md flex items-center justify-center text-slate-700 hover:bg-[#0D1F0F] hover:text-white transition-all duration-200"
+              className="absolute -right-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white border border-gray-100 shadow-md flex items-center justify-center text-slate-700 hover:bg-gray-50 hover:shadow-lg transition-all"
               aria-label="Scroll right"
             >
               <ArrowRight size={18} />
@@ -455,8 +645,12 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex justify-between items-end mb-12 flex-wrap gap-4">
             <div>
-              <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">Customer Favorites</span>
-              <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-slate-900 mt-2">Bestselling Bouquets</h2>
+              <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">
+                Customer Favorites
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-slate-900 mt-2">
+                Bestselling Bouquets
+              </h2>
             </div>
             <Link
               to="/category"
@@ -467,16 +661,14 @@ const Home = () => {
           </div>
 
           <div className="relative">
-            {/* Left Arrow */}
             <button
               onClick={() => scrollSlider(bestSellerSliderRef, "left")}
-              className="absolute -left-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white border border-gray-100 shadow-md flex items-center justify-center text-slate-700 hover:bg-[#0D1F0F] hover:text-white transition-all duration-200"
+              className="absolute -left-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white border border-gray-100 shadow-md flex items-center justify-center text-slate-700 hover:bg-gray-50 hover:shadow-lg transition-all"
               aria-label="Scroll left"
             >
               <ChevronLeft size={18} />
             </button>
 
-            {/* Slider track */}
             <div
               ref={bestSellerSliderRef}
               className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 scrollbar-hide"
@@ -497,23 +689,31 @@ const Home = () => {
                     <LazyImage
                       src={item.image}
                       alt={item.title}
-                      className="w-full h-full object-cover hover:scale-102 transition duration-500"
+                      className="w-full h-full object-cover hover:scale-105 transition duration-500"
                     />
                   </div>
                   <div className="p-6 flex flex-col flex-1">
-                    <h3 className="font-serif-display font-bold text-base text-slate-900 leading-snug">{item.title}</h3>
+                    <h3 className="font-serif-display font-bold text-base text-slate-900 leading-snug">
+                      {item.title}
+                    </h3>
                     <div className="flex items-center gap-1 mt-2">
                       <Star size={11} className="fill-amber-400 text-amber-400" />
-                      <span className="text-[11px] font-bold text-slate-700 font-inter">{item.rating}</span>
+                      <span className="text-[11px] font-bold text-slate-700 font-inter">
+                        {item.rating}
+                      </span>
                       <span className="text-[11px] text-gray-400">(120+ reviews)</span>
                     </div>
                     <div className="flex items-center gap-2 mt-3">
-                      <p className="text-rose-500 font-black text-base">{item.price === "acceptable" ? "Contact us" : item.price}</p>
+                      <p className="text-rose-500 font-black text-base">
+                        {item.price === "acceptable" ? "Contact us" : item.price}
+                      </p>
                       {item.originalPrice && (
-                        <p className="text-gray-400 text-xs line-through">{item.originalPrice}</p>
+                        <p className="text-gray-400 text-xs line-through">
+                          {item.originalPrice}
+                        </p>
                       )}
                     </div>
-                    
+
                     <Link
                       to={`/category?cat=${encodeURIComponent(item.category)}`}
                       className="mt-6 w-full bg-[#0D1F0F] text-white py-3 rounded-2xl font-bold text-xs tracking-wider uppercase hover:bg-[#1a3320] transition-colors text-center"
@@ -525,10 +725,9 @@ const Home = () => {
               ))}
             </div>
 
-            {/* Right Arrow */}
             <button
               onClick={() => scrollSlider(bestSellerSliderRef, "right")}
-              className="absolute -right-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white border border-gray-100 shadow-md flex items-center justify-center text-slate-700 hover:bg-[#0D1F0F] hover:text-white transition-all duration-200"
+              className="absolute -right-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white border border-gray-100 shadow-md flex items-center justify-center text-slate-700 hover:bg-gray-50 hover:shadow-lg transition-all"
               aria-label="Scroll right"
             >
               <ArrowRight size={18} />
@@ -541,7 +740,7 @@ const Home = () => {
       <section className="py-24 bg-[#0d1f0f] relative overflow-hidden">
         <div className="absolute top-10 right-10 w-72 h-72 bg-rose-500/10 rounded-full blur-3xl" />
         <div className="absolute bottom-10 left-10 w-72 h-72 bg-[#C8A882]/10 rounded-full blur-3xl" />
-        
+
         <div className="max-w-7xl mx-auto px-6 relative">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative">
@@ -549,7 +748,7 @@ const Home = () => {
                 <LazyImage
                   src={image28}
                   alt="Sunset Rose Grand Bouquet - Deal of the Day"
-                  className="w-full h-[480px] object-cover hover:scale-102 transition duration-700"
+                  className="w-full h-[480px] object-cover hover:scale-105 transition duration-700"
                 />
               </div>
               <div className="absolute -top-4 -left-4 bg-[#e11d48] text-white rounded-2xl px-6 py-4 shadow-xl -rotate-6">
@@ -559,7 +758,7 @@ const Home = () => {
                 <p className="text-2xl font-black mt-1 font-serif-display">40% OFF</p>
               </div>
             </div>
-            
+
             <div className="text-white flex flex-col gap-6">
               <div>
                 <span className="inline-flex items-center gap-2 bg-white/10 text-[#C8A882] text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-full border border-white/10">
@@ -569,7 +768,8 @@ const Home = () => {
                   Sunset Rose Grand Bouquet
                 </h2>
                 <p className="text-gray-400 text-sm mt-4 leading-relaxed font-light">
-                  A breathtaking, hand-tied arrangement of 50 premium long-stemmed roses in warm sunset hues, finished with fresh eucalyptus and a signature silk ribbon.
+                  A breathtaking, hand-tied arrangement of 50 premium long-stemmed roses in warm
+                  sunset hues, finished with fresh eucalyptus and a signature silk ribbon.
                 </p>
               </div>
 
@@ -585,7 +785,6 @@ const Home = () => {
                 <span className="text-base text-white/40 line-through">₹1,999</span>
               </div>
 
-              {/* Timer */}
               <div className="flex gap-3">
                 {[
                   { label: "Hours", value: timeLeft.hours },
@@ -610,7 +809,7 @@ const Home = () => {
                 href={WHATSAPP_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-flex items-center justify-center gap-2 bg-rose-500 hover:bg-rose-600 text-white px-8 py-4 rounded-full font-bold text-xs tracking-widest uppercase shadow-lg shadow-rose-950/30 hover:-translate-y-0.5 transition-all duration-300 max-w-[240px]"
+                className="mt-4 inline-flex items-center justify-center gap-2 bg-rose-500 hover:bg-rose-600 text-white px-8 py-4 rounded-full font-bold text-xs tracking-widest uppercase shadow-lg shadow-rose-200/30 hover:shadow-lg hover:shadow-rose-300/40 transition-all duration-300 hover:-translate-y-1"
               >
                 Grab This Deal <ArrowRight size={14} />
               </a>
@@ -623,11 +822,17 @@ const Home = () => {
       <section className="py-24 bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-20">
-            <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">Simple Process</span>
-            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-slate-900 mt-2">How It Works</h2>
-            <p className="text-gray-400 text-sm mt-3 font-light">From our garden directly to your doorstep in three easy steps</p>
+            <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">
+              Simple Process
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-slate-900 mt-2">
+              How It Works
+            </h2>
+            <p className="text-gray-400 text-sm mt-3 font-light">
+              From our garden directly to your doorstep in three easy steps
+            </p>
           </div>
-          
+
           <div className="grid md:grid-cols-3 gap-8">
             {steps.map((step, index) => {
               const Icon = step.icon;
@@ -642,7 +847,9 @@ const Home = () => {
                   <div className="w-14 h-14 mx-auto rounded-2xl bg-rose-500/10 flex items-center justify-center mb-6">
                     <Icon size={24} className="text-rose-500" />
                   </div>
-                  <h3 className="font-serif-display font-bold text-lg text-slate-900">{step.title}</h3>
+                  <h3 className="font-serif-display font-bold text-lg text-slate-900">
+                    {step.title}
+                  </h3>
                   <p className="text-gray-400 text-xs mt-3 leading-relaxed font-light">
                     {step.desc}
                   </p>
@@ -657,11 +864,17 @@ const Home = () => {
       <section className="py-24 bg-[#fafaf9]/60">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-20">
-            <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">Our Standards</span>
-            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-slate-900 mt-2">Why Choose Us</h2>
-            <p className="text-gray-400 text-sm mt-3 font-light">Delivering smiles and premium quality with every single delivery</p>
+            <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">
+              Our Standards
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-slate-900 mt-2">
+              Why Choose Us
+            </h2>
+            <p className="text-gray-400 text-sm mt-3 font-light">
+              Delivering smiles and premium quality with every single delivery
+            </p>
           </div>
-          
+
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {whyChooseUs.map((item, index) => {
               const Icon = item.icon;
@@ -673,7 +886,9 @@ const Home = () => {
                   <div className="w-14 h-14 mx-auto rounded-2xl bg-white border border-gray-100/80 flex items-center justify-center shadow-sm">
                     <Icon size={24} className={item.iconColor} />
                   </div>
-                  <h3 className="font-serif-display font-bold text-base text-slate-900 mt-5">{item.title}</h3>
+                  <h3 className="font-serif-display font-bold text-base text-slate-900 mt-5">
+                    {item.title}
+                  </h3>
                   <p className="text-gray-400 text-xs mt-2 font-light">{item.desc}</p>
                 </div>
               );
@@ -686,11 +901,17 @@ const Home = () => {
       <section className="py-24 bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-20">
-            <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">Life Milestones</span>
-            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-slate-900 mt-2">Perfect For Every Occasion</h2>
-            <p className="text-gray-400 text-sm mt-3 font-light">Handcrafted flowers designed for all of life's beautiful moments</p>
+            <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">
+              Life Milestones
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-slate-900 mt-2">
+              Perfect For Every Occasion
+            </h2>
+            <p className="text-gray-400 text-sm mt-3 font-light">
+              Handcrafted flowers designed for all of life's beautiful moments
+            </p>
           </div>
-          
+
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {occasions.map((item, index) => {
               const Icon = item.icon;
@@ -710,9 +931,11 @@ const Home = () => {
                     <div className="w-11 h-11 rounded-full bg-white/20 backdrop-blur-md border border-white/10 flex items-center justify-center mb-4">
                       <Icon size={18} />
                     </div>
-                    <h3 className="text-lg font-serif-display font-bold text-[#F7F0E8]">{item.title}</h3>
+                    <h3 className="text-lg font-serif-display font-bold text-[#F7F0E8]">
+                      {item.title}
+                    </h3>
                     <p className="text-white/60 text-xs mt-1.5 font-light">{item.desc}</p>
-                    <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold tracking-wider uppercase opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                    <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold tracking-wider uppercase opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 text-white">
                       Explore <ArrowRight size={12} />
                     </span>
                   </div>
@@ -727,10 +950,14 @@ const Home = () => {
       <section className="py-24 bg-[#fafaf9]/60">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">Customer Reviews</span>
-            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-slate-900 mt-2">What Our Customers Say</h2>
+            <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">
+              Customer Reviews
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-slate-900 mt-2">
+              What Our Customers Say
+            </h2>
           </div>
-          
+
           <div className="flex justify-center mb-16">
             <div className="flex items-center gap-5 bg-white border border-gray-100 rounded-3xl px-8 py-5 shadow-sm">
               <span className="text-4xl font-black text-slate-900 font-serif-display">4.9</span>
@@ -745,10 +972,13 @@ const Home = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((item, index) => (
-              <div key={index} className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm flex flex-col gap-6">
+              <div
+                key={index}
+                className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm flex flex-col gap-6"
+              >
                 <Quote size={32} className="text-rose-300" />
                 <div className="flex gap-0.5">
                   {[...Array(item.rating)].map((_, i) => (
@@ -759,12 +989,18 @@ const Home = () => {
                   "{item.review}"
                 </p>
                 <div className="flex items-center gap-3.5 pt-4 border-t border-gray-50">
-                  <div className={`w-10 h-10 rounded-full ${item.color} flex items-center justify-center text-white font-bold text-sm shadow-inner`}>
+                  <div
+                    className={`w-10 h-10 rounded-full ${item.color} flex items-center justify-center text-white font-bold text-sm shadow-inner`}
+                  >
                     {item.initials}
                   </div>
                   <div>
-                    <h4 className="font-bold text-sm text-slate-800 leading-none">{item.name}</h4>
-                    <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider mt-1">{item.role}</p>
+                    <h4 className="font-bold text-sm text-slate-800 leading-none">
+                      {item.name}
+                    </h4>
+                    <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider mt-1">
+                      {item.role}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -777,16 +1013,25 @@ const Home = () => {
       <section className="py-24 bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
-            <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">Follow Us</span>
-            <h2 className="text-3xl font-serif-display font-black text-slate-900 mt-2">Follow Our Floral Journey</h2>
+            <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">
+              Follow Us
+            </span>
+            <h2 className="text-3xl font-serif-display font-black text-slate-900 mt-2">
+              Follow Our Floral Journey
+            </h2>
             <p className="text-rose-500 font-bold mt-3 inline-flex items-center gap-1.5">
               <FaInstagram size={16} />
-              <a href={INSTAGRAM_LINK} target="_blank" rel="noopener noreferrer" className="hover:underline">
+              <a
+                href={INSTAGRAM_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
                 @ShivamFlorist
               </a>
             </p>
           </div>
-          
+
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {galleryImages.map((img, index) => (
               <a
@@ -817,11 +1062,17 @@ const Home = () => {
       <section className="py-24 bg-[#fafaf9]/60">
         <div className="max-w-3xl mx-auto px-6">
           <div className="text-center mb-16">
-            <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">Answers</span>
-            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-slate-900 mt-2">Frequently Asked Questions</h2>
-            <p className="text-gray-400 text-sm mt-3 font-light">Everything you need to know about our flowers and shipping policies</p>
+            <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">
+              Answers
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-slate-900 mt-2">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-gray-400 text-sm mt-3 font-light">
+              Everything you need to know about our flowers and shipping policies
+            </p>
           </div>
-          
+
           <div className="flex flex-col gap-4">
             {faqs.map((faq, index) => {
               const isSelected = openFaq === index;
@@ -839,7 +1090,7 @@ const Home = () => {
                       {isSelected ? <Minus size={14} /> : <Plus size={14} />}
                     </span>
                   </button>
-                  
+
                   <AnimatePresence initial={false}>
                     {isSelected && (
                       <motion.div
@@ -871,12 +1122,13 @@ const Home = () => {
             Join Our Flower Family
           </h2>
           <p className="text-gray-500 text-sm mt-3 font-light max-w-md mx-auto">
-            Subscribe for exclusive discounts, floral tips, and advance access to our limited holiday collections.
+            Subscribe for exclusive discounts, floral tips, and advance access to our limited
+            holiday collections.
           </p>
-          
+
           <div className="mt-10 max-w-xl mx-auto">
             {subscribed ? (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 className="bg-emerald-50 border border-emerald-200 rounded-3xl px-8 py-5 text-emerald-700 font-bold text-xs tracking-wider uppercase flex items-center justify-center gap-2"
@@ -891,7 +1143,7 @@ const Home = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSubscribe()}
                   placeholder="Enter your email address"
-                  className="flex-1 border border-gray-200 bg-white rounded-full px-6 py-4 text-sm text-[#0D1F0F] placeholder-gray-400 outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/20 transition-all duration-300"
+                  className="flex-1 border border-gray-200 bg-white rounded-full px-6 py-4 text-sm text-[#0D1F0F] placeholder-gray-400 outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-300 transition-all"
                 />
                 <button
                   onClick={handleSubscribe}
@@ -902,7 +1154,7 @@ const Home = () => {
               </div>
             )}
           </div>
-          
+
           <div className="flex items-center justify-center gap-3 mt-12">
             <a
               href={INSTAGRAM_LINK}
