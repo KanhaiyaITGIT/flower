@@ -1,4 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
+import LazyImage from "../components/ui/LazyImage";
+import {
+  BUSINESS_NAME_MAIN,
+  BUSINESS_NAME_SUB,
+  WHATSAPP_LINK,
+  WHATSAPP_DECOR_LINK,
+  CONTACT_PHONE_1,
+  CONTACT_PHONE_2,
+} from "../constants";
+import { motion, AnimatePresence } from "framer-motion";
 
 import image1 from "../assets/s1.png";
 import image2 from "../assets/s2.png";
@@ -12,12 +22,11 @@ import image9 from "../assets/s9.png";
 import image10 from "../assets/s10.png";
 import image11 from "../assets/s11.png";
 import image12 from "../assets/s12.png";
-import image21 from "../assets/s21.png"
+import image21 from "../assets/s21.png";
 
 import {
   MessageCircle,
   Phone,
-  Mail,
   ChevronDown,
   ChevronUp,
   ArrowRight,
@@ -28,35 +37,34 @@ import {
   MapPin,
   Star,
   Send,
-  PlayCircle,
 } from "lucide-react";
 
 // ─── Data ─────────────────────────────────────────
 
 const decoreThemes = [
-  { label: "Wedding", emoji: "💍", color: "#e8667a" },
-  { label: "Pre-Wedding", emoji: "🌸", color: "#c9a96e" },
-  { label: "Baby Shower", emoji: "👶", color: "#93c5fd" },
-  { label: "Haldi & Mehendi", emoji: "🌼", color: "#f59e0b" },
-  { label: "Birthday", emoji: "🎂", color: "#a78bfa" },
-  { label: "Anniversary", emoji: "🏢", color: "#6b7280" },
-  { label: "House Party", emoji: "🏠", color: "#34d399" },
-  { label: "Reception", emoji: "✨", color: "#e8667a" },
+  { label: "Wedding", emoji: "💍", tag: "Wedding" },
+  { label: "Pre-Wedding", emoji: "🌸", tag: "Pre-Wedding" },
+  { label: "Baby Shower", emoji: "👶", tag: "Baby Shower" },
+  { label: "Haldi & Mehendi", emoji: "🌼", tag: "Haldi" },
+  { label: "Birthday", emoji: "🎂", tag: "Birthday" },
+  { label: "Anniversary", emoji: "🏢", tag: "Corporate" }, // original tag was Corporate
+  { label: "House Party", emoji: "🏠", tag: "House Party" },
+  { label: "Reception", emoji: "✨", tag: "Reception" },
 ];
 
 const galleryItems = [
-  { image: image1, label: "Wedding Stage", tag: "Wedding", span: "row-span-2" },
-  { image: image2, label: "Entrance Decor", tag: "Reception", span: "row-span-1" },
-  { image: image3, label: "Table Centre", tag: "Corporate", span: "row-span-1" },
-  { image: image21, label: "Haldi Setup", tag: "Haldi", span: "row-span-2" },
-  { image: image5, label: "Floral Arch", tag: "Wedding", span: "row-span-1" },
-  { image: image6, label: "Baby Shower", tag: "Baby Shower", span: "row-span-1" },
-  { image: image7, label: "Mehendi Mandap", tag: "Pre-Wedding", span: "row-span-1" },
-  { image: image8, label: "Birthday Backdrop", tag: "Birthday", span: "row-span-1" },
-  { image: image9, label: "Reception Hall", tag: "Reception", span: "row-span-2" },
-  { image: image10, label: "Poolside Decor", tag: "House Party", span: "row-span-1" },
-  { image: image11, label: "Car Decoration", tag: "Wedding", span: "row-span-1" },
-  { image: image12, label: "Stage Flowers", tag: "Wedding", span: "row-span-1" },
+  { image: image1, label: "Wedding Stage", tag: "Wedding" },
+  { image: image2, label: "Entrance Decor", tag: "Reception" },
+  { image: image3, label: "Table Centre", tag: "Corporate" },
+  { image: image21, label: "Haldi Setup", tag: "Haldi" },
+  { image: image5, label: "Floral Arch", tag: "Wedding" },
+  { image: image6, label: "Baby Shower", tag: "Baby Shower" },
+  { image: image7, label: "Mehendi Mandap", tag: "Pre-Wedding" },
+  { image: image8, label: "Birthday Backdrop", tag: "Birthday" },
+  { image: image9, label: "Reception Hall", tag: "Reception" },
+  { image: image10, label: "Poolside Decor", tag: "House Party" },
+  { image: image11, label: "Car Decoration", tag: "Wedding" },
+  { image: image12, label: "Stage Flowers", tag: "Wedding" },
 ];
 
 const processSteps = [
@@ -64,29 +72,29 @@ const processSteps = [
     icon: MapPin,
     title: "On-Site Visit",
     desc: "Our expert florist visits your venue to understand the space, lighting, and layout — no guesswork, ever.",
-    color: "#e8667a",
-    bg: "#fdf2f4",
+    color: "text-rose-500",
+    bg: "bg-rose-50/50",
   },
   {
     icon: Palette,
     title: "Design Concept",
     desc: "We craft a detailed mood board with bloom choices, colour palette, and styling — tailored to your occasion.",
-    color: "#c9a96e",
-    bg: "#fdf8f0",
+    color: "text-[#c9a96e]",
+    bg: "bg-amber-50/50",
   },
   {
     icon: Eye,
     title: "Your Approval",
     desc: "We share a detailed plan and final costing. No surprises — you sign off before a single stem is cut.",
-    color: "#a78bfa",
-    bg: "#f5f3ff",
+    color: "text-purple-500",
+    bg: "bg-purple-50/50",
   },
   {
     icon: Sparkles,
     title: "We Transform",
     desc: "Our team sets up on the day with freshness, finesse, and flawless execution — you just show up and celebrate.",
-    color: "#34d399",
-    bg: "#f0fdf9",
+    color: "text-emerald-500",
+    bg: "bg-emerald-50/50",
   },
 ];
 
@@ -146,21 +154,12 @@ const AnimatedCounter = ({ target, suffix, duration = 1800 }) => {
   );
 };
 
-// ─── Component ────────────────────────────────────
-
 const DecorPage = () => {
   const [openFaq, setOpenFaq] = useState(null);
   const [activeTheme, setActiveTheme] = useState("All");
   const [form, setForm] = useState({ name: "", email: "", phone: "", occasion: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
   const [hoveredGallery, setHoveredGallery] = useState(null);
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const onScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -172,611 +171,167 @@ const DecorPage = () => {
     : galleryItems.filter((g) => g.tag === activeTheme);
 
   return (
-    <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=DM+Sans:wght@300;400;500;600&display=swap');
-
-        *, *::before, *::after { box-sizing: border-box; }
-        * { font-family: 'DM Sans', sans-serif; }
-        .font-display { font-family: 'Cormorant Garamond', serif; }
-
-        @keyframes slowZoom {
-          from { transform: scale(1); }
-          to { transform: scale(1.08); }
-        }
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(32px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        @keyframes shimmer {
-          0% { background-position: -200% center; }
-          100% { background-position: 200% center; }
-        }
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(-1deg); }
-          50% { transform: translateY(-10px) rotate(1deg); }
-        }
-        @keyframes scrollBounce {
-          0%, 100% { transform: translateX(-50%) translateY(0); opacity: 1; }
-          50% { transform: translateX(-50%) translateY(8px); opacity: 0.4; }
-        }
-        @keyframes dotPulse {
-          0%, 100% { transform: scale(1); opacity: 1; }
-          50% { transform: scale(1.5); opacity: 0.7; }
-        }
-
-        .hero-img { animation: slowZoom 16s ease-in-out infinite alternate; }
-        .fade-up-1 { animation: fadeUp 0.9s 0.1s cubic-bezier(0.16,1,0.3,1) both; }
-        .fade-up-2 { animation: fadeUp 0.9s 0.3s cubic-bezier(0.16,1,0.3,1) both; }
-        .fade-up-3 { animation: fadeUp 0.9s 0.5s cubic-bezier(0.16,1,0.3,1) both; }
-        .fade-up-4 { animation: fadeUp 0.9s 0.7s cubic-bezier(0.16,1,0.3,1) both; }
-
-        .gold-shimmer {
-          background: linear-gradient(90deg, #c9a96e, #f0d5a0, #c9a96e, #a07840, #c9a96e);
-          background-size: 300% auto;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          animation: shimmer 4s linear infinite;
-        }
-
-        .stat-card { position: relative; overflow: hidden; }
-        .stat-card::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(135deg, rgba(201,169,110,0.06) 0%, transparent 60%);
-          pointer-events: none;
-        }
-        .stat-card:hover .stat-icon { transform: scale(1.15) rotate(5deg); }
-        .stat-icon { transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); display: block; }
-
-        .hero-cta-primary {
-          position: relative;
-          overflow: hidden;
-          background: linear-gradient(135deg, #e8667a, #d4546a);
-          transition: all 0.3s ease;
-        }
-        .hero-cta-primary::before {
-          content: '';
-          position: absolute;
-          top: 0; left: -100%; width: 100%; height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-          transition: left 0.5s ease;
-        }
-        .hero-cta-primary:hover::before { left: 100%; }
-        .hero-cta-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(232,102,122,0.45); }
-
-        .hero-cta-secondary {
-          backdrop-filter: blur(12px);
-          -webkit-backdrop-filter: blur(12px);
-          border: 1px solid rgba(255,255,255,0.2);
-          background: rgba(255,255,255,0.07);
-          transition: all 0.3s ease;
-        }
-        .hero-cta-secondary:hover {
-          background: rgba(255,255,255,0.15);
-          border-color: rgba(255,255,255,0.35);
-          transform: translateY(-2px);
-        }
-
-        .scroll-dot {
-          animation: scrollBounce 2s ease-in-out infinite;
-          position: absolute;
-          top: 0;
-          left: 50%;
-          width: 5px;
-          height: 5px;
-          border-radius: 50%;
-          background: #c9a96e;
-          margin-left: -2.5px;
-        }
-
-        .tag-pill {
-          position: relative;
-          overflow: hidden;
-          transition: all 0.25s ease;
-          cursor: pointer;
-          border: none;
-        }
-        .tag-pill:hover { transform: translateY(-1px); }
-
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
-        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-
-        .gallery-item { transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94); }
-        .gallery-item:hover { transform: scale(1.01); }
-
-        /* ── HERO RESPONSIVE ── */
-        .hero-headline {
-          font-size: clamp(2.4rem, 7vw, 5.2rem);
-          line-height: 1.04;
-        }
-
-        /* ── STATS GRID RESPONSIVE ── */
-        .stats-grid {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-        }
-        @media (max-width: 640px) {
-          .stats-grid {
-            grid-template-columns: repeat(2, 1fr);
-          }
-          .stats-grid .stat-card:nth-child(2) { border-right: none !important; }
-          .stats-grid .stat-card:nth-child(3) { border-right: 1px solid rgba(255,255,255,0.06) !important; }
-          .stats-grid .stat-card:nth-child(1),
-          .stats-grid .stat-card:nth-child(2) {
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-          }
-        }
-
-        /* ── ABOUT GRID RESPONSIVE ── */
-        .about-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 3rem;
-          align-items: center;
-        }
-        @media (max-width: 768px) {
-          .about-grid {
-            grid-template-columns: 1fr;
-          }
-          .about-image-col {
-            height: 300px !important;
-          }
-          .about-img-1 {
-            width: 55% !important;
-            height: 60% !important;
-          }
-          .about-img-2 {
-            width: 48% !important;
-            height: 52% !important;
-          }
-        }
-
-        /* ── GALLERY GRID RESPONSIVE ── */
-        .gallery-grid {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 12px;
-          grid-auto-rows: 180px;
-        }
-        @media (max-width: 900px) {
-          .gallery-grid {
-            grid-template-columns: repeat(3, 1fr);
-          }
-        }
-        @media (max-width: 600px) {
-          .gallery-grid {
-            grid-template-columns: repeat(2, 1fr);
-            grid-auto-rows: 150px;
-          }
-          /* Reset row-span-2 on mobile for cleaner layout */
-          .gallery-grid .row-span-2 {
-            grid-row: span 1;
-          }
-        }
-
-        /* ── PROCESS STEPS RESPONSIVE ── */
-        .process-step {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          gap: 1.5rem;
-        }
-        .process-step.even { flex-direction: row; }
-        .process-step.odd  { flex-direction: row-reverse; }
-        @media (max-width: 768px) {
-          .process-step,
-          .process-step.odd {
-            flex-direction: column !important;
-            align-items: flex-start;
-            gap: 1rem;
-          }
-          .process-text { text-align: left !important; }
-          .process-connector { display: none !important; }
-          .process-spine { display: none !important; }
-        }
-
-        /* ── CONTACT FORM GRID ── */
-        .form-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1rem;
-          margin-bottom: 1rem;
-        }
-        @media (max-width: 600px) {
-          .form-grid { grid-template-columns: 1fr; }
-        }
-
-        /* ── FINAL CTA STRIP ── */
-        .cta-strip {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-between;
-          gap: 1.5rem;
-        }
-        @media (max-width: 640px) {
-          .cta-strip {
-            flex-direction: column;
-            align-items: flex-start;
-          }
-          .cta-strip-buttons {
-            width: 100%;
-            display: flex;
-            gap: 0.75rem;
-          }
-          .cta-strip-buttons a {
-            flex: 1;
-            justify-content: center;
-          }
-        }
-
-        /* ── HERO BUTTONS RESPONSIVE ── */
-        .hero-buttons {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.75rem;
-        }
-        @media (max-width: 420px) {
-          .hero-buttons a {
-            width: 100%;
-            justify-content: center;
-          }
-        }
-
-        /* ── FORM SUBMIT BUTTONS ── */
-        .form-submit-row {
-          display: flex;
-          flex-direction: row;
-          gap: 0.75rem;
-        }
-        @media (max-width: 500px) {
-          .form-submit-row {
-            flex-direction: column;
-          }
-        }
-
-        /* ── ABOUT BUTTONS ── */
-        .about-buttons {
-          display: flex;
-          gap: 0.75rem;
-          flex-wrap: wrap;
-        }
-        @media (max-width: 400px) {
-          .about-buttons a { width: 100%; justify-content: center; }
-        }
-
-        /* ── HERO TRUST ROW ── */
-        .hero-trust-row {
-          display: flex;
-          align-items: center;
-          gap: 1.5rem;
-          flex-wrap: wrap;
-        }
-
-        /* General section padding */
-        .section-pad { padding: 5rem 1.5rem; }
-        @media (max-width: 600px) {
-          .section-pad { padding: 3.5rem 1rem; }
-        }
-
-        .inner { max-width: 1100px; margin: 0 auto; }
-        .inner-sm { max-width: 760px; margin: 0 auto; }
-
-        /* Reduce hero stat font on very small screens */
-        @media (max-width: 380px) {
-          .hero-headline { font-size: 2rem; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .hero-img, .gold-shimmer, .scroll-dot, .fade-up-1, .fade-up-2, .fade-up-3, .fade-up-4 {
-            animation: none !important;
-          }
-          .hero-img { transform: none !important; }
-        }
-      `}</style>
-
-      {/* ══════════════════════════════════════════════ */}
+    <div className="w-full bg-[#fafaf9] min-h-screen">
       {/* ── HERO ────────────────────────────────────── */}
-      {/* ══════════════════════════════════════════════ */}
-      <section style={{ position: "relative", overflow: "hidden", height: "100svh", minHeight: "580px" }}>
-
-        {/* Background */}
-        <div style={{ position: "absolute", inset: 0, overflow: "hidden" }}>
+      <section className="relative overflow-hidden h-[85vh] min-h-[580px] flex items-center bg-[#0a0604]">
+        {/* Background Image & Overlays */}
+        <div className="absolute inset-0 overflow-hidden">
           <img
             src={image1}
-            alt="Luxury floral décor"
-            className="hero-img"
-            style={{ width: "100%", height: "100%", objectFit: "cover", transformOrigin: "center 40%" }}
+            alt="Luxury floral event decoration"
+            className="w-full h-full object-cover transform scale-102 filter brightness-75 select-none"
+            style={{ objectPosition: "center 40%" }}
           />
-          <div style={{
-            position: "absolute", inset: 0,
-            background: "linear-gradient(110deg, rgba(10,6,4,0.88) 0%, rgba(10,6,4,0.65) 45%, rgba(10,6,4,0.25) 100%)"
-          }} />
-          <div style={{
-            position: "absolute", inset: 0,
-            background: "linear-gradient(0deg, rgba(10,6,4,0.75) 0%, transparent 45%, transparent 70%, rgba(10,6,4,0.3) 100%)"
-          }} />
-          <div style={{
-            position: "absolute", inset: 0, pointerEvents: "none",
-            background: "radial-gradient(ellipse at center, transparent 40%, rgba(10,6,4,0.6) 100%)"
-          }} />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0a0604]/90 via-[#0a0604]/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0604]/80 via-transparent to-[#0a0604]/30" />
         </div>
 
-        {/* Gold left accent */}
-        <div style={{
-          position: "absolute", left: 0, top: 0, bottom: 0, width: "3px",
-          background: "linear-gradient(180deg, transparent 0%, #c9a96e 30%, #f0d5a0 60%, #c9a96e 80%, transparent 100%)",
-          opacity: 0.7
-        }} />
+        {/* Ambient Gold glow */}
+        <div className="absolute top-[30%] left-[20%] w-[450px] h-[300px] rounded-full bg-[#c9a96e]/5 blur-[80px] pointer-events-none" />
 
-        {/* Decorative petal — hidden on small screens via opacity trick */}
-        <div style={{
-          position: "absolute", top: "18%", right: "8%", opacity: 0.15, pointerEvents: "none",
-          animation: "float 8s ease-in-out infinite"
-        }}>
-          <svg width="70" height="70" viewBox="0 0 80 80" fill="none">
-            <ellipse cx="40" cy="20" rx="12" ry="20" fill="#c9a96e" transform="rotate(0 40 40)" />
-            <ellipse cx="40" cy="20" rx="12" ry="20" fill="#c9a96e" transform="rotate(72 40 40)" />
-            <ellipse cx="40" cy="20" rx="12" ry="20" fill="#c9a96e" transform="rotate(144 40 40)" />
-            <ellipse cx="40" cy="20" rx="12" ry="20" fill="#c9a96e" transform="rotate(216 40 40)" />
-            <ellipse cx="40" cy="20" rx="12" ry="20" fill="#c9a96e" transform="rotate(288 40 40)" />
-          </svg>
-        </div>
+        {/* Content Container */}
+        <div className="relative max-w-7xl mx-auto px-6 md:px-12 w-full z-10">
+          <div className="max-w-2xl">
+            {/* Eyebrow */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex items-center gap-2 mb-6"
+            >
+              <span className="w-2 h-2 rounded-full bg-[#c9a96e] animate-ping" />
+              <span className="text-[#c9a96e] text-[10px] font-bold tracking-widest uppercase font-inter">
+                Floral Decor Studio · Est. 2022
+              </span>
+            </motion.div>
 
-        {/* Content */}
-        <div style={{ position: "relative", height: "100%", display: "flex", alignItems: "center" }}>
-          <div className="inner" style={{ padding: "0 1.5rem", width: "100%" }}>
-            <div style={{ maxWidth: "660px" }}>
+            {/* Headline */}
+            <motion.h1
+              initial={{ opacity: 0, y: 25 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15 }}
+              className="font-serif-display text-4xl sm:text-5xl lg:text-7xl font-black text-white leading-[1.05] tracking-tight mb-6"
+            >
+              Spaces that
+              <br />
+              <span className="italic font-medium font-serif-display text-transparent bg-clip-text bg-gradient-to-r from-[#f0d5a0] via-[#c9a96e] to-[#a07840]">
+                remember you.
+              </span>
+            </motion.h1>
 
-              {/* Eyebrow */}
-              <div className="fade-up-1">
-                <div style={{ display: "inline-flex", alignItems: "center", gap: "10px", marginBottom: "2rem" }}>
-                  <div style={{
-                    width: "6px", height: "6px", borderRadius: "50%", background: "#c9a96e",
-                    animation: "dotPulse 2s ease-in-out infinite", flexShrink: 0
-                  }} />
-                  <span style={{
-                    color: "#c9a96e", fontSize: "11px", fontWeight: 700,
-                    letterSpacing: "0.2em", textTransform: "uppercase"
-                  }}>
-                    Floral Décor Studio · Est. 2022
-                  </span>
-                </div>
-              </div>
+            {/* Sub */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-gray-400 text-sm sm:text-base leading-relaxed mb-8 max-w-md font-light font-inter"
+            >
+              From custom wedding stages and traditional haldi mandaps to premium balloon displays — we design bespoke decors that define your celebrations.
+            </motion.p>
 
-              {/* Headline */}
-              <h1 className="fade-up-2 font-display hero-headline" style={{
-                fontWeight: 700, color: "#fff",
-                marginBottom: "1.25rem", letterSpacing: "-0.01em"
-              }}>
-                Spaces that
-                <br />
-                <em className="gold-shimmer font-display" style={{ fontStyle: "italic", fontWeight: 600 }}>
-                  remember you.
-                </em>
-              </h1>
-
-              {/* Sub */}
-              <p className="fade-up-3" style={{
-                color: "rgba(255,255,255,0.58)", fontSize: "clamp(0.9rem, 2.5vw, 1.05rem)",
-                lineHeight: 1.7, maxWidth: "460px", marginBottom: "2rem", fontWeight: 300
-              }}>
-                From intimate house parties to dreamy pre-wedding functions — every décor is designed from scratch. Personal, intentional, unforgettable.
-              </p>
-
-              {/* CTAs */}
-              <div className="fade-up-4 hero-buttons">
-                <a
-                  href="#contact"
-                  className="hero-cta-primary"
-                  style={{
-                    display: "inline-flex", alignItems: "center", gap: "10px",
-                    color: "#fff", borderRadius: "9999px", textDecoration: "none",
-                    fontSize: "14px", fontWeight: 600, padding: "13px 28px",
-                    letterSpacing: "0.02em"
-                  }}
-                >
-                  <Send size={14} />
-                  Request a Free Quote
-                </a>
-                <a
-                  href="https://wa.me/919999999999"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hero-cta-secondary"
-                  style={{
-                    display: "inline-flex", alignItems: "center", gap: "10px",
-                    color: "#fff", borderRadius: "9999px", textDecoration: "none",
-                    fontSize: "14px", fontWeight: 600, padding: "13px 28px",
-                    letterSpacing: "0.02em"
-                  }}
-                >
-                  <MessageCircle size={14} />
-                  Talk on WhatsApp
-                </a>
-              </div>
-
-              {/* Trust */}
-              <div className="fade-up-4 hero-trust-row" style={{ marginTop: "1.5rem" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={12} fill="#c9a96e" style={{ color: "#c9a96e" }} />
-                  ))}
-                  <span style={{ color: "rgba(255,255,255,0.45)", fontSize: "12px", marginLeft: "4px" }}>4.9 · 200+ reviews</span>
-                </div>
-                <div style={{ width: "1px", height: "14px", background: "rgba(255,255,255,0.2)", flexShrink: 0 }} />
-                <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "12px" }}>Reply within 10 mins</span>
-              </div>
-            </div>
+            {/* CTAs */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.45 }}
+              className="flex flex-wrap gap-4"
+            >
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-2 bg-[#e8667a] hover:bg-[#d4546a] text-white px-8 py-4 rounded-full font-bold text-xs tracking-widest uppercase transition-all duration-300 shadow-lg shadow-rose-950/20 hover:-translate-y-0.5"
+              >
+                <Send size={12} />
+                Request Free Quote
+              </a>
+              <a
+                href={WHATSAPP_DECOR_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/15 rounded-full px-8 py-4 text-xs font-bold tracking-widest uppercase backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5"
+              >
+                <MessageCircle size={12} />
+                WhatsApp Consultation
+              </a>
+            </motion.div>
           </div>
         </div>
 
-        {/* Scroll indicator */}
-        <div style={{
-          position: "absolute", bottom: "2rem", left: "50%", transform: "translateX(-50%)",
-          display: "flex", flexDirection: "column", alignItems: "center", gap: "8px",
-          animation: "fadeIn 1s 1.5s ease both"
-        }}>
-          <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "9px", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase" }}>
-            Scroll
-          </span>
-          <div style={{ width: "1px", height: "40px", background: "linear-gradient(to bottom, rgba(201,169,110,0.6), transparent)", position: "relative" }}>
-            <div className="scroll-dot" />
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 select-none">
+          <span className="text-gray-500 text-[9px] font-bold tracking-widest uppercase font-inter">Scroll</span>
+          <div className="w-[1px] h-8 bg-gradient-to-b from-[#c9a96e]/60 to-transparent relative">
+            <span className="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#c9a96e] animate-bounce" />
           </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════ */}
       {/* ── STATS ────────────────────────────────────── */}
-      {/* ══════════════════════════════════════════════ */}
-      <section style={{ background: "linear-gradient(135deg, #0f0b08 0%, #1a1108 50%, #0f0b08 100%)", position: "relative", overflow: "hidden" }}>
-        <div style={{
-          position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)",
-          width: "600px", height: "200px", borderRadius: "50%",
-          background: "radial-gradient(ellipse, rgba(201,169,110,0.12) 0%, transparent 70%)",
-          pointerEvents: "none"
-        }} />
-        <div style={{
-          position: "absolute", top: 0, left: 0, right: 0, height: "1px",
-          background: "linear-gradient(90deg, transparent, rgba(201,169,110,0.6), rgba(232,102,122,0.4), rgba(201,169,110,0.6), transparent)"
-        }} />
-        <div style={{
-          position: "absolute", bottom: 0, left: 0, right: 0, height: "1px",
-          background: "linear-gradient(90deg, transparent, rgba(201,169,110,0.3), transparent)"
-        }} />
-
-        <div className="inner" style={{ padding: "0 1.5rem" }}>
-          <div className="stats-grid">
+      <section className="bg-[#0f0b08] py-12 px-6 relative overflow-hidden border-y border-white/5">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[150px] bg-[#c9a96e]/5 blur-[70px] pointer-events-none" />
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map(({ value, suffix, label, icon }, i) => (
               <div
                 key={i}
-                className="stat-card"
-                style={{
-                  padding: "clamp(1.5rem, 4vw, 2.25rem) 1.25rem",
-                  textAlign: "center",
-                  borderRight: i < 3 ? "1px solid rgba(255,255,255,0.06)" : "none",
-                }}
+                className="flex flex-col items-center text-center p-4 relative"
               >
-                <div className="stat-icon" style={{ fontSize: "20px", marginBottom: "8px", filter: "drop-shadow(0 0 8px rgba(201,169,110,0.4))" }}>
-                  {icon}
-                </div>
-                <div className="font-display" style={{
-                  fontSize: "clamp(1.8rem, 5vw, 2.6rem)", fontWeight: 700, lineHeight: 1, marginBottom: "6px",
-                  background: "linear-gradient(135deg, #f0d5a0 0%, #c9a96e 40%, #a07840 100%)",
-                  WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
-                }}>
+                <span className="text-lg mb-1 drop-shadow-md select-none">{icon}</span>
+                <span className="font-serif-display text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#f0d5a0] to-[#c9a96e] leading-none mb-2">
                   <AnimatedCounter target={value} suffix={suffix} />
-                </div>
-                <div style={{ color: "rgba(255,255,255,0.42)", fontSize: "10px", fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase" }}>
+                </span>
+                <span className="text-gray-500 text-[9px] font-bold tracking-widest uppercase font-inter">
                   {label}
-                </div>
+                </span>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════ */}
       {/* ── ABOUT ────────────────────────────────────── */}
-      {/* ══════════════════════════════════════════════ */}
-      <section className="section-pad" style={{ background: "#faf7f2" }}>
-        <div className="inner">
-          <div className="about-grid">
+      <section className="py-24 px-6 bg-[#faf7f2]/70">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Text Column */}
             <div>
-              <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "#e8667a", marginBottom: "0.75rem" }}>
-                Our Approach
-              </p>
-              <h2 className="font-display" style={{
-                fontSize: "clamp(2rem, 5vw, 3.2rem)", fontWeight: 700,
-                color: "#111", lineHeight: 1.12, marginBottom: "1.25rem"
-              }}>
+              <span className="text-xs font-bold tracking-widest text-[#e8667a] uppercase font-inter">Our Approach</span>
+              <h2 className="font-serif-display text-3xl sm:text-4xl md:text-5xl font-black text-[#0D1F0F] mt-3 leading-tight">
                 Every celebration
                 <br />
-                <em className="font-display" style={{ color: "#c9a96e", fontStyle: "italic" }}>deserves to bloom.</em>
+                <span className="italic font-medium font-serif-display text-[#c9a96e]">deserves to bloom.</span>
               </h2>
-              <p style={{ color: "#6b7280", fontSize: "15px", lineHeight: 1.75, marginBottom: "1rem" }}>
-                At Shivam Florist, we turn spaces into experiences. Every project begins with an expert on-site visit — we understand your vision, assess the space, and let your flower preferences, colour palette, and occasion guide the design.
+              <p className="text-gray-500 text-sm leading-relaxed mt-6 font-light font-inter">
+                At Shivam Florist, we design environments that reflect your feelings. We start with a consultation, examine your venue to optimize styling, and craft a cohesive bloom composition, custom color palette, and detail list.
               </p>
-              <p style={{ color: "#6b7280", fontSize: "15px", lineHeight: 1.75, marginBottom: "2rem" }}>
-                Once the concept is refined, we share a detailed design plan and final costing for your approval. No surprises — just beautifully planned décor, executed with freshness and finesse.
+              <p className="text-gray-500 text-sm leading-relaxed mt-4 font-light font-inter">
+                Whether it's a corporate gala backdrop, an intimate backyard birthday party, or a wedding varmala stage decoration, we guarantee unmatched freshness and flawless styling execution.
               </p>
-              <div className="about-buttons">
+              
+              <div className="flex gap-4 flex-wrap mt-8">
                 <a
                   href="#contact"
-                  style={{
-                    display: "inline-flex", alignItems: "center", gap: "8px",
-                    background: "#e8667a", color: "#fff",
-                    borderRadius: "9999px", padding: "11px 26px",
-                    fontSize: "14px", fontWeight: 700, textDecoration: "none",
-                    transition: "transform 0.2s ease"
-                  }}
-                  onMouseEnter={e => e.currentTarget.style.transform = "translateY(-2px)"}
-                  onMouseLeave={e => e.currentTarget.style.transform = ""}
+                  className="inline-flex items-center gap-1.5 bg-[#e8667a] hover:bg-[#d4546a] text-white px-7 py-3.5 rounded-full font-bold text-xs tracking-widest uppercase transition-all duration-300 shadow-md hover:-translate-y-0.5"
                 >
-                  Write to Us <ArrowRight size={14} />
+                  Write to Us <ArrowRight size={13} />
                 </a>
                 <a
-                  href="https://wa.me/919999999999"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: "inline-flex", alignItems: "center", gap: "8px",
-                    border: "2px solid #c9a96e", color: "#c9a96e",
-                    borderRadius: "9999px", padding: "11px 26px",
-                    fontSize: "14px", fontWeight: 700, textDecoration: "none",
-                    transition: "transform 0.2s ease"
-                  }}
-                  onMouseEnter={e => e.currentTarget.style.transform = "translateY(-2px)"}
-                  onMouseLeave={e => e.currentTarget.style.transform = ""}
+                  href={`tel:${CONTACT_PHONE_1}`}
+                  className="inline-flex items-center gap-2 border border-[#c9a96e] text-[#c9a96e] hover:bg-[#c9a96e]/5 px-7 py-3.5 rounded-full font-bold text-xs tracking-widest uppercase transition-all duration-300 hover:-translate-y-0.5"
                 >
-                  <Phone size={14} />
-                  Talk to an Expert
+                  <Phone size={12} />
+                  Call Florist
                 </a>
               </div>
             </div>
 
-            <div className="about-image-col" style={{ position: "relative", height: "400px" }}>
-              <img
-                src={image5}
-                alt="Floral arch decor"
-                className="about-img-1"
-                style={{
-                  position: "absolute", top: 0, right: 0,
-                  width: "62%", height: "68%",
-                  objectFit: "cover", borderRadius: "16px",
-                  boxShadow: "0 20px 60px rgba(0,0,0,0.15)",
-                  border: "4px solid #fff"
-                }}
-              />
-              <img
-                src={image6}
-                alt="Baby shower decor"
-                className="about-img-2"
-                style={{
-                  position: "absolute", bottom: 0, left: 0,
-                  width: "54%", height: "56%",
-                  objectFit: "cover", borderRadius: "16px",
-                  boxShadow: "0 12px 40px rgba(0,0,0,0.12)",
-                  border: "4px solid #fff"
-                }}
-              />
-              <div style={{
-                position: "absolute", top: "50%", left: "50%",
-                transform: "translate(-50%, -50%)",
-                background: "#c9a96e", color: "#fff",
-                fontSize: "11px", fontWeight: 700,
-                letterSpacing: "0.15em", textTransform: "uppercase",
-                borderRadius: "9999px", padding: "10px 20px",
-                boxShadow: "0 6px 20px rgba(201,169,110,0.4)",
-                whiteSpace: "nowrap"
-              }}>
+            {/* Images Column */}
+            <div className="relative h-[380px] sm:h-[450px]">
+              <div className="absolute top-0 right-0 w-[65%] h-[70%] rounded-[24px] overflow-hidden shadow-xl border-4 border-white z-10">
+                <LazyImage src={image5} alt="Floral arch wedding decor" className="w-full h-full object-cover" />
+              </div>
+              <div className="absolute bottom-0 left-0 w-[55%] h-[60%] rounded-[24px] overflow-hidden shadow-lg border-4 border-white">
+                <LazyImage src={image6} alt="Baby shower theme decor" className="w-full h-full object-cover" />
+              </div>
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#c9a96e] text-white text-[9px] font-black tracking-widest uppercase px-5 py-2.5 rounded-full shadow-lg z-20 select-none">
                 Est. 2022
               </div>
             </div>
@@ -785,231 +340,167 @@ const DecorPage = () => {
       </section>
 
       {/* ── OCCASION THEME FILTER ─────────────────────── */}
-      <section style={{ padding: "1.1rem 1.5rem", borderTop: "1px solid #f3f4f6", borderBottom: "1px solid #f3f4f6", background: "#fff", overflow: "hidden" }}>
-        <div style={{ display: "flex", gap: "10px", overflowX: "auto", paddingBottom: "4px" }} className="scrollbar-hide">
-          {["All", ...decoreThemes.map((t) => t.label)].map((theme) => (
-            <button
-              key={theme}
-              onClick={() => setActiveTheme(theme)}
-              className="tag-pill"
-              style={{
-                flexShrink: 0, borderRadius: "9999px", padding: "7px 15px",
-                fontSize: "12px", fontWeight: 700, letterSpacing: "0.04em",
-                border: "1px solid",
-                ...(activeTheme === theme
-                  ? { background: "#e8667a", color: "#fff", borderColor: "#e8667a" }
-                  : { background: "#fff", color: "#6b7280", borderColor: "#e5e7eb" })
-              }}
-            >
-              {theme !== "All" && decoreThemes.find((t) => t.label === theme)?.emoji + " "}
-              {theme}
-            </button>
-          ))}
+      <section className="bg-white border-y border-gray-100 py-4 px-6 overflow-hidden">
+        <div className="max-w-6xl mx-auto flex gap-3 overflow-x-auto scrollbar-hide">
+          <button
+            onClick={() => setActiveTheme("All")}
+            className={`shrink-0 rounded-full px-5 py-2 text-xs font-bold tracking-widest uppercase border transition-all duration-300 ${
+              activeTheme === "All"
+                ? "bg-[#e8667a] text-white border-[#e8667a] shadow-sm shadow-[#e8667a]/25"
+                : "bg-white text-gray-500 border-gray-200 hover:border-rose-300 hover:text-[#e8667a]"
+            }`}
+          >
+            All Themes
+          </button>
+          {decoreThemes.map((theme) => {
+            const isSelected = activeTheme === theme.tag;
+            return (
+              <button
+                key={theme.label}
+                onClick={() => setActiveTheme(theme.tag)}
+                className={`shrink-0 rounded-full px-5 py-2 text-xs font-bold tracking-widest uppercase border transition-all duration-300 flex items-center gap-1.5 ${
+                  isSelected
+                    ? "bg-[#e8667a] text-white border-[#e8667a] shadow-sm shadow-[#e8667a]/25"
+                    : "bg-white text-gray-500 border-gray-200 hover:border-rose-300 hover:text-[#e8667a]"
+                }`}
+              >
+                <span>{theme.emoji}</span>
+                <span>{theme.label}</span>
+              </button>
+            );
+          })}
         </div>
       </section>
 
       {/* ── GALLERY ──────────────────────────────────── */}
-      <section className="section-pad" style={{ background: "#fff" }}>
-        <div className="inner">
-          <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
-            <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "#e8667a", marginBottom: "8px" }}>
-              Portfolio
-            </p>
-            <h2 className="font-display" style={{ fontSize: "clamp(2rem, 5vw, 3.2rem)", fontWeight: 700, color: "#111" }}>
-              Explore Our Work
-            </h2>
-            <p style={{ color: "#9ca3af", fontSize: "14px", marginTop: "8px" }}>
-              Each setup is one-of-a-kind. Hover to see the story.
-            </p>
+      <section className="py-24 px-6 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <span className="text-xs font-bold tracking-widest text-[#e8667a] uppercase font-inter">Portfolio</span>
+            <h2 className="font-serif-display text-3xl sm:text-4xl font-black text-[#0D1F0F] mt-2">Explore Our Work</h2>
+            <p className="text-gray-400 text-sm mt-3 font-light">Each venue setup is custom-designed. Hover to view theme tags.</p>
           </div>
 
-          <div className="gallery-grid">
-            {filteredGallery.map((item, i) => (
-              <div
-                key={i}
-                className={`gallery-item ${item.span}`}
-                style={{ position: "relative", borderRadius: "12px", overflow: "hidden", cursor: "pointer" }}
-                onMouseEnter={() => setHoveredGallery(i)}
-                onMouseLeave={() => setHoveredGallery(null)}
-              >
-                <img
-                  src={item.image}
-                  alt={item.label}
-                  style={{
-                    width: "100%", height: "100%", objectFit: "cover",
-                    transition: "transform 0.7s ease",
-                    transform: hoveredGallery === i ? "scale(1.1)" : "scale(1)"
-                  }}
-                />
-                <div style={{
-                  position: "absolute", inset: 0,
-                  background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 40%, transparent 100%)",
-                  opacity: hoveredGallery === i ? 1 : 0,
-                  transition: "opacity 0.4s ease"
-                }} />
-                <div style={{
-                  position: "absolute", top: "10px", left: "10px",
-                  background: "rgba(201,169,110,0.92)", backdropFilter: "blur(4px)",
-                  color: "#fff", fontSize: "9px", fontWeight: 700,
-                  letterSpacing: "0.12em", textTransform: "uppercase",
-                  borderRadius: "9999px", padding: "4px 10px"
-                }}>
-                  {item.tag}
+          {filteredGallery.length === 0 ? (
+            <div className="text-center py-16 text-gray-400 text-sm font-light">
+              No portfolio photos found in this category.
+            </div>
+          ) : (
+            <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-6 space-y-6">
+              {filteredGallery.map((item, i) => (
+                <div
+                  key={i}
+                  className="break-inside-avoid relative rounded-[20px] overflow-hidden cursor-pointer group shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 bg-rose-50/20"
+                  onMouseEnter={() => setHoveredGallery(i)}
+                  onMouseLeave={() => setHoveredGallery(null)}
+                >
+                  <LazyImage src={item.image} alt={item.label} className="w-full h-auto object-cover" />
+                  
+                  {/* Backdrop Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  
+                  <div className="absolute top-4.5 left-4.5 bg-white/95 backdrop-blur-md text-[8px] font-black text-gray-700 rounded-full px-2.5 py-1 border border-gray-100 z-10 select-none uppercase tracking-wider">
+                    {item.tag}
+                  </div>
+                  
+                  {/* Label Text */}
+                  <div className="absolute bottom-0 left-0 right-0 p-5 z-10 opacity-0 group-hover:opacity-100 translate-y-3 group-hover:translate-y-0 transition-all duration-300">
+                    <p className="font-serif-display text-white font-bold text-base leading-snug">{item.label}</p>
+                    <p className="text-white/60 text-[10px] mt-1.5 flex items-center gap-1 font-light">
+                      <Eye size={10} /> Inquire design
+                    </p>
+                  </div>
                 </div>
-                <div style={{
-                  position: "absolute", bottom: 0, left: 0, right: 0,
-                  padding: "12px 14px",
-                  opacity: hoveredGallery === i ? 1 : 0,
-                  transform: hoveredGallery === i ? "translateY(0)" : "translateY(10px)",
-                  transition: "all 0.35s ease"
-                }}>
-                  <p className="font-display" style={{ color: "#fff", fontWeight: 700, fontSize: "14px", margin: 0 }}>{item.label}</p>
-                  <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "11px", marginTop: "2px", display: "flex", alignItems: "center", gap: "4px" }}>
-                    <Eye size={10} /> View details
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ textAlign: "center", marginTop: "2rem" }}>
-            {/* <button style={{
-              display: "inline-flex", alignItems: "center", gap: "8px",
-              border: "2px solid #e8667a", color: "#e8667a",
-              borderRadius: "9999px", padding: "11px 28px",
-              fontSize: "14px", fontWeight: 700, background: "transparent",
-              cursor: "pointer", transition: "transform 0.2s ease"
-            }}
-              onMouseEnter={e => e.currentTarget.style.transform = "translateY(-2px)"}
-              onMouseLeave={e => e.currentTarget.style.transform = ""}
-            >
-              Load More Work <ArrowRight size={14} />
-            </button> */}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
       {/* ── PROCESS ──────────────────────────────────── */}
-      <section className="section-pad" style={{ background: "#faf7f2" }}>
-        <div className="inner-sm">
-          <div style={{ textAlign: "center", marginBottom: "3.5rem" }}>
-            <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "#e8667a", marginBottom: "8px" }}>
-              How It Works
-            </p>
-            <h2 className="font-display" style={{ fontSize: "clamp(2rem, 5vw, 3.2rem)", fontWeight: 700, color: "#111" }}>
-              From idea to
-              <em className="font-display" style={{ color: "#c9a96e", fontStyle: "italic" }}> execution</em>
+      <section className="py-24 px-6 bg-[#faf7f2]/70 border-y border-gray-100">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-20">
+            <span className="text-xs font-bold tracking-widest text-[#e8667a] uppercase font-inter">Flawless Delivery</span>
+            <h2 className="font-serif-display text-3xl sm:text-4xl font-black text-slate-900 mt-2">
+              From Idea to Execution
             </h2>
-            <p style={{ color: "#9ca3af", fontSize: "14px", marginTop: "10px", maxWidth: "340px", margin: "10px auto 0" }}>
-              A structured process so every detail is intentional — and nothing is left to chance.
-            </p>
+            <p className="text-gray-400 text-sm mt-3 font-light">A structured design process so nothing is left to chance</p>
           </div>
 
-          <div style={{ position: "relative" }}>
-            {/* Vertical spine — desktop only */}
-            <div className="process-spine" style={{
-              position: "absolute", left: "50%", top: "32px", bottom: "32px",
-              width: "1px",
-              background: "linear-gradient(to bottom, #e8667a, #c9a96e, #34d399)",
-              opacity: 0.3, transform: "translateX(-50%)", pointerEvents: "none"
-            }} />
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-              {processSteps.map((step, i) => {
-                const Icon = step.icon;
-                return (
-                  <div key={i} className={`process-step ${i % 2 === 0 ? "even" : "odd"}`}>
-                    <div className="process-text" style={{ flex: 1, textAlign: i % 2 === 0 ? "right" : "left" }}>
-                      <p style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: step.color, marginBottom: "4px" }}>
-                        Step {i + 1}
-                      </p>
-                      <h3 className="font-display" style={{ fontSize: "1.25rem", fontWeight: 700, color: "#111", marginBottom: "6px" }}>
-                        {step.title}
-                      </h3>
-                      <p style={{ color: "#6b7280", fontSize: "14px", lineHeight: 1.7, maxWidth: "260px", margin: i % 2 === 0 ? "0 0 0 auto" : "0 auto 0 0" }}>
-                        {step.desc}
-                      </p>
-                    </div>
-
-                    <div className="process-connector" style={{ flexShrink: 0 }}>
-                      <div style={{
-                        width: "60px", height: "60px", borderRadius: "50%",
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        background: step.bg, border: "4px solid #fff",
-                        boxShadow: "0 4px 20px rgba(0,0,0,0.1)", position: "relative", zIndex: 10
-                      }}>
-                        <Icon size={22} style={{ color: step.color }} />
-                      </div>
-                    </div>
-
-                    {/* Mobile layout: icon + text inline */}
-                    <div style={{ display: "none" }} className="process-mobile-icon" />
-
-                    <div style={{ flex: 1 }} className="process-connector" />
+          <div className="flex flex-col gap-12 relative">
+            {processSteps.map((step, i) => {
+              const Icon = step.icon;
+              return (
+                <div
+                  key={i}
+                  className="flex flex-col sm:flex-row items-center sm:items-start gap-6 relative"
+                >
+                  <div className="shrink-0 flex items-center justify-center w-14 h-14 rounded-2xl bg-white border border-gray-100 shadow-sm relative z-10">
+                    <Icon size={22} className={step.color} />
                   </div>
-                );
-              })}
-            </div>
+                  
+                  <div className="flex-1 text-center sm:text-left">
+                    <span className={`text-[9px] font-black uppercase tracking-widest ${step.color}`}>
+                      Step 0{i + 1}
+                    </span>
+                    <h3 className="font-serif-display text-lg font-bold text-slate-900 mt-1 mb-2">
+                      {step.title}
+                    </h3>
+                    <p className="text-gray-500 text-xs sm:text-sm leading-relaxed font-light font-inter max-w-xl">
+                      {step.desc}
+                    </p>
+                  </div>
+                  {i < processSteps.length - 1 && (
+                    <div className="hidden sm:block absolute left-7 top-14 w-[1px] h-16 bg-gray-200 pointer-events-none" />
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* ── CONTACT ──────────────────────────────────── */}
-      <section id="contact" className="section-pad" style={{ background: "#1a1a1a", position: "relative", overflow: "hidden" }}>
-        <div style={{
-          position: "absolute", top: "-8rem", right: "-8rem",
-          width: "24rem", height: "24rem", borderRadius: "50%",
-          background: "#c9a96e", opacity: 0.08, filter: "blur(60px)", pointerEvents: "none"
-        }} />
-        <div style={{
-          position: "absolute", bottom: "-6rem", left: "-6rem",
-          width: "16rem", height: "16rem", borderRadius: "50%",
-          background: "#e8667a", opacity: 0.08, filter: "blur(50px)", pointerEvents: "none"
-        }} />
+      {/* ── CONTACT FORM ─────────────────────────────── */}
+      <section id="contact" className="py-24 px-6 bg-[#111] relative overflow-hidden">
+        {/* Glow Effects */}
+        <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-[#c9a96e]/5 blur-[80px] pointer-events-none" />
+        <div className="absolute -bottom-24 -left-24 w-80 h-80 rounded-full bg-[#e8667a]/5 blur-[70px] pointer-events-none" />
 
-        <div className="inner-sm" style={{ position: "relative" }}>
-          <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
-            <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "#c9a96e", marginBottom: "0.75rem" }}>
-              Get in Touch
-            </p>
-            <h2 className="font-display" style={{ fontSize: "clamp(2rem, 5vw, 3.2rem)", fontWeight: 700, color: "#fff", lineHeight: 1.1, marginBottom: "0.75rem" }}>
+        <div className="max-w-xl mx-auto relative z-10">
+          <div className="text-center mb-16">
+            <span className="text-xs font-bold tracking-widest text-[#c9a96e] uppercase font-inter">Design Query</span>
+            <h2 className="font-serif-display text-3xl sm:text-4xl md:text-5xl font-black text-white mt-2 leading-tight">
               Let's plan your
               <br />
-              <em className="font-display" style={{ color: "#c9a96e", fontStyle: "italic" }}>perfect décor</em>
+              <span className="italic font-medium font-serif-display text-[#c9a96e]">perfect decor</span>
             </h2>
-            <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "14px", lineHeight: 1.7, maxWidth: "340px", margin: "0 auto" }}>
-              Fill in your details and our floral expert will get back to you within 10 minutes.
-            </p>
+            <p className="text-gray-500 text-sm mt-3 font-light">Fill in your requirements. Our decorator will contact you within 10 minutes.</p>
           </div>
 
           {submitted ? (
-            <div style={{
-              borderRadius: "16px", border: "1px solid rgba(201,169,110,0.25)",
-              background: "rgba(201,169,110,0.08)", padding: "3rem", textAlign: "center"
-            }}>
-              <CheckCircle size={48} style={{ color: "#c9a96e", margin: "0 auto 1rem" }} />
-              <h3 className="font-display" style={{ fontSize: "1.5rem", fontWeight: 700, color: "#fff", marginBottom: "0.5rem" }}>
-                We'll be in touch!
-              </h3>
-              <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "14px" }}>
-                Our floral expert will call you within 10 minutes.
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="bg-white/5 border border-[#c9a96e]/20 rounded-3xl p-10 text-center flex flex-col items-center gap-4"
+            >
+              <CheckCircle size={44} className="text-[#c9a96e]" />
+              <h3 className="font-serif-display text-xl font-bold text-white">Inquiry Received</h3>
+              <p className="text-gray-400 text-xs leading-relaxed max-w-xs font-light">
+                Thank you for reaching out! Our event decor coordinator will contact you shortly to plan the next steps.
               </p>
-            </div>
+            </motion.div>
           ) : (
             <form
               onSubmit={handleSubmit}
-              style={{
-                borderRadius: "16px", padding: "clamp(1.5rem, 5vw, 2.5rem)",
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.08)"
-              }}
+              className="bg-white/[0.02] border border-white/5 rounded-3xl p-6 sm:p-10 flex flex-col gap-5"
             >
-              <div className="form-grid">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
                   { key: "name", label: "Your Name", type: "text", required: true },
                   { key: "email", label: "Email Address", type: "email", required: true },
                   { key: "phone", label: "Phone Number", type: "tel", required: true },
-                  { key: "occasion", label: "Occasion Type", type: "text", required: false },
+                  { key: "occasion", label: "Occasion (e.g. Wedding, Birthday)", type: "text", required: false },
                 ].map(({ key, label, type, required }) => (
                   <div key={key}>
                     <input
@@ -1018,71 +509,40 @@ const DecorPage = () => {
                       placeholder={label + (required ? " *" : "")}
                       value={form[key]}
                       onChange={(e) => setForm((p) => ({ ...p, [key]: e.target.value }))}
-                      style={{
-                        width: "100%", padding: "12px 18px",
-                        borderRadius: "10px", fontSize: "14px", outline: "none",
-                        background: "rgba(255,255,255,0.06)",
-                        border: "1px solid rgba(255,255,255,0.12)",
-                        color: "#fff", transition: "border-color 0.2s"
-                      }}
-                      onFocus={(e) => (e.target.style.borderColor = "#c9a96e")}
-                      onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.12)")}
+                      className="w-full px-5 py-3.5 rounded-xl text-xs bg-white/5 border border-white/10 text-white placeholder-gray-500 outline-none focus:border-[#c9a96e] focus:ring-1 focus:ring-[#c9a96e]/10 transition-all duration-200 font-inter font-medium"
                     />
                   </div>
                 ))}
               </div>
               <textarea
                 rows={4}
-                placeholder="Tell us about your vision — theme, venue size, date, and any special requests..."
+                placeholder="Briefly describe your vision — guest count, color scheme, date, and specific decor elements..."
                 value={form.message}
                 onChange={(e) => setForm((p) => ({ ...p, message: e.target.value }))}
-                style={{
-                  width: "100%", padding: "12px 18px",
-                  borderRadius: "10px", fontSize: "14px", outline: "none",
-                  background: "rgba(255,255,255,0.06)",
-                  border: "1px solid rgba(255,255,255,0.12)",
-                  color: "#fff", resize: "none", marginBottom: "1.25rem",
-                  transition: "border-color 0.2s", display: "block"
-                }}
-                onFocus={(e) => (e.target.style.borderColor = "#c9a96e")}
-                onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.12)")}
+                className="w-full px-5 py-3.5 rounded-xl text-xs bg-white/5 border border-white/10 text-white placeholder-gray-500 outline-none focus:border-[#c9a96e] focus:ring-1 focus:ring-[#c9a96e]/10 resize-none transition-all duration-200 font-inter font-medium"
               />
-              <div className="form-submit-row">
+              
+              <div className="flex flex-col sm:flex-row gap-3 mt-2">
                 <button
                   type="submit"
-                  style={{
-                    flex: 1, display: "flex", alignItems: "center", justifyContent: "center",
-                    gap: "8px", background: "#e8667a", color: "#fff",
-                    border: "none", borderRadius: "10px", padding: "14px",
-                    fontSize: "14px", fontWeight: 700, cursor: "pointer",
-                    transition: "transform 0.2s ease, opacity 0.2s ease"
-                  }}
-                  onMouseEnter={e => e.currentTarget.style.transform = "translateY(-2px)"}
-                  onMouseLeave={e => e.currentTarget.style.transform = ""}
+                  className="flex-1 flex items-center justify-center gap-2 bg-[#e8667a] hover:bg-[#d4546a] text-white border-none rounded-xl py-4 font-bold text-xs tracking-widest uppercase cursor-pointer hover:-translate-y-0.5 transition-all duration-200"
                 >
-                  <Send size={15} />
-                  Send Request
+                  <Send size={13} />
+                  Submit Request
                 </button>
                 <a
-                  href="https://wa.me/919540849659"
+                  href={WHATSAPP_DECOR_LINK}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{
-                    flex: 1, display: "flex", alignItems: "center", justifyContent: "center",
-                    gap: "8px", border: "1px solid #25d366", color: "#25d366",
-                    borderRadius: "10px", padding: "14px",
-                    fontSize: "14px", fontWeight: 700, textDecoration: "none",
-                    transition: "transform 0.2s ease"
-                  }}
-                  onMouseEnter={e => e.currentTarget.style.transform = "translateY(-2px)"}
-                  onMouseLeave={e => e.currentTarget.style.transform = ""}
+                  className="flex-1 flex items-center justify-center gap-2 border border-[#25d366] text-[#25d366] hover:bg-[#25d366]/5 rounded-xl py-4 font-bold text-xs tracking-widest uppercase hover:-translate-y-0.5 transition-all duration-200"
                 >
-                  <MessageCircle size={15} />
-                  WhatsApp Us
+                  <MessageCircle size={13} />
+                  WhatsApp Consult
                 </a>
               </div>
-              <p style={{ color: "rgba(255,255,255,0.25)", fontSize: "12px", textAlign: "center", marginTop: "1rem" }}>
-                We respond within 10 minutes · Available 9 AM – 9 PM daily
+              
+              <p className="text-center text-gray-500 text-[10px] uppercase font-bold tracking-wider">
+                Support Hours: 9:00 AM – 9:00 PM NCR Wide
               </p>
             </form>
           )}
@@ -1090,116 +550,91 @@ const DecorPage = () => {
       </section>
 
       {/* ── FAQ ──────────────────────────────────────── */}
-      <section className="section-pad" style={{ background: "#faf7f2" }}>
-        <div className="inner-sm">
-          <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
-            <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "#e8667a", marginBottom: "8px" }}>
-              Questions & Answers
-            </p>
-            <h2 className="font-display" style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, color: "#111" }}>
-              FAQs
-            </h2>
+      <section className="py-24 px-6 bg-[#faf7f2]/70">
+        <div className="max-w-2xl mx-auto">
+          <div className="text-center mb-16">
+            <span className="text-xs font-bold tracking-widest text-[#e8667a] uppercase font-inter">Help Desk</span>
+            <h2 className="font-serif-display text-3xl sm:text-4xl font-black text-[#0D1F0F] mt-2">Frequently Asked Questions</h2>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-            {faqs.map((faq, i) => (
-              <div
-                key={i}
-                style={{
-                  background: "#fff", borderRadius: "14px",
-                  border: `1px solid ${openFaq === i ? "rgba(232,102,122,0.25)" : "#f3f4f6"}`,
-                  overflow: "hidden", transition: "border-color 0.2s"
-                }}
-              >
-                <button
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  style={{
-                    width: "100%", textAlign: "left", padding: "1.1rem 1.5rem",
-                    display: "flex", alignItems: "center", justifyContent: "space-between",
-                    gap: "1rem", background: "none", border: "none", cursor: "pointer"
-                  }}
+
+          <div className="flex flex-col gap-3">
+            {faqs.map((faq, i) => {
+              const isSelected = openFaq === i;
+              return (
+                <div
+                  key={i}
+                  className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm transition-all duration-300"
                 >
-                  <span style={{ fontWeight: 600, color: "#111", fontSize: "14px", lineHeight: 1.4 }}>{faq.q}</span>
-                  <span style={{ color: "#e8667a", flexShrink: 0 }}>
-                    {openFaq === i ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-                  </span>
-                </button>
-                {openFaq === i && (
-                  <div style={{ padding: "0 1.5rem 1.25rem" }}>
-                    <div style={{ width: "32px", height: "2px", background: "#e8667a", marginBottom: "10px" }} />
-                    <p style={{ color: "#6b7280", fontSize: "14px", lineHeight: 1.75 }}>{faq.a}</p>
-                  </div>
-                )}
-              </div>
-            ))}
+                  <button
+                    onClick={() => setOpenFaq(isSelected ? null : i)}
+                    className="w-full text-left px-5 py-4 flex items-center justify-between gap-4 font-bold text-slate-800 focus:outline-none"
+                  >
+                    <span className="font-serif-display text-sm leading-snug">{faq.q}</span>
+                    <span className="text-[#e8667a] shrink-0">
+                      {isSelected ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                    </span>
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {isSelected && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                      >
+                        <div className="px-5 pb-5 text-gray-500 text-xs sm:text-sm leading-relaxed font-light border-t border-gray-50/50 pt-3.5">
+                          {faq.a}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* ── FINAL CTA STRIP ──────────────────────────── */}
-      <section style={{ padding: "3.5rem 1.5rem", background: "#fff", borderTop: "1px solid #f3f4f6" }}>
-        <div className="inner cta-strip">
+      <section className="py-14 px-6 bg-white border-t border-gray-100">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
-            <h3 className="font-display" style={{ fontSize: "clamp(1.4rem, 4vw, 2rem)", fontWeight: 700, color: "#111", marginBottom: "4px" }}>
-              Ready to transform your space?
+            <h3 className="font-serif-display text-xl sm:text-2xl font-bold text-[#0D1F0F]">
+              Ready to transform your venue?
             </h3>
-            <p style={{ color: "#9ca3af", fontSize: "14px" }}>
-              Speak to a floral expert today — no commitment, just ideas.
+            <p className="text-gray-400 text-xs sm:text-sm mt-1 font-light">
+              Speak to our senior floral designer today — no obligations, just fresh design ideas.
             </p>
           </div>
-          <div className="cta-strip-buttons" style={{ display: "flex", gap: "12px", flexShrink: 0 }}>
+          <div className="flex gap-3 w-full sm:w-auto shrink-0">
             <a
-              href="tel:+919999999999"
-              style={{
-                display: "inline-flex", alignItems: "center", gap: "8px",
-                border: "2px solid #1a1a1a", color: "#1a1a1a",
-                borderRadius: "9999px", padding: "11px 22px",
-                fontSize: "14px", fontWeight: 700, textDecoration: "none",
-                transition: "transform 0.2s ease"
-              }}
-              onMouseEnter={e => e.currentTarget.style.transform = "translateY(-2px)"}
-              onMouseLeave={e => e.currentTarget.style.transform = ""}
+              href={`tel:${CONTACT_PHONE_1}`}
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 border border-slate-800 text-slate-800 hover:bg-slate-50 px-6 py-3.5 rounded-full font-bold text-xs tracking-widest uppercase transition-all duration-300 hover:-translate-y-0.5"
             >
-              <Phone size={14} />
-              Call Us
+              <Phone size={12} />
+              Call us
             </a>
             <a
               href="#contact"
-              style={{
-                display: "inline-flex", alignItems: "center", gap: "8px",
-                background: "#e8667a", color: "#fff",
-                borderRadius: "9999px", padding: "11px 22px",
-                fontSize: "14px", fontWeight: 700, textDecoration: "none",
-                boxShadow: "0 6px 20px rgba(232,102,122,0.35)",
-                transition: "transform 0.2s ease"
-              }}
-              onMouseEnter={e => e.currentTarget.style.transform = "translateY(-2px)"}
-              onMouseLeave={e => e.currentTarget.style.transform = ""}
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 bg-[#e8667a] hover:bg-[#d4546a] text-white px-6 py-3.5 rounded-full font-bold text-xs tracking-widest uppercase shadow-md shadow-rose-950/10 transition-all duration-300 hover:-translate-y-0.5"
             >
-              Get a Quote <ArrowRight size={14} />
+              Get Free Quote <ArrowRight size={12} />
             </a>
           </div>
         </div>
       </section>
 
-      {/* WhatsApp FAB */}
+      {/* WhatsApp Floating Button */}
       <a
-        href="https://wa.me/919999999999"
+        href={WHATSAPP_LINK}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Chat on WhatsApp"
-        style={{
-          position: "fixed", bottom: "1.5rem", right: "1.5rem", zIndex: 50,
-          width: "52px", height: "52px", borderRadius: "50%",
-          background: "#25d366", display: "flex", alignItems: "center", justifyContent: "center",
-          boxShadow: "0 8px 24px rgba(37,211,102,0.4)",
-          transition: "transform 0.2s ease"
-        }}
-        onMouseEnter={e => e.currentTarget.style.transform = "scale(1.1)"}
-        onMouseLeave={e => e.currentTarget.style.transform = ""}
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25d366] flex items-center justify-center shadow-xl shadow-emerald-400/30 hover:bg-[#20ba59] transition-transform hover:scale-105 duration-200"
+        aria-label="WhatsApp"
       >
-        <MessageCircle size={24} color="white" fill="white" />
+        <MessageCircle size={26} color="white" fill="white" />
       </a>
-    </>
+    </div>
   );
 };
 

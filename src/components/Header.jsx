@@ -3,6 +3,8 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Flower2, ShoppingCart, Menu, X } from "lucide-react";
 import { useSelector } from "react-redux";
 import { selectCartCount } from "../redux/cartSlice";
+import { WHATSAPP_LINK, CONTACT_PHONE_1, BUSINESS_NAME_MAIN, BUSINESS_NAME_SUB } from "../constants";
+import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -28,373 +30,203 @@ export default function Header() {
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [isOpen]);
 
   useEffect(() => {
-    const onResize = () => { if (window.innerWidth >= 1280) setIsOpen(false); };
+    const onResize = () => {
+      if (window.innerWidth >= 1024) setIsOpen(false);
+    };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
   return (
     <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@500;600;700&display=swap');
+      <header className="sticky top-0 z-50 w-full transition-all duration-300">
+        {/* Announcement Bar */}
+        <div className="w-full bg-[#0D1F0F] text-[#C8A882] py-2 px-4 text-center text-xs font-semibold tracking-widest uppercase font-inter transition-all hover:text-[#dfc4a3]">
+          <a
+            href={WHATSAPP_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2"
+          >
+            🌸 Fast Delivery Gurgaon & NCR — WhatsApp / Call Us: <strong>{CONTACT_PHONE_1}</strong>
+          </a>
+        </div>
 
-        .hdr-announce {
-          background: #0D1F0F;
-          color: #C8A882;
-          font-family: 'Inter', sans-serif;
-          font-size: 11px;
-          font-weight: 600;
-          letter-spacing: 0.18em;
-          text-transform: uppercase;
-          text-align: center;
-          padding: 9px 16px;
-        }
-
-        .hdr-bar {
-          max-width: 1440px;
-          margin: 0 auto;
-          height: 70px;
-          padding: 0 20px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-        @media (min-width: 950px) {
-          .hdr-bar { height: 82px; padding: 0 48px; }
-        }
-
-        /* Logo */
-        .hdr-logo {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          text-decoration: none;
-          flex-shrink: 0;
-          transition: transform 0.2s;
-        }
-        .hdr-logo:hover { transform: scale(1.03); }
-
-        .hdr-logo-icon {
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          background: #0D1F0F;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          box-shadow: 0 4px 16px rgba(13,31,15,0.25);
-          flex-shrink: 0;
-        }
-
-        .hdr-logo-text {
-          font-family: 'Playfair Display', serif;
-          font-weight: 900;
-          font-size: clamp(1rem, 3vw, 1.45rem);
-          color: #0D1F0F;
-          margin: 0;
-          line-height: 1;
-          letter-spacing: -0.01em;
-        }
-        .hdr-logo-text span { color: #e11d48; }
-
-        /* Desktop nav */
-        .hdr-nav {
-          display: none;
-          align-items: center;
-          gap: 2px;
-        }
-        @media (min-width: 950px) { .hdr-nav { display: flex; } }
-
-        .hdr-nav-link {
-          font-family: 'Inter', sans-serif;
-          font-size: 13px;
-          font-weight: 700;
-          letter-spacing: 0.06em;
-          text-transform: uppercase;
-          color: #374151;
-          text-decoration: none;
-          padding: 8px 14px;
-          border-radius: 8px;
-          transition: color 0.2s, background 0.2s;
-          position: relative;
-        }
-        .hdr-nav-link:hover { color: #0D1F0F; background: #f3f4f6; }
-
-        /* Desktop active link */
-        .hdr-nav-link--active {
-          color: #0D1F0F !important;
-          background: #f0fdf4 !important;
-        }
-        .hdr-nav-link--active::after {
-          content: '';
-          position: absolute;
-          bottom: -2px;
-          left: 14px;
-          right: 14px;
-          height: 2px;
-          background: #0D1F0F;
-          border-radius: 2px;
-        }
-
-        /* Right actions */
-        .hdr-actions { display: flex; align-items: center; gap: 8px; }
-
-        /* Cart button */
-        .hdr-cart {
-          position: relative;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          padding: 10px 14px;
-          border-radius: 12px;
-          background: #0D1F0F;
-          color: #F7F0E8;
-          font-family: 'Inter', sans-serif;
-          font-size: 12px;
-          font-weight: 700;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          border: none;
-          cursor: pointer;
-          box-shadow: 0 4px 16px rgba(13,31,15,0.2);
-          transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-        }
-        .hdr-cart:hover {
-          background: #1a3320;
-          transform: translateY(-1px);
-          box-shadow: 0 8px 24px rgba(13,31,15,0.3);
-        }
-        @media (min-width: 950px) { .hdr-cart { padding: 10px 22px; } }
-
-        .hdr-cart-label { display: none; }
-        @media (min-width: 950px) { .hdr-cart-label { display: inline; } }
-
-        .hdr-cart-badge {
-          position: absolute;
-          top: -7px; right: -7px;
-          background: #e11d48;
-          color: #fff;
-          font-family: 'Inter', sans-serif;
-          font-size: 9px; font-weight: 800;
-          width: 19px; height: 19px;
-          border-radius: 50%;
-          display: flex; align-items: center; justify-content: center;
-          border: 2px solid #fff;
-          animation: badgePop 0.25s cubic-bezier(0.34,1.56,0.64,1);
-        }
-        @keyframes badgePop { from { transform: scale(0); } to { transform: scale(1); } }
-
-        /* Hamburger */
-        .hdr-hamburger {
-          display: flex;
-          padding: 9px;
-          background: #f3f4f6;
-          border: none;
-          border-radius: 10px;
-          cursor: pointer;
-          color: #0D1F0F;
-          transition: background 0.2s;
-        }
-        .hdr-hamburger:hover { background: #e5e7eb; }
-        @media (min-width: 950px) { .hdr-hamburger { display: none; } }
-
-        /* Drawer */
-        .hdr-drawer {
-          position: fixed;
-          top: 0; right: 0; bottom: 0;
-          width: min(320px, 88vw);
-          z-index: 70;
-          background: #fff;
-          box-shadow: -8px 0 40px rgba(0,0,0,0.12);
-          display: flex;
-          flex-direction: column;
-          will-change: transform;
-          overflow-y: auto;
-          transition: transform 0.3s cubic-bezier(0.32,0,0.67,0);
-        }
-
-        .hdr-drawer-link {
-          font-family: 'Inter', sans-serif;
-          font-size: 14px;
-          font-weight: 700;
-          letter-spacing: 0.06em;
-          text-transform: uppercase;
-          color: #1f2937;
-          text-decoration: none;
-          padding: 15px 0;
-          border-bottom: 1px solid #f3f4f6;
-          display: block;
-          transition: color 0.2s, padding-left 0.2s, border-left 0.2s;
-        }
-        .hdr-drawer-link:last-child { border-bottom: none; }
-        .hdr-drawer-link:hover { color: #e11d48; padding-left: 8px; }
-
-        /* Drawer active link */
-        .hdr-drawer-link--active {
-          color: #0D1F0F !important;
-          padding-left: 12px !important;
-          border-left: 3px solid #0D1F0F;
-        }
-      `}</style>
-
-      <nav style={{
-        position: "sticky", top: 0, zIndex: 50,
-        background: scrolled ? "rgba(255,255,255,0.97)" : "#fff",
-        backdropFilter: scrolled ? "blur(14px)" : "none",
-        boxShadow: scrolled ? "0 2px 24px rgba(0,0,0,0.08)" : "none",
-        borderBottom: scrolled ? "none" : "1px solid #f3f4f6",
-        transition: "box-shadow 0.3s, background 0.3s",
-      }}>
-
-        {/* Announcement bar */}
-       <div className="hdr-announce">
-  <a
-    href="https://wa.me/919540849659?text=Hi,%20I'm%20interested%20in%20your%20flowers."
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    🌸 Fast Delivery Available — Call or WhatsApp Us Now: <strong>9540849659</strong>
-  </a>
-</div>
-
-        <div className="hdr-bar">
-
-          {/* Logo */}
-          <Link to="/" className="hdr-logo">
-            <div className="hdr-logo-icon">
-              <Flower2 size={20} color="#C8A882" />
-            </div>
-            <h1 className="hdr-logo-text">
-              Shivam <span>Florist</span>
-            </h1>
-          </Link>
-
-          {/* Desktop nav links */}
-          <div className="hdr-nav">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.path}
-                className={`hdr-nav-link${location.pathname === link.path ? ' hdr-nav-link--active' : ''}`}
+        {/* Main Nav Bar */}
+        <nav
+          className={`w-full transition-all duration-300 ${
+            scrolled
+              ? "bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100/60 py-3"
+              : "bg-white border-b border-gray-100 py-4"
+          }`}
+        >
+          <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
+            {/* Logo */}
+            <Link to="/" className="group flex items-center gap-3 select-none">
+              <motion.div 
+                whileHover={{ rotate: 18, rotateX: 10, rotateY: 10 }}
+                className="w-10 h-10 rounded-full bg-[#0D1F0F] flex items-center justify-center shadow-md shadow-[#0D1F0F]/10 group-hover:shadow-lg group-hover:shadow-[#0D1F0F]/20 transition-all duration-300"
               >
-                {link.name}
-              </Link>
-            ))}
-          </div>
-
-          {/* Right: Cart + Hamburger */}
-          <div className="hdr-actions">
-            <button className="hdr-cart" onClick={() => navigate("/cart")} aria-label="Cart">
-              <ShoppingCart size={16} />
-              <span className="hdr-cart-label">Cart</span>
-              {cartCount > 0 && (
-                <span className="hdr-cart-badge" key={cartCount}>
-                  {cartCount > 99 ? "99+" : cartCount}
-                </span>
-              )}
-            </button>
-
-            <button className="hdr-hamburger" onClick={() => setIsOpen(true)} aria-label="Open menu">
-              <Menu size={22} />
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      {/* Backdrop */}
-      <div
-        onClick={() => setIsOpen(false)}
-        style={{
-          position: "fixed", inset: 0, zIndex: 60,
-          background: "rgba(0,0,0,0.4)",
-          backdropFilter: "blur(3px)",
-          opacity: isOpen ? 1 : 0,
-          pointerEvents: isOpen ? "auto" : "none",
-          transition: "opacity 0.3s",
-        }}
-      />
-
-      {/* Drawer */}
-      <div
-        className="hdr-drawer"
-        style={{ transform: isOpen ? "translateX(0)" : "translateX(100%)" }}
-        aria-hidden={!isOpen}
-      >
-        {/* Drawer header */}
-        <div style={{
-          display: "flex", alignItems: "center", justifyContent: "space-between",
-          padding: "20px 24px 16px",
-          background: "#0D1F0F",
-          borderBottom: "2px solid rgba(200,168,130,0.3)",
-        }}>
-          <span style={{
-            fontFamily: "'Playfair Display', serif",
-            fontWeight: 900, color: "#F7F0E8", fontSize: "20px",
-          }}>
-            Shivam <span style={{ color: "#C8A882" }}>Florist</span>
-          </span>
-          <button
-            onClick={() => setIsOpen(false)}
-            aria-label="Close menu"
-            style={{
-              background: "rgba(255,255,255,0.1)", border: "none",
-              borderRadius: "8px", padding: "8px", cursor: "pointer",
-              color: "#F7F0E8", display: "flex",
-            }}
-          >
-            <X size={20} />
-          </button>
-        </div>
-
-        {/* Nav links */}
-        <nav style={{ padding: "8px 24px", flex: 1 }}>
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              to={link.path}
-              className={`hdr-drawer-link${location.pathname === link.path ? ' hdr-drawer-link--active' : ''}`}
-              onClick={() => setIsOpen(false)}
-            >
-              {link.name}
+                <Flower2 size={20} color="#C8A882" className="group-hover:scale-110 transition-transform duration-300" />
+              </motion.div>
+              <h1 className="font-serif-display font-black text-xl md:text-2xl text-[#0D1F0F] tracking-tight leading-none">
+                {BUSINESS_NAME_MAIN} <span className="text-[#e11d48] font-light">{BUSINESS_NAME_SUB}</span>
+              </h1>
             </Link>
-          ))}
 
-          {/* Cart link */}
-          <Link
-            to="/cart"
-            className="hdr-drawer-link"
-            onClick={() => setIsOpen(false)}
-            style={{ color: "#e11d48", display: "flex", alignItems: "center", gap: "10px" }}
-          >
-            <ShoppingCart size={16} />
-            Cart
-            {cartCount > 0 && (
-              <span style={{
-                background: "#e11d48", color: "#fff", borderRadius: "999px",
-                fontSize: "11px", padding: "2px 8px", fontWeight: 700,
-              }}>
-                {cartCount}
-              </span>
-            )}
-          </Link>
+            {/* Desktop Navigation Links */}
+            <div className="hidden lg:flex items-center gap-1">
+              {navLinks.map((link) => {
+                const isActive = location.pathname === link.path;
+                return (
+                  <Link
+                    key={link.name}
+                    to={link.path}
+                    className={`relative px-4 py-2 text-xs font-bold tracking-widest uppercase font-inter rounded-full transition-all duration-300 ${
+                      isActive
+                        ? "text-[#0D1F0F] bg-rose-50/60"
+                        : "text-[#374151] hover:text-[#0D1F0F] hover:bg-gray-50"
+                    }`}
+                  >
+                    {link.name}
+                    {isActive && (
+                      <motion.span
+                        layoutId="activeNavTab"
+                        className="absolute bottom-1 left-4 right-4 h-0.5 bg-[#0D1F0F] rounded-full"
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Right Side Actions */}
+            <div className="flex items-center gap-3">
+              {/* Cart Button */}
+              <motion.button
+                whileTap={{ scale: 0.95 }}
+                onClick={() => navigate("/cart")}
+                className="relative flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0D1F0F] text-[#F7F0E8] font-inter text-xs font-bold tracking-wider uppercase border border-[#0D1F0F] shadow-sm hover:bg-[#1a3320] hover:border-[#1a3320] transition-all duration-300"
+                aria-label="Cart"
+              >
+                <ShoppingCart size={15} className="mr-0.5" />
+                <span className="hidden md:inline">Cart</span>
+                <AnimatePresence>
+                  {cartCount > 0 && (
+                    <motion.span
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      exit={{ scale: 0 }}
+                      key={cartCount}
+                      className="absolute -top-1.5 -right-1.5 bg-[#e11d48] text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-sm"
+                    >
+                      {cartCount > 99 ? "99+" : cartCount}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </motion.button>
+
+              {/* Hamburger Button */}
+              <button
+                onClick={() => setIsOpen(true)}
+                className="lg:hidden p-2.5 bg-gray-50 border border-gray-100 text-[#0D1F0F] rounded-full hover:bg-gray-100 hover:border-gray-200 transition-all duration-200"
+                aria-label="Open menu"
+              >
+                <Menu size={20} />
+              </button>
+            </div>
+          </div>
         </nav>
+      </header>
 
-        {/* Drawer footer */}
-        <div style={{
-          padding: "16px 24px",
-          borderTop: "1px solid #f3f4f6",
-          textAlign: "center",
-          fontSize: "11px",
-          color: "#9ca3af",
-          fontFamily: "'Inter', sans-serif",
-        }}>
-          © {new Date().getFullYear()} Shivam Florist
-        </div>
-      </div>
+      {/* Mobile Drawer Navigation */}
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsOpen(false)}
+              className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"
+            />
+
+            {/* Side Drawer */}
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed top-0 right-0 bottom-0 w-full max-w-[320px] z-50 bg-white shadow-2xl flex flex-col overflow-y-auto"
+            >
+              {/* Drawer Header */}
+              <div className="flex items-center justify-between p-6 bg-[#0D1F0F] border-b border-[#C8A882]/20">
+                <span className="font-serif-display font-black text-lg text-[#F7F0E8] tracking-tight">
+                  {BUSINESS_NAME_MAIN} <span className="text-[#C8A882] font-light">{BUSINESS_NAME_SUB}</span>
+                </span>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  aria-label="Close menu"
+                  className="p-2 bg-white/10 hover:bg-white/20 text-[#F7F0E8] border border-white/10 rounded-full transition-all duration-200"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              {/* Navigation Links */}
+              <nav className="flex-1 py-6 px-6 flex flex-col gap-1">
+                {navLinks.map((link) => {
+                  const isActive = location.pathname === link.path;
+                  return (
+                    <Link
+                      key={link.name}
+                      to={link.path}
+                      onClick={() => setIsOpen(false)}
+                      className={`py-3 px-4 rounded-xl text-xs font-bold tracking-wider uppercase font-inter border-l-4 transition-all duration-200 ${
+                        isActive
+                          ? "text-[#0D1F0F] bg-rose-50/50 border-[#0D1F0F]"
+                          : "text-[#374151] hover:text-[#0D1F0F] hover:bg-gray-50 border-transparent"
+                      }`}
+                    >
+                      {link.name}
+                    </Link>
+                  );
+                })}
+
+                {/* Mobile Cart Link */}
+                <Link
+                  to="/cart"
+                  onClick={() => setIsOpen(false)}
+                  className="mt-2 py-3 px-4 rounded-xl text-xs font-bold tracking-wider uppercase font-inter border-l-4 border-transparent text-[#e11d48] bg-rose-50/20 hover:bg-rose-50/40 flex items-center justify-between"
+                >
+                  <span className="flex items-center gap-2.5">
+                    <ShoppingCart size={15} />
+                    Cart
+                  </span>
+                  {cartCount > 0 && (
+                    <span className="bg-[#e11d48] text-white rounded-full text-[10px] px-2.5 py-0.5 font-bold">
+                      {cartCount}
+                    </span>
+                  )}
+                </Link>
+              </nav>
+
+              {/* Drawer Footer */}
+              <div className="p-6 border-t border-gray-100 text-center text-[10px] text-gray-400 font-semibold tracking-wider font-inter">
+                © {new Date().getFullYear()} {BUSINESS_NAME_MAIN} {BUSINESS_NAME_SUB}
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 }

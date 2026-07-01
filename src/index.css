@@ -1,1 +1,52 @@
 @import "tailwindcss";
+
+@layer utilities {
+  /* Premium Typography Mappings */
+  .font-inter {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  .font-serif-display {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+  .font-cormorant {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+  .font-dmsans {
+    font-family: 'DM Sans', system-ui, sans-serif;
+  }
+
+  /* Custom Smooth Scrollbar Hide */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  /* Apple/Stripe-like subtle selection */
+  ::selection {
+    background-color: rgba(244, 63, 94, 0.2);
+    color: #e11d48;
+  }
+
+  /* Custom Smooth Image Loading Transitions */
+  .image-zoom-hover {
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .image-zoom-hover:hover {
+    transform: scale(1.05);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #0d1f0f;
+  background-color: #fafaf9;
+}

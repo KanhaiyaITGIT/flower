@@ -1,6 +1,9 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/cartSlice";
+import LazyImage from "../components/ui/LazyImage";
+import { WHATSAPP_LINK } from "../constants";
+import { motion, AnimatePresence } from "framer-motion";
 
 // s1 - s45
 import image1 from "../assets/s1.png";
@@ -92,11 +95,19 @@ import image84 from "../assets/s84.png";
 import image85 from "../assets/s85.png";
 
 import {
-  ShoppingBag, Star, SlidersHorizontal,
-  ChevronDown, X, Leaf, Truck, Sparkles, Search, Loader2,
+  ShoppingBag,
+  Star,
+  SlidersHorizontal,
+  ChevronDown,
+  X,
+  Leaf,
+  Truck,
+  Sparkles,
+  Search,
+  Loader2,
 } from "lucide-react";
 
-const ITEMS_PER_PAGE = 12; // pehle itne dikhao
+const ITEMS_PER_PAGE = 12;
 
 const allProducts = [
   { id: 1, name: "Romantic Rosebloom Bouquet", price: 849, originalPrice: 1099, rating: 4.9, reviews: 128, image: image1, category: "Bouquets", tag: "Bestseller", tagColor: "rose", isNew: false, desc: "Deep red roses with baby's breath" },
@@ -187,8 +198,16 @@ const allProducts = [
 ];
 
 const categoryFilters = [
-  "All", "Bouquets", "Wedding", "Reception", "Haldi",
-  "Birthday", "Anniversary", "Devotional", "Balloon", "Candles & More",
+  "All",
+  "Bouquets",
+  "Wedding",
+  "Reception",
+  "Haldi",
+  "Birthday",
+  "Anniversary",
+  "Devotional",
+  "Balloon",
+  "Candles & More",
 ];
 
 const sortOptions = [
@@ -200,45 +219,11 @@ const sortOptions = [
 ];
 
 const tagStyles = {
-  rose: "bg-rose-50 text-rose-600 border-rose-100",
-  amber: "bg-amber-50 text-amber-600 border-amber-100",
-  green: "bg-emerald-50 text-emerald-600 border-emerald-100",
-  purple: "bg-purple-50 text-purple-600 border-purple-100",
-  blue: "bg-blue-50 text-blue-600 border-blue-100",
-};
-
-// ── Lazy Image Component ──
-const LazyImage = ({ src, alt, className }) => {
-  const [loaded, setLoaded] = useState(false);
-  const [inView, setInView] = useState(false);
-  const imgRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setInView(true); observer.disconnect(); } },
-      { rootMargin: "200px" }
-    );
-    if (imgRef.current) observer.observe(imgRef.current);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div ref={imgRef} className="w-full h-full">
-      {/* Skeleton placeholder */}
-      {!loaded && (
-        <div className="w-full h-full bg-gradient-to-r from-rose-50 via-pink-100 to-rose-50 animate-pulse" />
-      )}
-      {inView && (
-        <img
-          src={src}
-          alt={alt}
-          className={`${className} ${loaded ? "opacity-100" : "opacity-0"} transition-opacity duration-300`}
-          onLoad={() => setLoaded(true)}
-          loading="lazy"
-        />
-      )}
-    </div>
-  );
+  rose: "bg-rose-50/90 text-rose-600 border-rose-100/60",
+  amber: "bg-amber-50/90 text-amber-600 border-amber-100/60",
+  green: "bg-emerald-50/90 text-emerald-600 border-emerald-100/60",
+  purple: "bg-purple-50/90 text-purple-600 border-purple-100/60",
+  blue: "bg-blue-50/90 text-blue-600 border-blue-100/60",
 };
 
 const CategoryPage = () => {
@@ -253,16 +238,18 @@ const CategoryPage = () => {
   const loaderRef = useRef(null);
 
   const handleAddToCart = (product) => {
-    dispatch(addToCart({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      image: product.image,
-      category: product.category,
-      season: product.desc,
-      color: "#f43f5e",
-      bg: "#fff1f2",
-    }));
+    dispatch(
+      addToCart({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        category: product.category,
+        season: product.desc,
+        color: "#f43f5e",
+        bg: "#fff1f2",
+      })
+    );
     setAddedToCart((prev) => ({ ...prev, [product.id]: true }));
     setTimeout(() => setAddedToCart((prev) => ({ ...prev, [product.id]: false })), 1800);
   };
@@ -283,12 +270,10 @@ const CategoryPage = () => {
       return b.reviews - a.reviews;
     });
 
-  // Category ya search badlne pe reset karo
   useEffect(() => {
     setVisibleCount(ITEMS_PER_PAGE);
   }, [activeCategory, searchQuery, sortBy]);
 
-  // Infinite scroll — loader div dikhte hi aur load karo
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -297,7 +282,7 @@ const CategoryPage = () => {
           setTimeout(() => {
             setVisibleCount((prev) => Math.min(prev + ITEMS_PER_PAGE, filtered.length));
             setLoadingMore(false);
-          }, 600); // smooth loading feel
+          }, 600);
         }
       },
       { rootMargin: "100px" }
@@ -318,35 +303,39 @@ const CategoryPage = () => {
   };
 
   return (
-    <>
-      {/* ── Hero ── */}
-      <section className="relative bg-gradient-to-br from-rose-950 via-rose-900 to-pink-900 overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-rose-400/10 -translate-y-1/2 translate-x-1/3 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-pink-300/10 translate-y-1/2 -translate-x-1/4 pointer-events-none" />
-        <div className="max-w-6xl mx-auto px-6 py-16 relative">
-          <div className="flex items-center gap-2 text-rose-300/70 text-xs mb-6 font-medium">
-            <span>Home</span><span>/</span>
+    <div className="w-full bg-[#fafaf9] min-h-screen pb-12">
+      {/* ── Hero Banner ── */}
+      <section className="relative bg-gradient-to-br from-rose-950 via-rose-900 to-pink-950 overflow-hidden py-20 px-6">
+        <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-rose-500/5 -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-pink-500/5 translate-y-1/2 -translate-x-1/4 pointer-events-none" />
+        <div className="max-w-6xl mx-auto relative z-10">
+          <div className="flex items-center gap-2 text-rose-300/50 text-[10px] font-bold tracking-widest uppercase mb-4">
+            <span>Home</span>
+            <span>/</span>
             <span className="text-white">All Products</span>
           </div>
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
             <div>
-              <h1 className="font-serif text-4xl md:text-6xl font-bold text-white leading-tight mb-3">
-                Fresh Blooms,<br />
-                <span className="text-rose-300 italic">Every Occasion</span>
+              <h1 className="font-serif-display text-4xl md:text-6xl font-black text-white leading-[1.1] mb-4">
+                Bespoke Blooms,<br />
+                <span className="text-rose-300 italic font-medium font-serif-display">For Every Feeling</span>
               </h1>
-              <p className="text-rose-200/70 text-sm md:text-base max-w-md leading-relaxed">
-                Handcrafted with love. Delivered same-day. Browse our full collection of fresh & forever flowers.
+              <p className="text-rose-200/60 text-xs sm:text-sm max-w-md leading-relaxed font-light font-inter">
+                Hand-arranged with surgical precision, sourced fresh daily, and delivered with same-day care across Delhi NCR.
               </p>
             </div>
-            <div className="flex flex-col gap-2.5 shrink-0">
+            <div className="flex flex-col gap-2 shrink-0">
               {[
                 { icon: Truck, text: "Free delivery above ₹999" },
-                { icon: Leaf, text: "Farm-fresh, sustainably sourced" },
-                { icon: Sparkles, text: "Same-day delivery available" },
+                { icon: Leaf, text: "Fresh from the farm daily" },
+                { icon: Sparkles, text: "Same-day delivery NCR wide" },
               ].map(({ icon: Icon, text }, i) => (
-                <div key={i} className="flex items-center gap-2.5 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10">
-                  <Icon size={14} className="text-rose-300 shrink-0" />
-                  <span className="text-white/80 text-xs font-medium whitespace-nowrap">{text}</span>
+                <div
+                  key={i}
+                  className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-full px-5 py-2.5 backdrop-blur-sm select-none"
+                >
+                  <Icon size={12} className="text-rose-300 shrink-0" />
+                  <span className="text-white/80 text-xs font-semibold tracking-wider font-inter">{text}</span>
                 </div>
               ))}
             </div>
@@ -354,184 +343,277 @@ const CategoryPage = () => {
         </div>
       </section>
 
-      {/* ── Sticky Filter Bar ── */}
-      <div className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="flex gap-2 py-3 overflow-x-auto scrollbar-hide">
-            {categoryFilters.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`shrink-0 rounded-full px-4 py-1.5 text-xs font-bold tracking-wide transition-all duration-200 border ${
-                  activeCategory === cat
-                    ? "bg-rose-500 text-white border-rose-500 shadow-md shadow-rose-200"
-                    : "bg-white text-gray-500 border-gray-200 hover:border-rose-300 hover:text-rose-500"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+      {/* ── Sticky Filter / Search Bar ── */}
+      <div className="sticky top-[80px] z-40 bg-white/85 backdrop-blur-md border-b border-gray-100 shadow-sm py-4">
+        <div className="max-w-6xl mx-auto px-6 flex flex-col gap-4">
+          {/* Scrollable Categories List */}
+          <div className="flex gap-2.5 overflow-x-auto scrollbar-hide py-1">
+            {categoryFilters.map((cat) => {
+              const isSelected = activeCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`shrink-0 rounded-full px-5 py-2 text-xs font-bold tracking-widest uppercase transition-all duration-300 border ${
+                    isSelected
+                      ? "bg-[#0D1F0F] text-white border-[#0D1F0F] shadow-sm shadow-[#0D1F0F]/20"
+                      : "bg-white text-gray-500 border-gray-200 hover:border-gray-300 hover:text-[#0D1F0F]"
+                  }`}
+                >
+                  {cat}
+                </button>
+              );
+            })}
           </div>
-          <div className="flex items-center gap-3 pb-3">
-            <div className="relative flex-1 max-w-xs">
-              <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+
+          {/* Search, Stats, & Sort */}
+          <div className="flex items-center gap-4 flex-wrap sm:flex-nowrap">
+            {/* Search Input */}
+            <div className="relative flex-1 max-w-sm">
+              <Search size={14} className="absolute left-4.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
               <input
                 type="text"
-                placeholder="Search flowers..."
+                placeholder="Search catalog..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 rounded-full bg-gray-50 border border-gray-200 text-sm text-gray-700 placeholder-gray-400 outline-none focus:border-rose-300 focus:bg-white transition-all duration-200"
+                className="w-full pl-11 pr-10 py-2.5 rounded-full bg-gray-50/50 border border-gray-200 text-xs text-slate-800 placeholder-gray-400 outline-none focus:border-rose-300 focus:bg-white focus:ring-1 focus:ring-rose-300/10 transition-all duration-300 font-inter font-medium"
               />
-              {searchQuery && (
-                <button onClick={() => setSearchQuery("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
-                  <X size={13} />
-                </button>
-              )}
+              <AnimatePresence>
+                {searchQuery && (
+                  <motion.button
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    onClick={() => setSearchQuery("")}
+                    className="absolute right-4.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  >
+                    <X size={13} />
+                  </motion.button>
+                )}
+              </AnimatePresence>
             </div>
-            <span className="text-xs text-gray-400 font-medium hidden sm:block">
-              {visibleCount} / {filtered.length} items
+
+            <span className="text-[11px] text-gray-400 font-bold uppercase tracking-widest hidden md:block">
+              {visibleProducts.length} of {filtered.length} items
             </span>
-            <div className="relative ml-auto">
+
+            {/* Sort Dropdown */}
+            <div className="relative ml-auto shrink-0 select-none">
               <button
                 onClick={() => setShowSortDropdown((v) => !v)}
-                className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-full px-4 py-2 text-xs font-bold text-gray-700 hover:border-rose-300 transition-all duration-200"
+                className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-full px-5 py-2.5 text-xs font-bold text-gray-700 hover:border-gray-300 transition-all duration-300"
               >
-                <SlidersHorizontal size={13} />
-                {sortOptions.find((s) => s.value === sortBy)?.label}
-                <ChevronDown size={13} className={`transition-transform duration-200 ${showSortDropdown ? "rotate-180" : ""}`} />
+                <SlidersHorizontal size={12} className="text-gray-500" />
+                <span>{sortOptions.find((s) => s.value === sortBy)?.label}</span>
+                <ChevronDown size={12} className={`transition-transform duration-300 ${showSortDropdown ? "rotate-180" : ""}`} />
               </button>
-              {showSortDropdown && (
-                <div className="absolute right-0 top-10 bg-white border border-gray-100 rounded-2xl shadow-xl py-2 w-48 z-50">
-                  {sortOptions.map((opt) => (
-                    <button
-                      key={opt.value}
-                      onClick={() => { setSortBy(opt.value); setShowSortDropdown(false); }}
-                      className={`w-full text-left px-4 py-2.5 text-xs font-semibold transition-colors hover:bg-rose-50 hover:text-rose-600 ${sortBy === opt.value ? "text-rose-500 bg-rose-50/60" : "text-gray-600"}`}
+
+              <AnimatePresence>
+                {showSortDropdown && (
+                  <>
+                    <div className="fixed inset-0 z-40" onClick={() => setShowSortDropdown(false)} />
+                    <motion.div
+                      initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 8, scale: 0.95 }}
+                      transition={{ duration: 0.2, ease: "easeOut" }}
+                      className="absolute right-0 top-11 bg-white border border-gray-100 rounded-2xl shadow-xl py-2 w-48 z-50 overflow-hidden"
                     >
-                      {opt.label}
-                    </button>
-                  ))}
-                </div>
-              )}
+                      {sortOptions.map((opt) => (
+                        <button
+                          key={opt.value}
+                          onClick={() => {
+                            setSortBy(opt.value);
+                            setShowSortDropdown(false);
+                          }}
+                          className={`w-full text-left px-4 py-2.5 text-xs font-bold tracking-wider uppercase transition-colors hover:bg-rose-50 hover:text-rose-600 ${
+                            sortBy === opt.value ? "text-rose-500 bg-rose-50/40" : "text-gray-600"
+                          }`}
+                        >
+                          {opt.label}
+                        </button>
+                      ))}
+                    </motion.div>
+                  </>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </div>
       </div>
 
       {/* ── Products Grid ── */}
-      <section className="py-12 px-6 bg-gray-50 min-h-screen">
+      <section className="py-12 px-6">
         <div className="max-w-6xl mx-auto">
           {filtered.length === 0 ? (
-            <div className="text-center py-24">
-              <div className="text-6xl mb-4">🌸</div>
-              <h3 className="font-serif text-2xl font-bold text-gray-700 mb-2">No blooms found</h3>
-              <p className="text-gray-400 text-sm mb-6">Try a different category or search term</p>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center py-24 flex flex-col items-center gap-4"
+            >
+              <div className="text-5xl select-none">🌸</div>
+              <h3 className="font-serif-display text-2xl font-bold text-slate-800">No Blooms Found</h3>
+              <p className="text-gray-400 text-sm max-w-xs font-light">Try adjusting your filters or search query to find the perfect flower arrangement.</p>
               <button
-                onClick={() => { setActiveCategory("All"); setSearchQuery(""); }}
-                className="bg-rose-500 text-white rounded-full px-6 py-2.5 text-sm font-bold hover:bg-rose-600 transition-colors"
+                onClick={() => {
+                  setActiveCategory("All");
+                  setSearchQuery("");
+                }}
+                className="mt-2 bg-[#0D1F0F] text-white rounded-full px-6 py-2.5 text-xs font-bold tracking-wider uppercase hover:bg-[#1a3320] transition-colors"
               >
-                View All Products
+                Reset Filters
               </button>
-            </div>
+            </motion.div>
           ) : (
             <>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
+              <motion.div 
+                layout
+                className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6"
+              >
                 {visibleProducts.map((product) => (
-                  <div key={product.id} className="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer relative flex flex-col">
-                    <div className="relative overflow-hidden bg-rose-50 aspect-[4/3]">
-                      {/* ✅ Lazy loaded image */}
+                  <motion.div
+                    layout
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4 }}
+                    key={product.id}
+                    className="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer relative flex flex-col"
+                  >
+                    {/* Image Block */}
+                    <div className="relative overflow-hidden bg-rose-50/20 aspect-[4/3] w-full">
                       <LazyImage
                         src={product.image}
                         alt={product.name}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                       />
-                      <div className="absolute top-2.5 left-2.5 right-2.5 flex items-start justify-between">
+                      
+                      <div className="absolute top-3 left-3 flex items-start justify-between z-10 pointer-events-none">
                         {product.tag ? (
-                          <span className={`text-[10px] font-bold tracking-widest uppercase rounded-full px-2.5 py-1 border ${tagStyles[product.tagColor]} backdrop-blur-sm`}>
+                          <span className={`text-[8px] font-black tracking-widest uppercase rounded-full px-2.5 py-1 border ${tagStyles[product.tagColor]} backdrop-blur-md`}>
                             {product.tag}
                           </span>
-                        ) : <span />}
+                        ) : (
+                          <span />
+                        )}
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+
+                      {/* Hover Slide Add Button */}
+                      <div className="absolute bottom-0 left-0 right-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-10 hidden sm:block">
                         <button
-                          onClick={(e) => { e.stopPropagation(); handleAddToCart(product); }}
-                          className={`w-full py-2.5 text-xs font-bold tracking-wide transition-all duration-200 flex items-center justify-center gap-1.5 ${addedToCart[product.id] ? "bg-green-500 text-white" : "bg-gray-900 text-white hover:bg-rose-600"}`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleAddToCart(product);
+                          }}
+                          className={`w-full py-3 text-xs font-bold tracking-widest uppercase transition-all duration-300 flex items-center justify-center gap-1.5 ${
+                            addedToCart[product.id] ? "bg-emerald-500 text-white" : "bg-slate-900 text-white hover:bg-rose-500"
+                          }`}
                         >
-                          {addedToCart[product.id] ? <>✓ Added to Cart</> : <><ShoppingBag size={12} /> Quick Add</>}
+                          {addedToCart[product.id] ? "✓ Added" : "Quick Add"}
                         </button>
                       </div>
                     </div>
-                    <div className="p-3.5 flex flex-col flex-1">
-                      <p className="text-[10px] font-bold text-rose-400 tracking-widest uppercase mb-1">{product.category}</p>
-                      <h3 className="font-serif text-sm font-bold text-gray-900 leading-snug mb-1 line-clamp-2">{product.name}</h3>
-                      <p className="text-gray-400 text-xs mb-2.5 line-clamp-1">{product.desc}</p>
-                      <div className="flex items-center gap-1.5 mb-3">
+
+                    {/* Meta Details Block */}
+                    <div className="p-5 flex flex-col flex-1">
+                      <p className="text-[9px] font-bold text-rose-400 tracking-widest uppercase mb-1">{product.category}</p>
+                      <h3 className="font-serif-display text-sm font-bold text-slate-800 leading-snug mb-1 line-clamp-2">{product.name}</h3>
+                      <p className="text-gray-400 text-xs mb-3 line-clamp-1 font-light">{product.desc}</p>
+                      
+                      {/* Review row */}
+                      <div className="flex items-center gap-1.5 mb-4">
                         <div className="flex">
                           {[1, 2, 3, 4, 5].map((s) => (
-                            <Star key={s} size={10} className={s <= Math.round(product.rating) ? "text-amber-400 fill-amber-400" : "text-gray-200 fill-gray-200"} />
+                            <Star
+                              key={s}
+                              size={10}
+                              className={
+                                s <= Math.round(product.rating)
+                                  ? "text-amber-400 fill-amber-400"
+                                  : "text-gray-200 fill-gray-200"
+                              }
+                            />
                           ))}
                         </div>
-                        <span className="text-[10px] text-gray-400 font-medium">{product.rating} ({product.reviews})</span>
+                        <span className="text-[9px] text-gray-400 font-bold font-inter mt-0.5">
+                          {product.rating} ({product.reviews})
+                        </span>
                       </div>
-                      <div className="flex items-center justify-between mt-auto">
+
+                      {/* Pricing Row */}
+                      <div className="flex items-center justify-between mt-auto pt-2 border-t border-gray-50">
                         <div className="flex flex-col">
-                          <span className="font-bold text-gray-900 text-base leading-none">₹{product.price}</span>
+                          <span className="font-bold text-slate-900 text-base">₹{product.price}</span>
                           {product.originalPrice && (
                             <span className="text-xs text-gray-400 line-through leading-none mt-0.5">₹{product.originalPrice}</span>
                           )}
                         </div>
+                        
+                        {/* Quick Cart Button */}
                         <button
-                          onClick={() => handleAddToCart(product)}
-                          className={`w-9 h-9 rounded-full flex items-center justify-center border transition-all duration-200 ${addedToCart[product.id] ? "bg-green-500 border-green-500" : "bg-rose-500 border-rose-500 hover:bg-rose-600 hover:scale-110 shadow-md shadow-rose-200"}`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleAddToCart(product);
+                          }}
+                          className={`w-9 h-9 rounded-full flex items-center justify-center border transition-all duration-300 shadow-sm ${
+                            addedToCart[product.id]
+                              ? "bg-emerald-500 border-emerald-500"
+                              : "bg-[#0D1F0F] border-[#0D1F0F] hover:bg-rose-500 hover:border-rose-500 hover:scale-105"
+                          }`}
+                          aria-label="Add to cart"
                         >
-                          <ShoppingBag size={15} className="text-white" strokeWidth={2} />
+                          <ShoppingBag size={14} className="text-white" strokeWidth={2} />
                         </button>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
 
-              {/* ── Show More / Loader ── */}
+              {/* Load More Section */}
               {hasMore && (
-                <div ref={loaderRef} className="flex flex-col items-center gap-4 mt-10">
+                <div ref={loaderRef} className="flex flex-col items-center gap-4 mt-12">
                   {loadingMore ? (
                     <div className="flex items-center gap-2 text-rose-500">
-                      <Loader2 size={20} className="animate-spin" />
-                      <span className="text-sm font-medium">Loading more blooms...</span>
+                      <Loader2 size={16} className="animate-spin" />
+                      <span className="text-xs font-bold tracking-widest uppercase font-inter">Loading more blooms...</span>
                     </div>
                   ) : (
                     <button
                       onClick={handleShowMore}
-                      className="inline-flex items-center gap-2 bg-white border border-rose-200 text-rose-500 rounded-full px-8 py-3 text-sm font-bold hover:bg-rose-500 hover:text-white hover:border-rose-500 transition-all duration-200 shadow-sm"
+                      className="inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-700 hover:text-rose-500 hover:border-rose-300 rounded-full px-8 py-3 text-xs font-bold tracking-wider uppercase transition-all duration-300 shadow-sm"
                     >
-                      Show More ({filtered.length - visibleCount} remaining)
-                      <ChevronDown size={16} />
+                      <span>Show More ({filtered.length - visibleCount} remaining)</span>
+                      <ChevronDown size={14} />
                     </button>
                   )}
                 </div>
               )}
-
             </>
           )}
         </div>
       </section>
 
-      {/* ── Bottom Banner ── */}
-      <section className="py-14 px-6 bg-gradient-to-r from-rose-50 via-pink-50 to-amber-50 border-t border-rose-100">
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="text-xs font-bold tracking-widest text-rose-400 uppercase mb-3">Can't find what you're looking for?</p>
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-3">Get a Custom Arrangement</h2>
-          <p className="text-gray-500 text-sm mb-7 max-w-sm mx-auto leading-relaxed">
-            Tell us the occasion, your budget, and preferred flowers. We'll craft something truly unique just for you.
+      {/* ── Bottom Custom Order Banner ── */}
+      <section className="py-20 px-6 bg-gradient-to-r from-rose-50 via-pink-50/50 to-amber-50/50 border-t border-gray-100">
+        <div className="max-w-3xl mx-auto text-center flex flex-col items-center gap-6">
+          <p className="text-[10px] font-bold tracking-widest text-rose-400 uppercase font-inter">Custom Arrangements</p>
+          <h2 className="font-serif-display text-3xl md:text-4xl font-black text-slate-900 leading-tight">
+            Can't find exactly what you want?
+          </h2>
+          <p className="text-gray-500 text-sm max-w-sm leading-relaxed font-light font-inter">
+            Tell us your budget, occasion, and favorite blooms. Our master florists will craft a bespoke arrangement just for you.
           </p>
-          <a href="https://wa.me/919540849659" target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-gray-900 text-white rounded-full px-8 py-3.5 text-sm font-bold hover:bg-rose-600 transition-colors duration-300 shadow-lg">
-            💬 Chat with Us on WhatsApp
+          <a
+            href={WHATSAPP_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-[#0D1F0F] text-white rounded-full px-8 py-4 text-xs font-bold tracking-widest uppercase hover:bg-[#1a3320] transition-colors duration-300 shadow-md hover:-translate-y-0.5"
+          >
+            💬 Custom Order WhatsApp
           </a>
         </div>
       </section>
-    </>
+    </div>
   );
 };
 

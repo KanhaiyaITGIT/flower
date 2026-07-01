@@ -1,6 +1,15 @@
 import { Flower2 } from "lucide-react";
 import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import {
+  BUSINESS_NAME_MAIN,
+  BUSINESS_NAME_SUB,
+  CONTACT_PHONE_1,
+  CONTACT_PHONE_2,
+  WHATSAPP_LINK,
+  INSTAGRAM_LINK,
+  FACEBOOK_LINK,
+} from "../constants";
 
 const infoLinks = [
   { name: "About Us", path: "/about" },
@@ -8,164 +17,68 @@ const infoLinks = [
   { name: "Occasions", path: "/occasions" },
   { name: "Decor", path: "/decor" },
 ];
-const policyLinks = [
 
-  "Terms & Conditions",
-  "Privacy Policy",
+const policyLinks = [
+  { name: "Terms & Conditions", path: "#" },
+  { name: "Privacy Policy", path: "#" },
 ];
 
 export default function Footer() {
   return (
-    <footer
-      style={{
-        background: "#0D1F0F",
-        color: "#F7F0E8",
-        fontFamily: "'Inter', sans-serif",
-      }}
-    >
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap');
-
-        .ftr-link {
-          color: rgba(247,240,232,0.45);
-          text-decoration: none;
-          font-size: 13px;
-          font-weight: 500;
-          letter-spacing: 0.03em;
-          transition: color 0.2s;
-          display: block;
-          padding: 5px 0;
-        }
-        .ftr-link:hover { color: #C8A882; }
-
-        .ftr-social {
-          width: 38px; height: 38px;
-          border-radius: 10px;
-          border: 1px solid rgba(247,240,232,0.12);
-          background: rgba(247,240,232,0.06);
-          display: flex; align-items: center; justify-content: center;
-          font-size: 15px; text-decoration: none;
-          transition: background 0.2s, border-color 0.2s, transform 0.2s;
-        }
-        .ftr-social:hover {
-          background: #C8A882;
-          border-color: #C8A882;
-          transform: translateY(-2px);
-        }
-
-        .ftr-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 40px;
-        }
-        @media (min-width: 540px) { .ftr-grid { grid-template-columns: 1fr 1fr; } }
-        @media (min-width: 900px) { .ftr-grid { grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; } }
-      `}</style>
-
-      {/* Main content */}
-      <div
-        style={{
-          maxWidth: "1280px",
-          margin: "0 auto",
-          padding: "64px 32px 48px",
-        }}
-      >
-        <div className="ftr-grid">
-          {/* Brand column */}
-          <div>
-            {/* Logo — same as header */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-                marginBottom: "20px",
-              }}
-            >
-              <div
-                style={{
-                  width: "42px",
-                  height: "42px",
-                  borderRadius: "50%",
-                  background: "rgba(200,168,130,0.15)",
-                  border: "1px solid rgba(200,168,130,0.3)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexShrink: 0,
-                }}
-              >
-                <Flower2 size={20} color="#C8A882" />
+    <footer className="bg-[#0D1F0F] text-[#F7F0E8] font-inter border-t border-white/5">
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-6 md:px-12 py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16">
+          {/* Brand Column */}
+          <div className="flex flex-col gap-6">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+                <Flower2 size={18} className="text-[#C8A882]" />
               </div>
-              <h2
-                style={{
-                  fontFamily: "'Playfair Display', serif",
-                  fontWeight: 900,
-                  fontSize: "1.3rem",
-                  color: "#F7F0E8",
-                  margin: 0,
-                  letterSpacing: "-0.01em",
-                  lineHeight: 1,
-                }}
-              >
-                Shivam <span style={{ color: "#C8A882" }}>Florist</span>
+              <h2 className="font-serif-display font-black text-lg md:text-xl text-[#F7F0E8] tracking-tight">
+                {BUSINESS_NAME_MAIN} <span className="text-[#C8A882] font-light">{BUSINESS_NAME_SUB}</span>
               </h2>
             </div>
-
-            <p
-              style={{
-                fontSize: "13px",
-                lineHeight: 1.8,
-                color: "rgba(247,240,232,0.4)",
-                maxWidth: "240px",
-                margin: "0 0 24px",
-              }}
-            >
-              Bringing fresh blooms and beautiful arrangements to your doorstep
-              — same day delivery available.
+            
+            <p className="text-sm text-gray-400 leading-relaxed max-w-xs font-light">
+              Bringing fresh premium blooms, bespoke flower arrangements, and exquisite venue styling to Gurgaon and Delhi NCR. Same-day delivery available.
             </p>
-
-            {/* Social icons */}
-            <div style={{ display: "flex", gap: "10px" }}>
+            
+            {/* Social Icons */}
+            <div className="flex items-center gap-3.5">
               <a
-                href="https://www.facebook.com/share/1EHkduyD3K/"
+                href={FACEBOOK_LINK}
                 target="_blank"
-                className="ftr-social"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-xl bg-white/5 hover:bg-[#C8A882] border border-white/10 hover:border-[#C8A882] hover:text-[#0D1F0F] flex items-center justify-center text-lg transition-all duration-300 hover:-translate-y-1"
                 aria-label="Facebook"
               >
-                <FaFacebook></FaFacebook>
+                <FaFacebook />
               </a>
               <a
-                href="https://www.instagram.com/shiv.amflowers?igsh=MWVocXd2d3BrN3ptdA=="
+                href={INSTAGRAM_LINK}
                 target="_blank"
-                className="ftr-social"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-xl bg-white/5 hover:bg-[#C8A882] border border-white/10 hover:border-[#C8A882] hover:text-[#0D1F0F] flex items-center justify-center text-lg transition-all duration-300 hover:-translate-y-1"
                 aria-label="Instagram"
               >
-                {" "}
-                <FaInstagram></FaInstagram>{" "}
+                <FaInstagram />
               </a>
             </div>
           </div>
 
-          {/* Information */}
+          {/* Quick Links Column */}
           <div>
-            <h4
-              style={{
-                fontFamily: "'Inter', sans-serif",
-                fontSize: "10px",
-                fontWeight: 700,
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                color: "#C8A882",
-                margin: "0 0 20px",
-              }}
-            >
+            <h3 className="text-xs font-bold tracking-widest uppercase text-[#C8A882] mb-6">
               Information
-            </h4>
-            <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
+            </h3>
+            <ul className="flex flex-col gap-3 font-light text-sm">
               {infoLinks.map((item) => (
                 <li key={item.name}>
-                  <Link to={item.path} className="ftr-link">
+                  <Link
+                    to={item.path}
+                    className="text-gray-400 hover:text-[#C8A882] transition-colors duration-200 block py-1"
+                  >
                     {item.name}
                   </Link>
                 </li>
@@ -173,141 +86,77 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Policies */}
+          {/* Policies Column */}
           <div>
-            <h4
-              style={{
-                fontFamily: "'Inter', sans-serif",
-                fontSize: "10px",
-                fontWeight: 700,
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                color: "#C8A882",
-                margin: "0 0 20px",
-              }}
-            >
+            <h3 className="text-xs font-bold tracking-widest uppercase text-[#C8A882] mb-6">
               Policies
-            </h4>
-            <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
+            </h3>
+            <ul className="flex flex-col gap-3 font-light text-sm">
               {policyLinks.map((item) => (
-                <li key={item}>
-                  <a href="#" className="ftr-link">
-                    {item}
-                  </a>
+                <li key={item.name}>
+                  <Link
+                    to={item.path}
+                    className="text-gray-400 hover:text-[#C8A882] transition-colors duration-200 block py-1"
+                  >
+                    {item.name}
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Contact Column */}
           <div>
-            <h4
-              style={{
-                fontFamily: "'Inter', sans-serif",
-                fontSize: "10px",
-                fontWeight: 700,
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                color: "#C8A882",
-                margin: "0 0 20px",
-              }}
-            >
+            <h3 className="text-xs font-bold tracking-widest uppercase text-[#C8A882] mb-6">
               Contact Us
-            </h4>
-
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "12px" }}
-            >
+            </h3>
+            <div className="flex flex-col gap-4 font-light text-sm">
               <a
-                href="tel:+919540849659"
-                className="ftr-link"
-                style={{ display: "flex", alignItems: "center", gap: "8px" }}
+                href={`tel:${CONTACT_PHONE_1}`}
+                className="text-gray-400 hover:text-[#C8A882] flex items-center gap-3 transition-colors duration-200 py-1"
               >
-                <span style={{ fontSize: "15px" }}>📞</span> +91 9540849659
+                <span className="text-base select-none">📞</span> {CONTACT_PHONE_1}
               </a>
               <a
-                href="tel:+919990812250"
-                className="ftr-link"
-                style={{ display: "flex", alignItems: "center", gap: "8px" }}
+                href={`tel:${CONTACT_PHONE_2}`}
+                className="text-gray-400 hover:text-[#C8A882] flex items-center gap-3 transition-colors duration-200 py-1"
               >
-                <span style={{ fontSize: "15px" }}>📞</span> +91 9990812250
+                <span className="text-base select-none">📞</span> {CONTACT_PHONE_2}
               </a>
               <a
-                href="https://wa.me/919540849659"
+                href={WHATSAPP_LINK}
                 target="_blank"
-                className="ftr-link"
-                style={{ display: "flex", alignItems: "center", gap: "8px" }}
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-[#C8A882] flex items-center gap-3 transition-colors duration-200 py-1"
               >
-                <span style={{ fontSize: "15px" }}>
-                  {" "}
-                  <FaWhatsapp></FaWhatsapp>{" "}
-                </span>{" "}
-                WhatsApp Us
+                <span className="text-base text-emerald-400">
+                  <FaWhatsapp />
+                </span>
+                WhatsApp Support
               </a>
             </div>
 
-            {/* Same day delivery badge */}
-            <div
-              style={{
-                marginTop: "24px",
-                padding: "12px 16px",
-                borderRadius: "10px",
-                background: "rgba(200,168,130,0.1)",
-                border: "1px solid rgba(200,168,130,0.2)",
-              }}
-            >
-              <p
-                style={{
-                  fontSize: "11px",
-                  color: "#C8A882",
-                  fontWeight: 700,
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
-                  margin: "0 0 2px",
-                }}
-              >
-                🚚 Fast Delivery
+            {/* Same Day Delivery Badge */}
+            <div className="mt-6 bg-white/5 border border-white/10 rounded-xl p-4 max-w-[220px]">
+              <p className="text-[10px] text-[#C8A882] font-bold tracking-widest uppercase flex items-center gap-2">
+                <span>🚚</span> Same-Day Delivery
+              </p>
+              <p className="text-xs text-gray-400 mt-1 font-light leading-snug">
+                Gurgaon & NCR wide delivery available for orders placed before 4:00 PM.
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom bar */}
-      <div
-        style={{
-          borderTop: "1px solid rgba(247,240,232,0.08)",
-          padding: "18px 32px",
-        }}
-      >
-        <div
-          style={{
-            maxWidth: "1280px",
-            margin: "0 auto",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: "8px",
-          }}
-        >
-          <p
-            style={{
-              fontSize: "11px",
-              color: "rgba(247,240,232,0.25)",
-              margin: 0,
-            }}
-          >
-            © {new Date().getFullYear()} Shivam Florist. All Rights Reserved.
+      {/* Bottom Bar */}
+      <div className="border-t border-white/5 py-8 px-6">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center">
+          <p className="text-xs text-gray-500 font-light">
+            © {new Date().getFullYear()} {BUSINESS_NAME_MAIN} {BUSINESS_NAME_SUB}. All Rights Reserved.
           </p>
-          <p
-            style={{
-              fontSize: "11px",
-              color: "rgba(247,240,232,0.25)",
-              margin: 0,
-            }}
-          >
-            Made with 🌸 in India
+          <p className="text-xs text-gray-500 font-light flex items-center gap-1.5 justify-center">
+            Made with <span className="text-rose-500 animate-pulse">🌸</span> in India
           </p>
         </div>
       </div>
