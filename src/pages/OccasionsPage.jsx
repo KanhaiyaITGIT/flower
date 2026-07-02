@@ -9,6 +9,8 @@ import {
   CONTACT_PHONE_2,
 } from "../constants";
 import { motion } from "framer-motion";
+import RevealSection from "../components/RevealSection";
+import FloatingDecoration from "../components/FloatingDecoration";
 
 // Import actual images
 import image1 from "../assets/s1.png";
@@ -47,9 +49,9 @@ const occasions = [
     desc: "Bridal bouquets, ceremony décor & reception centrepieces crafted to make your day unforgettable.",
     image: image1,
     gradient: "from-rose-950/80 via-rose-900/40 to-transparent",
-    accentBg: "bg-rose-50/90",
-    accentText: "text-rose-600",
-    accentBorder: "border-rose-100/60",
+    accentBg: "bg-[#F4C9D1]/90",
+    accentText: "text-[#D6537A]",
+    accentBorder: "border-#F4C9D1/60",
     products: "48 arrangements",
     size: "large",
     emoji: "💍",
@@ -242,9 +244,15 @@ const OccasionsPage = () => {
   ];
 
   return (
-    <div className="w-full bg-[#fafaf9] overflow-hidden">
+    <div className="w-full bg-[#fafaf9] overflow-hidden relative">
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <FloatingDecoration type="leaf" side="left" top="4%" size={26} opacity={0.1} delay={0.3} duration={13} animation="sway3" color="#d1bca8" />
+        <FloatingDecoration type="petal6" side="right" top="3%" size={22} opacity={0.1} delay={1.2} duration={14} animation="sway2" color="#d1bca8" />
+        <FloatingDecoration type="petal5" side="left" bottom="10%" size={30} opacity={0.1} delay={0.8} duration={12} animation="sway1" color="#d1bca8" />
+        <FloatingDecoration type="petal" side="right" bottom="8%" size={20} opacity={0.1} delay={2} duration={15} animation="sway2" color="#d1bca8" />
+      </div>
       {/* Hero Banner */}
-      <section className="relative min-h-[500px] flex items-center overflow-hidden bg-[#0a0805]">
+      <RevealSection className="relative min-h-[500px] flex items-center overflow-hidden bg-[#0a0805]">
         {/* Layered ambient gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-rose-950/60 via-gray-950 to-purple-950/50 pointer-events-none" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_60%_40%,rgba(253,164,175,0.08),transparent)] pointer-events-none" />
@@ -278,7 +286,7 @@ const OccasionsPage = () => {
               </span>
             </div>
 
-            <h1 className="font-serif-display text-5xl md:text-7xl font-black text-[#F7F0E8] leading-[1.05] mb-6">
+            <h1 className="font-serif-display text-5xl md:text-7xl font-black text-[#FBF6EF] leading-[1.05] mb-6">
               Every moment
               <br />
               <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-rose-300 via-pink-300 to-amber-200 font-medium font-serif-display">
@@ -293,31 +301,31 @@ const OccasionsPage = () => {
             <div className="flex gap-4 flex-wrap">
               <a
                 href="#occasions-grid"
-                className="inline-flex items-center gap-2 bg-rose-500 hover:bg-rose-600 text-white rounded-full px-8 py-4 text-xs font-bold tracking-widest uppercase transition-all duration-300 shadow-lg shadow-rose-950/40 hover:-translate-y-0.5"
+                className="group inline-flex items-center gap-2 bg-[#D6537A] hover:bg-rose-600 text-white rounded-2xl px-8 py-4 text-xs font-bold tracking-widest uppercase transition-all duration-300 shadow-soft-lg shadow-rose-950/40 hover:shadow-soft-lg hover:shadow-rose-950/30 hover:scale-[1.04]"
               >
                 Browse Occasions
-                <ArrowRight size={13} />
+                <ArrowRight size={13} className="icon-wiggle" />
               </a>
               <a
                 href={WHATSAPP_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-full px-8 py-4 text-xs font-bold tracking-widest uppercase backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5"
+                className="group inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-2xl px-8 py-4 text-xs font-bold tracking-widest uppercase backdrop-blur-md transition-all duration-300 hover:shadow-soft-lg hover:shadow-white/10 hover:scale-[1.04]"
               >
-                <MessageCircle size={13} />
+                <MessageCircle size={13} className="icon-wiggle" />
                 WhatsApp Consultation
               </a>
             </div>
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* ── OCCASIONS GRID ── */}
-      <section id="occasions-grid" className="py-24 px-6">
+      <RevealSection id="occasions-grid" className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">Find Your Moment</span>
-            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-slate-900 mt-3">Shop by Occasion</h2>
+            <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">Find Your Moment</span>
+            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[#14301F] mt-3">Shop by Occasion</h2>
           </div>
 
           <div
@@ -327,13 +335,13 @@ const OccasionsPage = () => {
             {occasions.map((occ) => (
               <div
                 key={occ.id}
-                className={`relative rounded-[24px] overflow-hidden cursor-pointer group ${gridClasses[occ.size]} shadow-sm hover:shadow-xl transition-all duration-300`}
+                className={`relative rounded-2xl overflow-hidden cursor-pointer group ${gridClasses[occ.size]} shadow-soft hover:shadow-soft-lg hover:scale-[1.02] transition-all duration-300`}
                 onMouseEnter={() => setHoveredCard(occ.id)}
                 onMouseLeave={() => setHoveredCard(null)}
                 onClick={() => navigate(`/category?cat=${encodeURIComponent(occ.category)}`)}
               >
                 {/* Background image container */}
-                <div className="absolute inset-0 w-full h-full bg-rose-50/20">
+                <div className="absolute inset-0 w-full h-full bg-[#F4C9D1]/20">
                   <LazyImage
                     src={occ.image}
                     alt={occ.name}
@@ -384,7 +392,7 @@ const OccasionsPage = () => {
                     </span>
 
                     <span
-                      className={`flex items-center gap-1 bg-white text-[#0D1F0F] text-[10px] font-bold tracking-wider uppercase rounded-full px-3 py-1.5 transition-all duration-300 shadow-md ${
+                      className={`flex items-center gap-1 bg-white text-[#14301F] text-[10px] font-bold tracking-wider uppercase rounded-2xl px-3 py-1.5 transition-all duration-300 shadow-soft ${
                         hoveredCard === occ.id
                           ? "opacity-100 translate-x-0"
                           : "opacity-0 translate-x-3"
@@ -399,14 +407,14 @@ const OccasionsPage = () => {
             ))}
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* ── HOW IT WORKS ── */}
-      <section className="py-20 px-6 bg-white border-y border-gray-100">
+      <RevealSection className="py-20 px-6 bg-white border-y border-gray-100">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">Reliable & Transparent</span>
-            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-slate-900 mt-2">Delivered in 3 Simple Steps</h2>
+            <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">Reliable & Transparent</span>
+            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[#14301F] mt-2">Delivered in 3 Simple Steps</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
@@ -416,7 +424,7 @@ const OccasionsPage = () => {
                 <div className="w-18 h-18 rounded-full bg-gradient-to-br from-rose-50 to-pink-100/50 border border-rose-100 flex items-center justify-center text-3xl mb-4 shadow-sm relative z-10">
                   {step.icon}
                 </div>
-                <h3 className="font-serif-display text-lg font-bold text-slate-900 mb-2">
+                <h3 className="font-serif-display text-lg font-bold text-[#14301F] mb-2">
                   {step.title}
                 </h3>
                 <p className="text-gray-400 text-xs leading-relaxed max-w-[200px] font-light">
@@ -440,20 +448,20 @@ const OccasionsPage = () => {
                 key={i}
                 className="flex items-center gap-2 bg-[#fafaf9] border border-gray-200/60 rounded-full px-5 py-2.5 shadow-sm"
               >
-                <Icon size={12} className="text-rose-500" />
+                <Icon size={12} className="text-[#D6537A]" />
                 <span className="text-xs text-slate-700 font-bold tracking-wide font-inter">{text}</span>
               </div>
             ))}
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* ── SHOP BY RECIPIENT ── */}
-      <section className="py-24 bg-[#fafaf9]/60">
+      <RevealSection className="py-24 bg-[#fafaf9]/60">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">Personalized Gifting</span>
-            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-slate-900 mt-2">Who Are You Gifting?</h2>
+            <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">Personalized Gifting</span>
+            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[#14301F] mt-2">Who Are You Gifting?</h2>
             <p className="text-gray-400 text-sm mt-3 font-light">Bespoke arrangements curated for all the special people in your circle</p>
           </div>
 
@@ -462,9 +470,9 @@ const OccasionsPage = () => {
               <div
                 key={index}
                 onClick={() => navigate(`/category?cat=${encodeURIComponent(item.category)}`)}
-                className="group relative overflow-hidden rounded-[24px] bg-white shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer hover:-translate-y-1.5"
+                className="group relative overflow-hidden rounded-2xl bg-white shadow-soft hover:shadow-soft-lg hover:shadow-rose-500/10 hover:scale-[1.02] transition-all duration-500 cursor-pointer"
               >
-                <div className="h-52 overflow-hidden bg-rose-50/20">
+                <div className="h-52 overflow-hidden bg-[#F4C9D1]/20">
                   <img
                     src={item.image}
                     alt={item.label}
@@ -484,22 +492,22 @@ const OccasionsPage = () => {
             ))}
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* ── FEATURED PICKS ── */}
-      <section className="py-24 bg-white border-t border-gray-100">
+      <RevealSection className="py-24 bg-white border-t border-gray-100">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex items-end justify-between mb-12 flex-wrap gap-4">
             <div>
-              <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">Featured Creations</span>
-              <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-slate-900 mt-2">Most-Loved Gifts</h2>
+              <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">Featured Creations</span>
+              <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[#14301F] mt-2">Most-Loved Gifts</h2>
             </div>
             <Link
               to="/category"
-              className="flex items-center gap-1.5 text-xs font-bold tracking-widest uppercase text-rose-500 hover:text-rose-600 transition-colors"
+              className="group flex items-center gap-1.5 text-xs font-bold tracking-widest uppercase text-[#D6537A] hover:text-[#D6537A] hover:scale-[1.04] transition-all duration-300"
             >
               View All Products
-              <ArrowRight size={14} />
+              <ArrowRight size={14} className="icon-wiggle" />
             </Link>
           </div>
 
@@ -508,9 +516,9 @@ const OccasionsPage = () => {
               <div
                 key={item.id}
                 onClick={() => navigate(`/category?cat=${encodeURIComponent(item.category)}`)}
-                className="group bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col"
+                className="group bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-soft-lg hover:shadow-rose-500/10 hover:scale-[1.02] transition-all duration-300 cursor-pointer flex flex-col"
               >
-                <div className="aspect-square overflow-hidden bg-rose-50/20 relative">
+                <div className="aspect-square overflow-hidden bg-[#F4C9D1]/20 relative">
                   <LazyImage
                     src={item.image}
                     alt={item.name}
@@ -522,7 +530,7 @@ const OccasionsPage = () => {
                 </div>
 
                 <div className="p-5 flex flex-col flex-1">
-                  <h3 className="font-serif-display text-sm font-bold text-slate-900 mb-1 leading-snug line-clamp-2">
+                  <h3 className="font-serif-display text-sm font-bold text-[#14301F] mb-1 leading-snug line-clamp-2">
                     {item.name}
                   </h3>
                   <div className="flex items-center gap-1.5 mb-4">
@@ -530,20 +538,20 @@ const OccasionsPage = () => {
                     <span className="text-[10px] text-gray-500 font-bold font-inter mt-0.5">{item.rating}</span>
                   </div>
                   <div className="flex items-center justify-between mt-auto">
-                    <span className="font-bold text-slate-900 text-base">₹{item.price}</span>
+                    <span className="font-bold text-[#D6537A] text-sm">Call for Price</span>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         handleCart(item.id);
                       }}
-                      className={`w-9 h-9 rounded-full flex items-center justify-center border transition-all duration-300 shadow-sm ${
+                      className={`group w-9 h-9 rounded-full flex items-center justify-center border transition-all duration-300 shadow-soft ${
                         addedToCart[item.id]
                           ? "bg-emerald-500 border-emerald-500"
-                          : "bg-rose-500 border-rose-500 hover:bg-rose-600 hover:scale-110 shadow-rose-200"
+                          : "bg-[#D6537A] border-rose-500 hover:bg-rose-600 hover:scale-110 shadow-rose-200"
                       }`}
                       aria-label="Add to cart"
                     >
-                      <ShoppingBag size={14} className="text-white" />
+                      <ShoppingBag size={14} className="text-white icon-wiggle" />
                     </button>
                   </div>
                 </div>
@@ -551,17 +559,17 @@ const OccasionsPage = () => {
             ))}
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* ── CUSTOM ORDER CTA ── */}
-      <section className="py-24 px-6 relative overflow-hidden bg-[#0a0805]">
+      <RevealSection className="py-24 px-6 relative overflow-hidden bg-[#0a0805]">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_50%,rgba(253,164,175,0.08),transparent)] pointer-events-none" />
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-rose-500/20 to-transparent" />
         <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-rose-500/10 to-transparent" />
 
         <div className="max-w-2xl mx-auto text-center relative z-10 flex flex-col items-center">
           <div className="text-4xl mb-4 select-none">🌸</div>
-          <h2 className="font-serif-display text-4xl md:text-5xl font-black text-[#F7F0E8] mb-4 leading-tight">
+          <h2 className="font-serif-display text-4xl md:text-5xl font-black text-[#FBF6EF] mb-4 leading-tight">
             Can't find your
             <br />
             <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-rose-300 to-pink-300 font-medium font-serif-display">
@@ -577,16 +585,16 @@ const OccasionsPage = () => {
               href={WHATSAPP_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-[#25d366] hover:bg-[#20ba59] text-white rounded-full px-8 py-4 text-xs font-bold tracking-widest uppercase transition-all duration-300 shadow-lg shadow-emerald-950/40 hover:-translate-y-0.5"
+              className="group inline-flex items-center justify-center gap-2 bg-[#25d366] hover:bg-[#20ba59] text-white rounded-2xl px-8 py-4 text-xs font-bold tracking-widest uppercase transition-all duration-300 shadow-soft-lg shadow-emerald-950/40 hover:shadow-soft-lg hover:shadow-emerald-950/30 hover:scale-[1.04]"
             >
-              <MessageCircle size={14} />
+              <MessageCircle size={14} className="icon-wiggle" />
               Chat on WhatsApp
             </a>
             <a
               href={`tel:${CONTACT_PHONE_1}`}
-              className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/20 rounded-full px-8 py-4 text-xs font-bold tracking-widest uppercase backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5"
+              className="group inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/20 rounded-2xl px-8 py-4 text-xs font-bold tracking-widest uppercase backdrop-blur-md transition-all duration-300 hover:shadow-soft-lg hover:shadow-white/10 hover:scale-[1.04]"
             >
-              <Phone size={14} />
+              <Phone size={14} className="icon-wiggle" />
               Call us: {CONTACT_PHONE_1}
             </a>
           </div>
@@ -595,14 +603,14 @@ const OccasionsPage = () => {
             We respond within 10 minutes · Available 9 AM – 9 PM
           </p>
         </div>
-      </section>
+      </RevealSection>
 
       {/* WhatsApp Floating Button */}
       <a
         href={WHATSAPP_LINK}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25d366] flex items-center justify-center shadow-xl shadow-emerald-400/30 hover:bg-[#20ba59] transition-transform hover:scale-105 duration-200"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25d366] flex items-center justify-center shadow-soft-lg shadow-emerald-400/30 hover:bg-[#20ba59] hover:shadow-2xl hover:shadow-emerald-400/50 transition-all duration-300 hover:scale-105"
         aria-label="WhatsApp"
       >
         <MessageCircle size={26} color="white" fill="white" />

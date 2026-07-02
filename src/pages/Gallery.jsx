@@ -18,6 +18,7 @@ import flower16 from "../assets/s16.png";
 import flower17 from "../assets/s17.png";
 import flower18 from "../assets/s18.png";
 import flower19 from "../assets/s19.png";
+import FloatingDecoration from "../components/FloatingDecoration";
 import flower20 from "../assets/s20.png";
 import flower21 from "../assets/s21.png";
 import flower22 from "../assets/s22.png";
@@ -197,6 +198,7 @@ export default function Gallery() {
         background: "#0D1F0F",
         minHeight: "100vh",
         color: "#F7F0E8",
+        position: "relative",
       }}
     >
       <link
@@ -237,11 +239,11 @@ export default function Gallery() {
 
         .card-inner {
           position: relative;
-          border-radius: 20px;
+          border-radius: 18px;
           overflow: hidden;
           cursor: pointer;
           transition: transform 0.35s cubic-bezier(.2,.8,.2,1), box-shadow 0.35s ease;
-          box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+          box-shadow: 0 4px 16px rgba(0,0,0,0.15);
         }
         /* mixed big/medium/small card heights for a lively Pinterest-style masonry */
         .size-small { height: 220px; }
@@ -263,8 +265,8 @@ export default function Gallery() {
           .size-large { height: 320px; }
         }
         .card-inner:hover {
-          transform: translateY(-6px) scale(1.012);
-          box-shadow: 0 28px 50px rgba(0,0,0,0.55);
+          transform: translateY(-6px) scale(1.03);
+          box-shadow: 0 8px 30px rgba(214,83,122,0.2);
         }
         .card-inner img {
           width: 100%; height: 100%; object-fit: cover; display: block;
@@ -280,10 +282,10 @@ export default function Gallery() {
         /* small coloured chip, top-left, like the old category/season badge */
         .card-chip {
           position: absolute; top: 16px; left: 14px; z-index: 3;
-          padding: 5px 12px; border-radius: 999px;
+          padding: 5px 12px; border-radius: 18px;
           font-size: 9px; font-weight: 700; letter-spacing: 0.12em;
           text-transform: uppercase; color: #fff;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+          box-shadow: 0 4px 16px rgba(0,0,0,0.1);
           backdrop-filter: blur(2px);
         }
 
@@ -303,7 +305,7 @@ export default function Gallery() {
         }
 
         .load-more-btn {
-          padding: 14px 44px; border-radius: 999px; border: 1px solid #C8A882;
+          padding: 14px 44px; border-radius: 18px; border: 1px solid #C8A882;
           background: transparent; color: #C8A882; cursor: pointer;
           font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
           letter-spacing: 0.15em; text-transform: uppercase;
@@ -311,7 +313,8 @@ export default function Gallery() {
         }
         .load-more-btn:hover {
           background: #C8A882; color: #0D1F0F;
-          box-shadow: 0 10px 28px rgba(200,168,130,0.3);
+          transform: scale(1.04);
+          box-shadow: 0 8px 30px rgba(200,168,130,0.3);
         }
         @media (max-width: 480px) {
           .load-more-btn { width: 100%; padding: 14px 20px; }
@@ -329,6 +332,13 @@ export default function Gallery() {
         @media (max-width: 900px) { .gallery-hero { padding: 56px 28px 36px; } }
         @media (max-width: 560px) { .gallery-hero { padding: 40px 18px 28px; } }
       `}</style>
+
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <FloatingDecoration type="leaf" side="left" top="4%" size={26} opacity={0.1} delay={0.4} duration={14} animation="sway3" color="#d1bca8" />
+        <FloatingDecoration type="petal6" side="right" top="3%" size={22} opacity={0.1} delay={1.3} duration={13} animation="sway2" color="#d1bca8" />
+        <FloatingDecoration type="petal5" side="left" bottom="10%" size={30} opacity={0.1} delay={0.7} duration={12} animation="sway1" color="#d1bca8" />
+        <FloatingDecoration type="petal" side="right" bottom="8%" size={20} opacity={0.1} delay={2} duration={15} animation="sway2" color="#d1bca8" />
+      </div>
 
       {/* Hero */}
       <header className="gallery-hero" style={{ textAlign: "center", borderBottom: "1px solid rgba(200,168,130,0.15)" }}>
@@ -475,7 +485,7 @@ export default function Gallery() {
               width: "100%",
               overflow: "hidden",
               position: "relative",
-              boxShadow: "0 32px 80px rgba(0,0,0,0.5)",
+              boxShadow: "0 8px 30px rgba(0,0,0,0.3)",
               border: `1px solid ${lightbox.accent}55`,
             }}
             onClick={(e) => e.stopPropagation()}
@@ -490,7 +500,7 @@ export default function Gallery() {
                 zIndex: 10,
                 background: "rgba(0,0,0,0.4)",
                 border: "1px solid rgba(200,168,130,0.4)",
-                borderRadius: "100px",
+                borderRadius: "18px",
                 width: "34px",
                 height: "34px",
                 cursor: "pointer",
@@ -508,7 +518,7 @@ export default function Gallery() {
               style={{
                 position: "absolute", top: "14px", left: "14px", zIndex: 10,
                 background: lightbox.accent, color: "#fff",
-                padding: "5px 14px", borderRadius: "999px",
+                padding: "5px 14px", borderRadius: "18px",
                 fontSize: "10px", fontWeight: 700, letterSpacing: "0.1em",
                 textTransform: "uppercase",
               }}

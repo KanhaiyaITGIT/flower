@@ -26,6 +26,9 @@ import {
 import { FaInstagram, FaFacebookF } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import LazyImage from "../components/ui/LazyImage";
+import FloatingDecoration from "../components/FloatingDecoration";
+import BokehLights from "../components/BokehLights";
+import RevealSection from "../components/RevealSection";
 import { WHATSAPP_LINK, INSTAGRAM_LINK, FACEBOOK_LINK } from "../constants";
 
 import image1 from "../assets/f4.png";
@@ -60,12 +63,12 @@ const containerVariants = {
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.8,
+      duration: 0.6,
       ease: [0.16, 1, 0.3, 1],
     },
   },
@@ -229,8 +232,8 @@ const Home = () => {
       title: "Fast Delivery",
       desc: "Same day flower delivery available.",
       icon: Truck,
-      bg: "bg-rose-50/50",
-      iconColor: "text-rose-500",
+      bg: "bg-[#F4C9D1]/50",
+      iconColor: "text-[#D6537A]",
     },
     {
       title: "Fresh Flowers",
@@ -336,248 +339,167 @@ const Home = () => {
   return (
     <div className="w-full overflow-hidden bg-[#fafaf9]">
       {/* ═══════════════════════════════════════════════════════════════════ */}
-      {/* ─── HERO SECTION: WORLD-CLASS PREMIUM DESIGN ─── */}
+      {/* ─── HERO SECTION: PROMOTIONAL CARD STYLE ─── */}
       {/* ═══════════════════════════════════════════════════════════════════ */}
-      <section className="relative w-full overflow-hidden bg-white min-h-screen lg:min-h-[120vh] flex items-center justify-center pt-20 lg:pt-0">
-        {/* ─── Animated Background Gradients ─── */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Top-right gradient orb */}
-          <motion.div
-            animate={{
-              x: [0, 40, 0],
-              y: [0, -60, 0],
-            }}
-            transition={{
-              duration: 20,
-              ease: "easeInOut",
-              repeat: Infinity,
-            }}
-            className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-rose-200/30 via-pink-100/20 to-transparent rounded-full blur-3xl"
-          />
+      <section className="relative w-full overflow-hidden bg-[#fafaf9] pt-20 lg:pt-14">
 
-          {/* Bottom-left gradient orb */}
-          <motion.div
-            animate={{
-              x: [0, -40, 0],
-              y: [0, 60, 0],
-            }}
-            transition={{
-              duration: 25,
-              ease: "easeInOut",
-              repeat: Infinity,
-              delay: 1,
-            }}
-            className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-amber-100/20 via-rose-100/15 to-transparent rounded-full blur-3xl"
-          />
-
-          {/* Center accent */}
-          <motion.div
-            animate={{
-              scale: [1, 1.1, 1],
-              opacity: [0.3, 0.5, 0.3],
-            }}
-            transition={{
-              duration: 8,
-              ease: "easeInOut",
-              repeat: Infinity,
-            }}
-            className="absolute top-1/3 left-1/4 w-96 h-96 bg-gradient-to-br from-rose-100/10 to-transparent rounded-full blur-3xl"
-          />
+        {/* ─── Category Shortcuts Row ─── */}
+        <div className="w-full overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pb-2 lg:pb-4">
+          <div className="flex gap-5 lg:gap-8 justify-start lg:justify-center px-6 lg:px-8 max-w-7xl mx-auto">
+            {[
+              { label: "All Flowers", image: image1, link: "/category" },
+              { label: "Rose Love", image: image4, link: "/category?cat=Anniversary" },
+              { label: "Birthdays", image: image5, link: "/category?cat=Birthday" },
+              { label: "Anniversaries", image: image6, link: "/category?cat=Anniversary" },
+              { label: "Weddings", image: image7, link: "/category?cat=Wedding" },
+              { label: "Luxury", icon: "flower", link: "/category" },
+              { label: "Balloons", image: image16, link: "/category?cat=Balloon" },
+              { label: "Devotional", image: image9, link: "/category?cat=Devotional" },
+              { label: "Gifts", icon: "gift", link: "/category" },
+            ].map((cat, i) => (
+              <Link
+                key={i}
+                to={cat.link}
+                className="flex flex-col items-center gap-2 shrink-0 group"
+              >
+                <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full overflow-hidden border-2 border-transparent group-hover:border-[#C9A15A] group-hover:shadow-lg transition-all duration-300">
+                  {cat.icon ? (
+                    <div className={`w-full h-full flex items-center justify-center ${cat.icon === "flower" ? "bg-[#F4C9D1]/30" : "bg-[#C9A15A]/20"}`}>
+                      {cat.icon === "flower" ? <Flower2 size={28} className="text-[#D6537A]" /> : <Gift size={28} className="text-[#C9A15A]" />}
+                    </div>
+                  ) : (
+                    <LazyImage
+                      src={cat.image}
+                      alt={cat.label}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                  )}
+                </div>
+                <span className="text-[11px] lg:text-xs font-bold text-gray-600 group-hover:text-[#14301F] transition-colors whitespace-nowrap">
+                  {cat.label}
+                </span>
+              </Link>
+            ))}
+          </div>
         </div>
 
-        {/* ─── Content Container ─── */}
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-screen lg:min-h-auto py-20 lg:py-0"
-          >
-            {/* ─── LEFT COLUMN: CONTENT ─── */}
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-col justify-center space-y-8 order-2 lg:order-1"
-            >
-              {/* Micro-copy Badge */}
-              <motion.div
-                variants={itemVariants}
-                className="inline-flex items-center gap-2 w-fit"
-              >
-                <div className="flex items-center gap-2 bg-gradient-to-r from-rose-50 to-pink-50 border border-rose-200/50 backdrop-blur-sm px-4 py-2.5 rounded-full hover:border-rose-300/80 transition-all duration-300 group cursor-default">
-                  <motion.div
-                    animate={{ rotate: [0, 20, 0] }}
-                    transition={{ duration: 3, repeat: Infinity }}
-                  >
-                    <Leaf size={14} className="text-rose-500" />
-                  </motion.div>
-                  <span className="text-xs font-semibold tracking-wider text-rose-700 uppercase group-hover:text-rose-800 transition-colors">
-                    Handpicked Fresh, Every Morning
-                  </span>
-                </div>
-              </motion.div>
+        {/* ─── Hero Promotional Card ─── */}
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-6 lg:pb-10">
+          <div className="relative bg-[#F5EFE6] rounded-[28px] overflow-hidden shadow-lg">
 
-              {/* Main Headline */}
-              <motion.div variants={itemVariants} className="space-y-3 lg:space-y-4">
-                <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-serif-display font-black leading-[1.08] tracking-tight">
-                  <span className="block text-slate-950">Delivering</span>
-                  <span className="block bg-gradient-to-r from-rose-600 via-rose-500 to-pink-500 bg-clip-text text-transparent italic">
-                    Happiness
-                  </span>
-                  <span className="block text-slate-950">With Fresh Flowers</span>
+            {/* Top-right decorative accent button */}
+            <div className="absolute top-4 right-4 z-20 w-11 h-11 lg:w-12 lg:h-12 rounded-full bg-[#14301F] flex items-center justify-center shadow-md cursor-default">
+              <ArrowRight size={20} className="text-[#C9A15A]" strokeWidth={2.5} />
+            </div>
+
+            {/* Hand-drawn botanical illustration — Top-left corner */}
+            <div className="absolute top-0 left-0 z-10 pointer-events-none" aria-hidden="true">
+              <svg width="140" height="100" viewBox="0 0 140 100" fill="none">
+                <path d="M0 70 C20 50, 40 30, 60 20 C80 10, 100 8, 130 12" stroke="#7a8c6b" strokeWidth="1.8" strokeLinecap="round" fill="none" opacity="0.7" />
+                <path d="M30 40 C34 34, 40 32, 44 36 C40 42, 34 44, 30 40Z" fill="#7a8c6b" opacity="0.5" />
+                <path d="M55 24 C59 18, 65 16, 69 20 C65 26, 59 28, 55 24Z" fill="#7a8c6b" opacity="0.5" />
+                <path d="M85 14 C89 8, 95 6, 99 10 C95 16, 89 18, 85 14Z" fill="#7a8c6b" opacity="0.45" />
+                <path d="M5 85 C8 75, 14 72, 18 76 C14 82, 8 88, 5 85Z" fill="#C9A15A" opacity="0.5" />
+                {/* Scattered dots */}
+                <circle cx="110" cy="6" r="2" fill="#C9A15A" opacity="0.4" />
+                <circle cx="125" cy="18" r="1.5" fill="#7a8c6b" opacity="0.4" />
+                <circle cx="15" cy="95" r="1.5" fill="#C9A15A" opacity="0.35" />
+              </svg>
+            </div>
+
+            {/* Hand-drawn botanical illustration — Bottom-left corner */}
+            <div className="absolute bottom-0 left-0 z-10 pointer-events-none" aria-hidden="true">
+              <svg width="100" height="80" viewBox="0 0 100 80" fill="none">
+                <path d="M20 80 C30 60, 40 40, 40 28 C40 18, 35 10, 30 4" stroke="#7a8c6b" strokeWidth="1.5" strokeLinecap="round" fill="none" opacity="0.6" />
+                <path d="M34 30 C38 24, 44 22, 48 26 C44 32, 38 34, 34 30Z" fill="#7a8c6b" opacity="0.5" />
+                <path d="M32 16 C36 10, 42 8, 46 12 C42 18, 36 20, 32 16Z" fill="#7a8c6b" opacity="0.5" />
+                <circle cx="85" cy="70" r="2" fill="#C9A15A" opacity="0.35" />
+                <circle cx="90" cy="64" r="1.2" fill="#7a8c6b" opacity="0.35" />
+              </svg>
+            </div>
+
+            {/* Hand-drawn botanical flower bloom — Top-right area */}
+            <div className="absolute top-0 right-0 z-10 pointer-events-none" aria-hidden="true">
+              <svg width="90" height="90" viewBox="0 0 90 90" fill="none">
+                <path d="M55 90 C58 74, 62 60, 62 48 C62 36, 58 26, 50 18" stroke="#C9A15A" strokeWidth="1.5" strokeLinecap="round" fill="none" opacity="0.5" />
+                <circle cx="50" cy="16" r="6" fill="#C9A15A" opacity="0.3" />
+                <circle cx="42" cy="12" r="4" fill="#C9A15A" opacity="0.25" />
+                <circle cx="58" cy="12" r="4" fill="#C9A15A" opacity="0.25" />
+                <circle cx="50" cy="8" r="4" fill="#C9A15A" opacity="0.25" />
+                <circle cx="44" cy="20" r="3.5" fill="#C9A15A" opacity="0.2" />
+                <circle cx="56" cy="20" r="3.5" fill="#C9A15A" opacity="0.2" />
+                <circle cx="70" cy="10" r="1.5" fill="#C9A15A" opacity="0.35" />
+                <circle cx="78" cy="24" r="1.5" fill="#7a8c6b" opacity="0.3" />
+              </svg>
+            </div>
+
+            {/* Grid: content left, image right */}
+            <div className="grid lg:grid-cols-2 min-h-[360px] lg:min-h-[460px]">
+              {/* ─── LEFT: TEXT CONTENT ─── */}
+              <div className="flex flex-col justify-center px-7 lg:px-12 py-10 lg:py-12 order-2 lg:order-1">
+                <span className="inline-flex items-center gap-1.5 text-[10px] font-bold tracking-[0.2em] uppercase text-[#7a8c6b] font-inter mb-3">
+                  <span className="w-6 h-[1.5px] bg-[#7a8c6b]/40 inline-block" />
+                  Fresh Daily
+                </span>
+
+                <h1 className="font-inter font-bold text-4xl sm:text-5xl lg:text-6xl xl:text-7xl text-[#1a1a1a] leading-[1.08] tracking-tight">
+                  Luxury
+                  <span className="block text-[#C9A15A]">Blooms</span>
                 </h1>
-              </motion.div>
 
-              {/* Subheading */}
-              <motion.p
-                variants={itemVariants}
-                className="text-lg sm:text-xl text-slate-600 max-w-lg leading-relaxed font-light"
-              >
-                Bespoke bouquets, luxury floral arrangements and meaningful gifts designed to elevate your moments into unforgettable memories.
-              </motion.p>
+                <p className="text-gray-500 text-sm lg:text-base mt-3 max-w-md leading-relaxed font-inter">
+                  Handpicked fresh every morning. Artisan bouquets, premium arrangements and thoughtful gifts — curated for life's most beautiful moments.
+                </p>
 
-              {/* CTA Buttons */}
-              <motion.div
-                variants={itemVariants}
-                className="flex flex-col sm:flex-row gap-4 pt-4"
-              >
-                <Link
-                  to="/category"
-                  className="group relative inline-flex items-center justify-center gap-2 px-8 lg:px-10 py-4 lg:py-5 bg-gradient-to-r from-rose-600 to-rose-500 text-white font-bold text-sm lg:text-base tracking-wider uppercase rounded-full shadow-lg shadow-rose-200 hover:shadow-xl hover:shadow-rose-300 hover:-translate-y-1 transition-all duration-300 overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-rose-700 to-rose-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
-                  <ShoppingBag size={18} className="relative z-10 group-hover:scale-110 transition-transform" />
-                  <span className="relative z-10">Shop Collection</span>
-                </Link>
-
-                <Link
-                  to="/occasions"
-                  className="group inline-flex items-center justify-center gap-2 px-8 lg:px-10 py-4 lg:py-5 bg-slate-100 hover:bg-slate-200 text-slate-900 font-bold text-sm lg:text-base tracking-wider uppercase rounded-full border-2 border-slate-200 hover:border-slate-300 transition-all duration-300 hover:-translate-y-1"
-                >
-                  <Flower2 size={18} className="text-rose-500 group-hover:rotate-12 transition-transform" />
-                  <span>Explore Occasions</span>
-                </Link>
-              </motion.div>
-
-              {/* Trust Metrics */}
-              <motion.div
-                variants={itemVariants}
-                className="grid grid-cols-3 gap-6 lg:gap-10 pt-8 border-t border-slate-200/50"
-              >
-                {[
-                  { number: "10K+", label: "Customers" },
-                  { number: "500+", label: "Designs" },
-                  { number: "4.9★", label: "Rating" },
-                ].map((stat, idx) => (
-                  <motion.div
-                    key={idx}
-                    whileHover={{ y: -4 }}
-                    className="flex flex-col"
+                {/* CTA Buttons — dark pill shape */}
+                <div className="flex flex-col sm:flex-row gap-3 mt-7 lg:mt-8">
+                  <Link
+                    to="/category"
+                    className="group inline-flex items-center justify-center gap-2 px-7 lg:px-8 py-3.5 lg:py-4 bg-[#1a1a1a] text-white font-bold text-xs lg:text-sm tracking-wider uppercase rounded-full hover:bg-[#333] hover:shadow-lg hover:scale-[1.03] transition-all duration-300"
                   >
-                    <span className="text-3xl lg:text-4xl font-serif-display font-black text-slate-950 tracking-tight">
-                      {stat.number}
-                    </span>
-                    <span className="text-xs lg:text-sm text-slate-500 uppercase tracking-widest font-semibold mt-1">
-                      {stat.label}
-                    </span>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </motion.div>
-
-            {/* ─── RIGHT COLUMN: VISUALS ─── */}
-            <motion.div
-              variants={imageVariants}
-              className="relative order-1 lg:order-2 flex items-center justify-center"
-            >
-              {/* Main Hero Image */}
-              <motion.div
-                className="relative w-full max-w-md lg:max-w-none aspect-square lg:aspect-auto"
-                variants={floatingVariants}
-                animate="animate"
-              >
-                <div className="relative rounded-3xl lg:rounded-4xl overflow-hidden shadow-2xl">
-                  <LazyImage
-                    src={hero}
-                    alt="Luxurious fresh flower bouquet arrangement - Premium floral delivery"
-                    className="w-full h-96 lg:h-[500px] object-cover"
-                  />
-
-                  {/* Overlay gradient for depth */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-slate-900/5 via-transparent to-white/5" />
-
-                  {/* Premium Badge */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6 }}
-                    className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-md px-5 lg:px-7 py-4 rounded-2xl shadow-xl border border-white/60"
+                    <ShoppingBag size={16} className="group-hover:scale-110 transition-transform icon-wiggle" />
+                    <span>Shop Collection</span>
+                  </Link>
+                  <Link
+                    to="/occasions"
+                    className="group inline-flex items-center justify-center gap-2 px-7 lg:px-8 py-3.5 lg:py-4 bg-white text-[#1a1a1a] font-bold text-xs lg:text-sm tracking-wider uppercase rounded-full border-2 border-[#1a1a1a]/15 hover:bg-[#1a1a1a] hover:text-white hover:border-[#1a1a1a] hover:shadow-lg hover:scale-[1.03] transition-all duration-300"
                   >
-                    <p className="font-serif-display font-black text-base lg:text-lg text-slate-950">
-                      100% Fresh
-                    </p>
-                    <p className="text-slate-500 text-xs lg:text-sm mt-1">
-                      Satisfaction Guaranteed
-                    </p>
-                  </motion.div>
+                    <Flower2 size={16} className="text-[#C9A15A] group-hover:rotate-12 transition-transform icon-wiggle" />
+                    <span>Explore Occasions</span>
+                  </Link>
                 </div>
+              </div>
 
-                {/* Floating Side Images - Desktop Only */}
-                <motion.div
-                  initial={{ opacity: 0, x: -40, y: -40 }}
-                  animate={{ opacity: 1, x: 0, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                  whileHover={{ scale: 1.08, rotate: -2 }}
-                  className="hidden lg:block absolute -left-16 top-20 w-32 h-32 rounded-3xl overflow-hidden shadow-2xl border-4 border-white"
-                >
-                  <LazyImage
-                    src={image42}
-                    alt="Floral arrangement showcase"
-                    className="w-full h-full object-cover"
-                  />
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, x: 40, y: 40 }}
-                  animate={{ opacity: 1, x: 0, y: 0 }}
-                  transition={{ delay: 0.6 }}
-                  whileHover={{ scale: 1.08, rotate: 2 }}
-                  className="hidden lg:block absolute -right-12 -bottom-8 w-28 h-28 rounded-3xl overflow-hidden shadow-2xl border-4 border-white"
-                >
-                  <LazyImage
-                    src={image16}
-                    alt="Balloon decoration option"
-                    className="w-full h-full object-cover"
-                  />
-                </motion.div>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-
-          {/* ─── Scroll Indicator ─── */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
-            className="hidden lg:flex flex-col items-center gap-2 justify-center pt-12 absolute bottom-12 left-1/2 -translate-x-1/2"
-          >
-            <span className="text-xs uppercase tracking-widest font-bold text-slate-400">
-              Scroll
-            </span>
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              <ChevronDown size={18} className="text-slate-400" />
-            </motion.div>
-          </motion.div>
+              {/* ─── RIGHT: HERO IMAGE (bleeding off edge) ─── */}
+              <div className="relative order-1 lg:order-2 min-h-[260px] lg:min-h-full overflow-hidden">
+                {/* Soft gradient overlay on left edge for smooth blend */}
+                <div className="absolute inset-y-0 left-0 w-16 lg:w-24 bg-gradient-to-r from-[#F5EFE6] to-transparent z-10 pointer-events-none" />
+                <LazyImage
+                  src={hero}
+                  alt="Luxurious fresh flower bouquet arrangement - Premium floral delivery"
+                  className="absolute right-0 top-0 h-full w-auto min-w-[120%] lg:min-w-[130%] max-w-none object-cover object-left"
+                />
+                {/* Bottom fade */}
+                <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-[#F5EFE6] to-transparent pointer-events-none lg:hidden" />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* ─── Shop By Category ─── */}
-      <section className="py-24 bg-white border-b border-gray-100">
+      <RevealSection className="relative pt-16 pb-24 bg-white border-b border-gray-100 overflow-hidden">
+        <BokehLights spots={[
+          { color: "from-rose-200/15 to-transparent", size: 260, top: "-6%", right: "-4%", anim: "bk-drift2", delay: 0, duration: 32 },
+          { color: "from-amber-100/12 to-transparent", size: 200, bottom: "-8%", left: "5%", anim: "bk-drift1", delay: 3, duration: 28 },
+          { color: "from-purple-200/10 to-transparent", size: 220, top: "40%", left: "40%", anim: "bk-float", delay: 1, duration: 30 },
+        ]} />
+        <FloatingDecoration type="petal5" side="left" top="20%" size={60} opacity={0.12} delay={0} duration={13} />
+        <FloatingDecoration type="leaf" side="right" top="30%" size={50} opacity={0.15} delay={1} duration={11} animation="sway2" />
+        <FloatingDecoration type="petal6" side="left" top="auto" bottom="10%" size={44} opacity={0.1} delay={2} duration={14} animation="sway3" color="#C9A15A" />
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">
+            <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">
               Curated Collections
             </span>
             <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[#0d1f0f] mt-3">
@@ -591,10 +513,10 @@ const Home = () => {
           <div className="relative">
             <button
               onClick={() => scrollSlider(categorySliderRef, "left")}
-              className="absolute -left-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white border border-gray-100 shadow-md flex items-center justify-center text-slate-700 hover:bg-gray-50 hover:shadow-lg transition-all"
+              className="absolute -left-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-2xl bg-white border border-gray-100 shadow-md flex items-center justify-center text-slate-700 hover:bg-gray-50 hover:shadow-soft-lg hover:scale-[1.04] transition-all duration-300"
               aria-label="Scroll left"
             >
-              <ChevronLeft size={18} />
+              <ChevronLeft size={18} className="icon-wiggle" />
             </button>
 
             <div
@@ -606,21 +528,21 @@ const Home = () => {
                   key={index}
                   data-slide-card
                   onClick={() => navigate(`/category?cat=${encodeURIComponent(item.category)}`)}
-                  className="group rounded-3xl overflow-hidden bg-white border border-gray-100/80 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer shrink-0 w-[80vw] sm:w-[280px]"
+                  className="group rounded-3xl overflow-hidden bg-white border border-gray-100/80 shadow-soft hover:shadow-soft-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer shrink-0 w-[80vw] sm:w-[280px]"
                 >
-                  <div className="h-64 overflow-hidden relative bg-rose-50/20">
+                  <div className="h-64 overflow-hidden relative bg-[#F4C9D1]/20">
                     <LazyImage
                       src={item.image}
                       alt={item.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300" />
-                    <span className="absolute bottom-4 left-1/2 -translate-x-1/2 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 bg-white text-xs font-bold text-slate-900 px-4 py-2 rounded-full flex items-center gap-1">
+                    <span className="absolute bottom-4 left-1/2 -translate-x-1/2 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 bg-white text-xs font-bold text-[#14301F] px-4 py-2 rounded-2xl flex items-center gap-1">
                       Shop Now <ArrowRight size={12} />
                     </span>
                   </div>
                   <div className="p-6">
-                    <h3 className="font-serif-display font-bold text-lg text-slate-900">
+                    <h3 className="font-serif-display font-bold text-lg text-[#14301F]">
                       {item.title}
                     </h3>
                     <p className="text-gray-400 text-xs mt-1">{item.products}</p>
@@ -631,42 +553,42 @@ const Home = () => {
 
             <button
               onClick={() => scrollSlider(categorySliderRef, "right")}
-              className="absolute -right-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white border border-gray-100 shadow-md flex items-center justify-center text-slate-700 hover:bg-gray-50 hover:shadow-lg transition-all"
+              className="absolute -right-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-2xl bg-white border border-gray-100 shadow-md flex items-center justify-center text-slate-700 hover:bg-gray-50 hover:shadow-soft-lg hover:scale-[1.04] transition-all duration-300"
               aria-label="Scroll right"
             >
-              <ArrowRight size={18} />
+              <ArrowRight size={18} className="icon-wiggle" />
             </button>
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* ─── Best Sellers ─── */}
-      <section className="py-24 bg-[#fafaf9]/60">
+      <RevealSection className="py-24 bg-[#fafaf9]/60">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex justify-between items-end mb-12 flex-wrap gap-4">
             <div>
-              <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">
+              <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">
                 Customer Favorites
               </span>
-              <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-slate-900 mt-2">
+              <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[#14301F] mt-2">
                 Bestselling Bouquets
               </h2>
             </div>
             <Link
               to="/category"
-              className="text-rose-500 hover:text-rose-600 font-bold text-xs tracking-widest uppercase flex items-center gap-1.5 transition-colors"
+              className="text-[#D6537A] hover:text-[#D6537A] font-bold text-xs tracking-widest uppercase flex items-center gap-1.5 transition-colors duration-300 hover:scale-[1.04]"
             >
-              View All <ArrowRight size={14} />
+              View All <ArrowRight size={14} className="icon-wiggle" />
             </Link>
           </div>
 
           <div className="relative">
             <button
               onClick={() => scrollSlider(bestSellerSliderRef, "left")}
-              className="absolute -left-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white border border-gray-100 shadow-md flex items-center justify-center text-slate-700 hover:bg-gray-50 hover:shadow-lg transition-all"
+              className="absolute -left-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-2xl bg-white border border-gray-100 shadow-md flex items-center justify-center text-slate-700 hover:bg-gray-50 hover:shadow-soft-lg hover:scale-[1.04] transition-all duration-300"
               aria-label="Scroll left"
             >
-              <ChevronLeft size={18} />
+              <ChevronLeft size={18} className="icon-wiggle" />
             </button>
 
             <div
@@ -677,11 +599,11 @@ const Home = () => {
                 <div
                   key={item.id}
                   data-slide-card
-                  className="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 shrink-0 w-[80vw] sm:w-[280px] snap-start flex flex-col"
+                  className="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-soft hover:shadow-soft-lg hover:scale-[1.02] transition-all duration-300 shrink-0 w-[80vw] sm:w-[280px] snap-start flex flex-col"
                 >
-                  <div className="overflow-hidden h-72 relative bg-rose-50/20">
+                  <div className="overflow-hidden h-72 relative bg-[#F4C9D1]/20">
                     {item.badge && (
-                      <span className="absolute top-4 left-4 z-10 bg-rose-500 text-white text-[9px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider">
+                      <span className="absolute top-4 left-4 z-10 bg-[#D6537A] text-white text-[9px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider">
                         {item.badge}
                       </span>
                     )}
@@ -693,7 +615,7 @@ const Home = () => {
                     />
                   </div>
                   <div className="p-6 flex flex-col flex-1">
-                    <h3 className="font-serif-display font-bold text-base text-slate-900 leading-snug">
+                    <h3 className="font-serif-display font-bold text-base text-[#14301F] leading-snug">
                       {item.title}
                     </h3>
                     <div className="flex items-center gap-1 mt-2">
@@ -704,19 +626,14 @@ const Home = () => {
                       <span className="text-[11px] text-gray-400">(120+ reviews)</span>
                     </div>
                     <div className="flex items-center gap-2 mt-3">
-                      <p className="text-rose-500 font-black text-base">
-                        {item.price === "acceptable" ? "Contact us" : item.price}
+                      <p className="text-[#D6537A] font-black text-base">
+                        {item.price === "acceptable" ? "Call for Price" : item.price}
                       </p>
-                      {item.originalPrice && (
-                        <p className="text-gray-400 text-xs line-through">
-                          {item.originalPrice}
-                        </p>
-                      )}
                     </div>
 
                     <Link
                       to={`/category?cat=${encodeURIComponent(item.category)}`}
-                      className="mt-6 w-full bg-[#0D1F0F] text-white py-3 rounded-2xl font-bold text-xs tracking-wider uppercase hover:bg-[#1a3320] transition-colors text-center"
+                      className="mt-6 w-full bg-[#14301F] text-white py-3 rounded-2xl font-bold text-xs tracking-wider uppercase hover:bg-[#1a3320] hover:shadow-soft-lg hover:shadow-[#14301F]/30 hover:scale-[1.03] transition-all duration-300 text-center"
                     >
                       Quick View
                     </Link>
@@ -727,31 +644,35 @@ const Home = () => {
 
             <button
               onClick={() => scrollSlider(bestSellerSliderRef, "right")}
-              className="absolute -right-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white border border-gray-100 shadow-md flex items-center justify-center text-slate-700 hover:bg-gray-50 hover:shadow-lg transition-all"
+              className="absolute -right-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-2xl bg-white border border-gray-100 shadow-md flex items-center justify-center text-slate-700 hover:bg-gray-50 hover:shadow-soft-lg hover:scale-[1.04] transition-all duration-300"
               aria-label="Scroll right"
             >
-              <ArrowRight size={18} />
+              <ArrowRight size={18} className="icon-wiggle" />
             </button>
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* ─── Deal of the Day ─── */}
-      <section className="py-24 bg-[#0d1f0f] relative overflow-hidden">
-        <div className="absolute top-10 right-10 w-72 h-72 bg-rose-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 left-10 w-72 h-72 bg-[#C8A882]/10 rounded-full blur-3xl" />
+      <RevealSection className="py-24 bg-[#0d1f0f] relative overflow-hidden">
+        <BokehLights spots={[
+          { color: "from-rose-400/20 to-transparent", size: 300, top: "-8%", right: "-5%", anim: "bk-drift1", delay: 0, duration: 28 },
+          { color: "from-amber-300/15 to-transparent", size: 250, bottom: "-10%", left: "-4%", anim: "bk-drift2", delay: 2, duration: 32 },
+          { color: "from-pink-400/15 to-transparent", size: 200, top: "50%", left: "35%", anim: "bk-float", delay: 4, duration: 24 },
+          { color: "from-violet-400/10 to-transparent", size: 260, top: "15%", right: "25%", anim: "bk-drift3", delay: 1, duration: 30 },
+        ]} />
 
         <div className="max-w-7xl mx-auto px-6 relative">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative">
-              <div className="rounded-[32px] overflow-hidden shadow-2xl">
+              <div className="rounded-2xl overflow-hidden shadow-2xl">
                 <LazyImage
                   src={image28}
                   alt="Sunset Rose Grand Bouquet - Deal of the Day"
                   className="w-full h-[480px] object-cover hover:scale-105 transition duration-700"
                 />
               </div>
-              <div className="absolute -top-4 -left-4 bg-[#e11d48] text-white rounded-2xl px-6 py-4 shadow-xl -rotate-6">
+              <div className="absolute -top-4 -left-4 bg-[#D6537A] text-white rounded-2xl px-6 py-4 shadow-xl -rotate-6">
                 <p className="text-[10px] uppercase tracking-widest font-black flex items-center gap-1">
                   <Percent size={11} /> Today Only
                 </p>
@@ -761,7 +682,7 @@ const Home = () => {
 
             <div className="text-white flex flex-col gap-6">
               <div>
-                <span className="inline-flex items-center gap-2 bg-white/10 text-[#C8A882] text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-full border border-white/10">
+                <span className="inline-flex items-center gap-2 bg-white/10 text-[#C9A15A] text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-full border border-white/10">
                   <Clock size={12} className="animate-pulse" /> Deal of the Day
                 </span>
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif-display font-black mt-6 leading-tight text-[#F7F0E8]">
@@ -778,11 +699,10 @@ const Home = () => {
                   href={WHATSAPP_LINK}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-2xl sm:text-3xl font-black text-[#C8A882] hover:text-[#dfc4a3] transition-colors font-serif-display"
+                  className="text-2xl sm:text-3xl font-black text-[#C9A15A] hover:text-[#dfc4a3] transition-colors font-serif-display"
                 >
-                  Contact for Best Price
+                  Call us for best price
                 </a>
-                <span className="text-base text-white/40 line-through">₹1,999</span>
               </div>
 
               <div className="flex gap-3">
@@ -798,7 +718,7 @@ const Home = () => {
                     <p className="text-2xl font-bold text-[#F7F0E8] tabular-nums leading-none">
                       {pad(t.value)}
                     </p>
-                    <p className="text-[9px] text-[#C8A882] uppercase tracking-wider font-bold mt-2">
+                    <p className="text-[9px] text-[#C9A15A] uppercase tracking-wider font-bold mt-2">
                       {t.label}
                     </p>
                   </div>
@@ -809,23 +729,32 @@ const Home = () => {
                 href={WHATSAPP_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-flex items-center justify-center gap-2 bg-rose-500 hover:bg-rose-600 text-white px-8 py-4 rounded-full font-bold text-xs tracking-widest uppercase shadow-lg shadow-rose-200/30 hover:shadow-lg hover:shadow-rose-300/40 transition-all duration-300 hover:-translate-y-1"
+                className="group mt-4 inline-flex items-center justify-center gap-2 bg-[#D6537A] hover:bg-rose-600 text-white px-8 py-4 rounded-2xl font-bold text-xs tracking-widest uppercase shadow-lg shadow-rose-200/30 hover:shadow-soft-lg hover:shadow-rose-400/40 hover:scale-[1.04] transition-all duration-300 hover:-translate-y-1"
               >
-                Grab This Deal <ArrowRight size={14} />
+                Grab This Deal <ArrowRight size={14} className="icon-wiggle" />
               </a>
             </div>
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* ─── How It Works ─── */}
-      <section className="py-24 bg-white border-b border-gray-100">
+      <RevealSection className="relative py-24 bg-white border-b border-gray-100 overflow-hidden">
+        <BokehLights spots={[
+          { color: "from-rose-200/12 to-transparent", size: 240, top: "-5%", left: "20%", anim: "bk-drift3", delay: 0, duration: 30 },
+          { color: "from-amber-100/10 to-transparent", size: 200, bottom: "-6%", right: "5%", anim: "bk-drift1", delay: 2, duration: 28 },
+          { color: "from-purple-200/8 to-transparent", size: 180, top: "30%", right: "30%", anim: "bk-float", delay: 4, duration: 26 },
+        ]} />
+        <FloatingDecoration type="petal" side="left" top="18%" size={40} opacity={0.14} delay={0} duration={10} animation="sway3" color="#D6537A" />
+        <FloatingDecoration type="petal5" side="right" top="12%" size={70} opacity={0.1} delay={2} duration={15} animation="sway1" />
+        <FloatingDecoration type="petal6" side="left" top="auto" bottom="8%" size={48} opacity={0.12} delay={1} duration={12} animation="sway2" color="#C9A15A" />
+        <FloatingDecoration type="leaf" side="right" top="auto" bottom="15%" size={44} opacity={0.15} delay={3} duration={9} animation="sway3" />
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-20">
-            <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">
+            <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">
               Simple Process
             </span>
-            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-slate-900 mt-2">
+            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[#14301F] mt-2">
               How It Works
             </h2>
             <p className="text-gray-400 text-sm mt-3 font-light">
@@ -839,15 +768,15 @@ const Home = () => {
               return (
                 <div
                   key={index}
-                  className="relative bg-[#fafaf9] rounded-3xl p-8 pt-12 border border-gray-100 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 text-center"
+                  className="group relative bg-[#fafaf9] rounded-3xl p-8 pt-12 border border-gray-100 hover:shadow-soft-lg hover:shadow-rose-500/10 hover:scale-[1.03] hover:-translate-y-1.5 transition-all duration-300 text-center"
                 >
-                  <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-6xl font-black text-rose-100/50 font-serif-display select-none">
+                  <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-6xl font-black text-#F4C9D1/50 font-serif-display select-none">
                     {pad(index + 1)}
                   </span>
-                  <div className="w-14 h-14 mx-auto rounded-2xl bg-rose-500/10 flex items-center justify-center mb-6">
-                    <Icon size={24} className="text-rose-500" />
+                  <div className="w-14 h-14 mx-auto rounded-2xl bg-[#D6537A]/10 flex items-center justify-center mb-6">
+                    <Icon size={24} className="text-[#D6537A] icon-wiggle" />
                   </div>
-                  <h3 className="font-serif-display font-bold text-lg text-slate-900">
+                  <h3 className="font-serif-display font-bold text-lg text-[#14301F]">
                     {step.title}
                   </h3>
                   <p className="text-gray-400 text-xs mt-3 leading-relaxed font-light">
@@ -858,16 +787,19 @@ const Home = () => {
             })}
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* ─── Why Choose Us ─── */}
-      <section className="py-24 bg-[#fafaf9]/60">
+      <RevealSection className="relative py-24 bg-[#fafaf9]/60 overflow-hidden">
+        <FloatingDecoration type="petal5" side="left" top="15%" size={56} opacity={0.12} delay={1} duration={14} color="#D6537A" />
+        <FloatingDecoration type="leaf" side="right" top="25%" size={60} opacity={0.18} delay={0} duration={11} animation="sway2" color="#14301F" />
+        <FloatingDecoration type="petal6" side="left" top="auto" bottom="12%" size={42} opacity={0.1} delay={2.5} duration={13} animation="sway3" color="#C9A15A" />
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-20">
-            <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">
+            <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">
               Our Standards
             </span>
-            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-slate-900 mt-2">
+            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[#14301F] mt-2">
               Why Choose Us
             </h2>
             <p className="text-gray-400 text-sm mt-3 font-light">
@@ -881,12 +813,12 @@ const Home = () => {
               return (
                 <div
                   key={index}
-                  className={`${item.bg} p-8 rounded-3xl border border-gray-200/40 text-center hover:shadow-lg transition-all duration-300`}
+                  className={`${item.bg} group p-8 rounded-3xl border border-gray-200/40 text-center hover:shadow-soft-lg hover:shadow-rose-500/10 hover:scale-[1.03] transition-all duration-300`}
                 >
                   <div className="w-14 h-14 mx-auto rounded-2xl bg-white border border-gray-100/80 flex items-center justify-center shadow-sm">
-                    <Icon size={24} className={item.iconColor} />
+                    <Icon size={24} className={`${item.iconColor} icon-wiggle`} />
                   </div>
-                  <h3 className="font-serif-display font-bold text-base text-slate-900 mt-5">
+                  <h3 className="font-serif-display font-bold text-base text-[#14301F] mt-5">
                     {item.title}
                   </h3>
                   <p className="text-gray-400 text-xs mt-2 font-light">{item.desc}</p>
@@ -895,16 +827,20 @@ const Home = () => {
             })}
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* ─── Perfect For Every Occasion ─── */}
-      <section className="py-24 bg-white border-b border-gray-100">
+      <RevealSection className="relative py-24 bg-white border-b border-gray-100 overflow-hidden">
+        <FloatingDecoration type="petal5" side="left" top="10%" size={72} opacity={0.1} delay={0} duration={15} animation="sway2" />
+        <FloatingDecoration type="petal" side="right" top="18%" size={44} opacity={0.15} delay={1.5} duration={10} animation="sway3" color="#D6537A" />
+        <FloatingDecoration type="leaf" side="right" top="auto" bottom="10%" size={52} opacity={0.14} delay={2} duration={12} animation="sway1" color="#C9A15A" />
+        <FloatingDecoration type="petal6" side="left" top="auto" bottom="5%" size={48} opacity={0.1} delay={3} duration={11} animation="rotate" color="#C9A15A" />
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-20">
-            <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">
+            <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">
               Life Milestones
             </span>
-            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-slate-900 mt-2">
+            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[#14301F] mt-2">
               Perfect For Every Occasion
             </h2>
             <p className="text-gray-400 text-sm mt-3 font-light">
@@ -919,7 +855,7 @@ const Home = () => {
                 <div
                   key={index}
                   onClick={() => navigate("/occasions")}
-                  className="group relative h-80 rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                  className="group relative h-80 rounded-3xl overflow-hidden cursor-pointer shadow-soft hover:shadow-soft-lg hover:shadow-rose-500/15 hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300"
                 >
                   <LazyImage
                     src={item.image}
@@ -944,23 +880,31 @@ const Home = () => {
             })}
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* ─── Testimonials ─── */}
-      <section className="py-24 bg-[#fafaf9]/60">
+      <RevealSection className="relative py-24 bg-[#fafaf9]/60 overflow-hidden">
+        <BokehLights spots={[
+          { color: "from-rose-300/12 to-transparent", size: 240, top: "-6%", right: "-3%", anim: "bk-drift2", delay: 0, duration: 32 },
+          { color: "from-amber-200/10 to-transparent", size: 200, bottom: "-8%", left: "8%", anim: "bk-drift4", delay: 3, duration: 28 },
+          { color: "from-violet-200/8 to-transparent", size: 180, top: "40%", left: "45%", anim: "bk-float", delay: 1, duration: 26 },
+        ]} />
+        <FloatingDecoration type="petal5" side="left" top="8%" size={56} opacity={0.1} delay={0.5} duration={13} color="#C9A15A" />
+        <FloatingDecoration type="petal6" side="right" top="12%" size={60} opacity={0.12} delay={0} duration={14} animation="sway2" />
+        <FloatingDecoration type="leaf" side="right" top="auto" bottom="8%" size={48} opacity={0.16} delay={2} duration={11} animation="sway3" color="#14301F" />
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">
+            <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">
               Customer Reviews
             </span>
-            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-slate-900 mt-2">
+            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[#14301F] mt-2">
               What Our Customers Say
             </h2>
           </div>
 
           <div className="flex justify-center mb-16">
-            <div className="flex items-center gap-5 bg-white border border-gray-100 rounded-3xl px-8 py-5 shadow-sm">
-              <span className="text-4xl font-black text-slate-900 font-serif-display">4.9</span>
+            <div className="flex items-center gap-5 bg-white border border-gray-100 rounded-3xl px-8 py-5 shadow-soft">
+              <span className="text-4xl font-black text-[#14301F] font-serif-display">4.9</span>
               <div className="w-px h-10 bg-gray-200" />
               <div>
                 <div className="flex gap-0.5">
@@ -977,7 +921,7 @@ const Home = () => {
             {testimonials.map((item, index) => (
               <div
                 key={index}
-                className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm flex flex-col gap-6"
+                className="bg-white rounded-3xl p-8 border border-gray-100 shadow-soft flex flex-col gap-6"
               >
                 <Quote size={32} className="text-rose-300" />
                 <div className="flex gap-0.5">
@@ -995,7 +939,7 @@ const Home = () => {
                     {item.initials}
                   </div>
                   <div>
-                    <h4 className="font-bold text-sm text-slate-800 leading-none">
+                    <h4 className="font-bold text-sm text-[#14301F] leading-none">
                       {item.name}
                     </h4>
                     <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider mt-1">
@@ -1007,19 +951,19 @@ const Home = () => {
             ))}
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* ─── Instagram Gallery ─── */}
-      <section className="py-24 bg-white border-b border-gray-100">
+      <RevealSection className="py-24 bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
-            <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">
+            <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">
               Follow Us
             </span>
-            <h2 className="text-3xl font-serif-display font-black text-slate-900 mt-2">
+            <h2 className="text-3xl font-serif-display font-black text-[#14301F] mt-2">
               Follow Our Floral Journey
             </h2>
-            <p className="text-rose-500 font-bold mt-3 inline-flex items-center gap-1.5">
+            <p className="text-[#D6537A] font-bold mt-3 inline-flex items-center gap-1.5">
               <FaInstagram size={16} />
               <a
                 href={INSTAGRAM_LINK}
@@ -1039,14 +983,14 @@ const Home = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 key={index}
-                className="group relative aspect-square rounded-2xl overflow-hidden cursor-pointer shadow-sm"
+                className="group relative aspect-square rounded-2xl overflow-hidden cursor-pointer shadow-soft hover:shadow-soft-lg hover:scale-[1.02] transition-all duration-300"
               >
                 <LazyImage
                   src={img}
                   alt="Floral journey picture on Instagram"
                   className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
                 />
-                <div className="absolute inset-0 bg-rose-500/0 group-hover:bg-rose-500/30 transition duration-300 flex items-center justify-center">
+                <div className="absolute inset-0 bg-[#D6537A]/0 group-hover:bg-[#D6537A]/30 transition duration-300 flex items-center justify-center">
                   <FaInstagram
                     size={22}
                     className="text-white opacity-0 group-hover:opacity-100 transition duration-300"
@@ -1056,16 +1000,16 @@ const Home = () => {
             ))}
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* ─── FAQ ─── */}
-      <section className="py-24 bg-[#fafaf9]/60">
-        <div className="max-w-3xl mx-auto px-6">
+      <RevealSection className="py-24 bg-[#fafaf9]/60">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
-            <span className="text-xs font-bold tracking-widest text-rose-500 uppercase font-inter">
+            <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">
               Answers
             </span>
-            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-slate-900 mt-2">
+            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[#14301F] mt-2">
               Frequently Asked Questions
             </h2>
             <p className="text-gray-400 text-sm mt-3 font-light">
@@ -1073,20 +1017,20 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="flex flex-col gap-4">
+          <div className="max-w-4xl mx-auto flex flex-col gap-4">
             {faqs.map((faq, index) => {
               const isSelected = openFaq === index;
               return (
                 <div
                   key={index}
-                  className="border border-gray-100 rounded-3xl overflow-hidden bg-white shadow-sm transition-all duration-300"
+                  className="border border-gray-100 rounded-3xl overflow-hidden bg-white shadow-soft transition-all duration-300"
                 >
                   <button
                     onClick={() => setOpenFaq(isSelected ? null : index)}
-                    className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left font-bold text-slate-800 hover:text-slate-900 focus:outline-none transition-colors"
+                    className="group w-full flex items-center justify-between gap-4 px-6 py-5 text-left font-bold text-[#14301F] hover:text-[#14301F] focus:outline-none transition-colors duration-300 hover:bg-[#F4C9D1]/30"
                   >
                     <span className="font-serif-display text-base leading-snug">{faq.q}</span>
-                    <span className="w-8 h-8 rounded-full bg-rose-50/50 flex items-center justify-center text-rose-500 shrink-0">
+                    <span className="w-8 h-8 rounded-full bg-[#F4C9D1]/50 flex items-center justify-center text-[#D6537A] shrink-0">
                       {isSelected ? <Minus size={14} /> : <Plus size={14} />}
                     </span>
                   </button>
@@ -1110,15 +1054,24 @@ const Home = () => {
             })}
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* ─── Newsletter ─── */}
-      <section className="py-24 bg-gradient-to-r from-rose-100/50 via-pink-50/30 to-purple-100/40">
-        <div className="max-w-4xl mx-auto text-center px-6">
-          <div className="w-14 h-14 bg-rose-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-            <Mail size={24} className="text-rose-500" />
+      <RevealSection className="relative py-24 bg-gradient-to-r from-#F4C9D1/50 via-pink-50/30 to-purple-100/40 overflow-hidden">
+        <BokehLights spots={[
+          { color: "from-rose-300/20 to-transparent", size: 280, top: "-8%", left: "-5%", anim: "bk-drift1", delay: 0, duration: 30 },
+          { color: "from-amber-200/18 to-transparent", size: 220, bottom: "-10%", right: "10%", anim: "bk-drift4", delay: 3, duration: 28 },
+          { color: "from-purple-300/12 to-transparent", size: 200, top: "60%", left: "40%", anim: "bk-float", delay: 1, duration: 26 },
+        ]} />
+        <FloatingDecoration type="petal5" side="left" top="15%" size={64} opacity={0.12} delay={0} duration={14} />
+        <FloatingDecoration type="petal6" side="right" top="10%" size={52} opacity={0.1} delay={1.5} duration={12} animation="sway2" color="#C9A15A" />
+        <FloatingDecoration type="leaf" side="left" top="auto" bottom="12%" size={44} opacity={0.15} delay={2} duration={10} animation="sway3" />
+        <FloatingDecoration type="petal" side="right" top="auto" bottom="8%" size={40} opacity={0.12} delay={3} duration={11} animation="sway1" color="#D6537A" />
+        <div className="max-w-7xl mx-auto text-center px-6 lg:px-8">
+          <div className="w-14 h-14 bg-[#D6537A]/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <Mail size={24} className="text-[#D6537A]" />
           </div>
-          <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-slate-950 leading-tight">
+          <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[#14301F] leading-tight">
             Join Our Flower Family
           </h2>
           <p className="text-gray-500 text-sm mt-3 font-light max-w-md mx-auto">
@@ -1143,11 +1096,11 @@ const Home = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSubscribe()}
                   placeholder="Enter your email address"
-                  className="flex-1 border border-gray-200 bg-white rounded-full px-6 py-4 text-sm text-[#0D1F0F] placeholder-gray-400 outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-300 transition-all"
+                  className="flex-1 border border-gray-200 bg-white rounded-full px-6 py-4 text-sm text-[#14301F] placeholder-gray-400 outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-300 transition-all"
                 />
                 <button
                   onClick={handleSubscribe}
-                  className="bg-[#0D1F0F] hover:bg-[#1a3320] text-white px-8 py-4 rounded-full font-bold text-xs tracking-widest uppercase hover:-translate-y-0.5 transition-all duration-300"
+                  className="bg-[#14301F] hover:bg-[#1a3320] text-white px-8 py-4 rounded-2xl font-bold text-xs tracking-widest uppercase hover:shadow-soft-lg hover:shadow-[#14301F]/30 hover:scale-[1.04] transition-all duration-300"
                 >
                   Subscribe
                 </button>
@@ -1161,7 +1114,7 @@ const Home = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
-              className="w-10 h-10 rounded-full bg-white border border-gray-100 flex items-center justify-center text-rose-500 shadow-sm hover:-translate-y-1 transition duration-300"
+              className="w-10 h-10 rounded-full bg-white border border-gray-100 flex items-center justify-center text-[#D6537A] shadow-sm hover:-translate-y-1 transition duration-300"
             >
               <FaInstagram size={16} />
             </a>
@@ -1170,13 +1123,13 @@ const Home = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
-              className="w-10 h-10 rounded-full bg-white border border-gray-100 flex items-center justify-center text-rose-500 shadow-sm hover:-translate-y-1 transition duration-300"
+              className="w-10 h-10 rounded-full bg-white border border-gray-100 flex items-center justify-center text-[#D6537A] shadow-sm hover:-translate-y-1 transition duration-300"
             >
               <FaFacebookF size={15} />
             </a>
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* ─── WhatsApp Floating Button ─── */}
       <motion.a
@@ -1185,7 +1138,7 @@ const Home = () => {
         href={WHATSAPP_LINK}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25d366] flex items-center justify-center shadow-xl shadow-emerald-400/30 hover:bg-[#20ba59] transition-colors"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25d366] flex items-center justify-center shadow-xl shadow-emerald-400/30 hover:bg-[#20ba59] hover:shadow-2xl hover:shadow-emerald-400/50 hover:scale-[1.05] transition-all duration-300"
         aria-label="Chat on WhatsApp"
       >
         <MessageCircle size={26} color="white" fill="white" />

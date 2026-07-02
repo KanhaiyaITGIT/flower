@@ -9,6 +9,8 @@ import {
   CONTACT_PHONE_2,
 } from "../constants";
 import { motion, AnimatePresence } from "framer-motion";
+import RevealSection from "../components/RevealSection";
+import FloatingDecoration from "../components/FloatingDecoration";
 
 import image1 from "../assets/s1.png";
 import image2 from "../assets/s2.png";
@@ -72,8 +74,8 @@ const processSteps = [
     icon: MapPin,
     title: "On-Site Visit",
     desc: "Our expert florist visits your venue to understand the space, lighting, and layout — no guesswork, ever.",
-    color: "text-rose-500",
-    bg: "bg-rose-50/50",
+    color: "text-[#D6537A]",
+    bg: "bg-[#F4C9D1]/50",
   },
   {
     icon: Palette,
@@ -171,7 +173,13 @@ const DecorPage = () => {
     : galleryItems.filter((g) => g.tag === activeTheme);
 
   return (
-    <div className="w-full bg-[#fafaf9] min-h-screen">
+    <div className="w-full bg-[#fafaf9] min-h-screen relative">
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <FloatingDecoration type="leaf" side="left" top="4%" size={28} opacity={0.1} delay={0} duration={14} animation="sway3" color="#d1bca8" />
+        <FloatingDecoration type="petal6" side="right" top="3%" size={24} opacity={0.1} delay={1} duration={13} animation="sway2" color="#d1bca8" />
+        <FloatingDecoration type="petal5" side="left" bottom="8%" size={32} opacity={0.1} delay={0.5} duration={12} animation="sway1" color="#d1bca8" />
+        <FloatingDecoration type="petal" side="right" bottom="6%" size={22} opacity={0.1} delay={1.5} duration={15} animation="sway2" color="#d1bca8" />
+      </div>
       {/* ── HERO ────────────────────────────────────── */}
       <section className="relative overflow-hidden h-[85vh] min-h-[580px] flex items-center bg-[#0a0604]">
         {/* Background Image & Overlays */}
@@ -237,18 +245,18 @@ const DecorPage = () => {
             >
               <a
                 href="#contact"
-                className="inline-flex items-center gap-2 bg-[#e8667a] hover:bg-[#d4546a] text-white px-8 py-4 rounded-full font-bold text-xs tracking-widest uppercase transition-all duration-300 shadow-lg shadow-rose-950/20 hover:-translate-y-0.5"
+                className="group inline-flex items-center gap-2 bg-[#e8667a] hover:bg-[#d4546a] text-white px-8 py-4 rounded-2xl font-bold text-xs tracking-widest uppercase transition-all duration-300 shadow-lg shadow-rose-950/20 hover:shadow-soft-lg hover:shadow-rose-950/30 hover:scale-[1.04]"
               >
-                <Send size={12} />
+                <Send size={12} className="icon-wiggle" />
                 Request Free Quote
               </a>
               <a
                 href={WHATSAPP_DECOR_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/15 rounded-full px-8 py-4 text-xs font-bold tracking-widest uppercase backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5"
+                className="group inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/15 rounded-2xl px-8 py-4 text-xs font-bold tracking-widest uppercase backdrop-blur-md transition-all duration-300 hover:shadow-soft-lg hover:shadow-white/10 hover:scale-[1.04]"
               >
-                <MessageCircle size={12} />
+                <MessageCircle size={12} className="icon-wiggle" />
                 WhatsApp Consultation
               </a>
             </motion.div>
@@ -265,7 +273,7 @@ const DecorPage = () => {
       </section>
 
       {/* ── STATS ────────────────────────────────────── */}
-      <section className="bg-[#0f0b08] py-12 px-6 relative overflow-hidden border-y border-white/5">
+      <RevealSection className="bg-[#0f0b08] py-12 px-6 relative overflow-hidden border-y border-white/5">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[150px] bg-[#c9a96e]/5 blur-[70px] pointer-events-none" />
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -285,16 +293,16 @@ const DecorPage = () => {
             ))}
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* ── ABOUT ────────────────────────────────────── */}
-      <section className="py-24 px-6 bg-[#faf7f2]/70">
+      <RevealSection className="py-24 px-6 bg-[#faf7f2]/70">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Text Column */}
             <div>
               <span className="text-xs font-bold tracking-widest text-[#e8667a] uppercase font-inter">Our Approach</span>
-              <h2 className="font-serif-display text-3xl sm:text-4xl md:text-5xl font-black text-[#0D1F0F] mt-3 leading-tight">
+              <h2 className="font-serif-display text-3xl sm:text-4xl md:text-5xl font-black text-[#14301F] mt-3 leading-tight">
                 Every celebration
                 <br />
                 <span className="italic font-medium font-serif-display text-[#c9a96e]">deserves to bloom.</span>
@@ -309,15 +317,15 @@ const DecorPage = () => {
               <div className="flex gap-4 flex-wrap mt-8">
                 <a
                   href="#contact"
-                  className="inline-flex items-center gap-1.5 bg-[#e8667a] hover:bg-[#d4546a] text-white px-7 py-3.5 rounded-full font-bold text-xs tracking-widest uppercase transition-all duration-300 shadow-md hover:-translate-y-0.5"
+                  className="group inline-flex items-center gap-1.5 bg-[#e8667a] hover:bg-[#d4546a] text-white px-7 py-3.5 rounded-2xl font-bold text-xs tracking-widest uppercase transition-all duration-300 shadow-soft hover:shadow-soft-lg hover:shadow-rose-950/30 hover:scale-[1.04]"
                 >
-                  Write to Us <ArrowRight size={13} />
+                  Write to Us <ArrowRight size={13} className="icon-wiggle" />
                 </a>
                 <a
                   href={`tel:${CONTACT_PHONE_1}`}
-                  className="inline-flex items-center gap-2 border border-[#c9a96e] text-[#c9a96e] hover:bg-[#c9a96e]/5 px-7 py-3.5 rounded-full font-bold text-xs tracking-widest uppercase transition-all duration-300 hover:-translate-y-0.5"
+                  className="group inline-flex items-center gap-2 border border-[#c9a96e] text-[#c9a96e] hover:bg-[#c9a96e]/5 px-7 py-3.5 rounded-2xl font-bold text-xs tracking-widest uppercase transition-all duration-300 hover:shadow-soft-lg hover:shadow-[#c9a96e]/20 hover:scale-[1.04]"
                 >
-                  <Phone size={12} />
+                  <Phone size={12} className="icon-wiggle" />
                   Call Florist
                 </a>
               </div>
@@ -325,7 +333,7 @@ const DecorPage = () => {
 
             {/* Images Column */}
             <div className="relative h-[380px] sm:h-[450px]">
-              <div className="absolute top-0 right-0 w-[65%] h-[70%] rounded-[24px] overflow-hidden shadow-xl border-4 border-white z-10">
+              <div className="absolute top-0 right-0 w-[65%] h-[70%] rounded-[24px] overflow-hidden shadow-soft-lg border-4 border-white z-10">
                 <LazyImage src={image5} alt="Floral arch wedding decor" className="w-full h-full object-cover" />
               </div>
               <div className="absolute bottom-0 left-0 w-[55%] h-[60%] rounded-[24px] overflow-hidden shadow-lg border-4 border-white">
@@ -337,17 +345,17 @@ const DecorPage = () => {
             </div>
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* ── OCCASION THEME FILTER ─────────────────────── */}
-      <section className="bg-white border-y border-gray-100 py-4 px-6 overflow-hidden">
+      <RevealSection className="bg-white border-y border-gray-100 py-4 px-6 overflow-hidden">
         <div className="max-w-6xl mx-auto flex gap-3 overflow-x-auto scrollbar-hide">
           <button
             onClick={() => setActiveTheme("All")}
-            className={`shrink-0 rounded-full px-5 py-2 text-xs font-bold tracking-widest uppercase border transition-all duration-300 ${
+            className={`shrink-0 rounded-2xl px-5 py-2 text-xs font-bold tracking-widest uppercase border transition-all duration-300 ${
               activeTheme === "All"
-                ? "bg-[#e8667a] text-white border-[#e8667a] shadow-sm shadow-[#e8667a]/25"
-                : "bg-white text-gray-500 border-gray-200 hover:border-rose-300 hover:text-[#e8667a]"
+                ? "bg-[#e8667a] text-white border-[#e8667a] shadow-soft shadow-[#e8667a]/25"
+                : "bg-white text-gray-500 border-gray-200 hover:border-rose-300 hover:text-[#e8667a] hover:scale-[1.04]"
             }`}
           >
             All Themes
@@ -358,10 +366,10 @@ const DecorPage = () => {
               <button
                 key={theme.label}
                 onClick={() => setActiveTheme(theme.tag)}
-                className={`shrink-0 rounded-full px-5 py-2 text-xs font-bold tracking-widest uppercase border transition-all duration-300 flex items-center gap-1.5 ${
+                className={`shrink-0 rounded-2xl px-5 py-2 text-xs font-bold tracking-widest uppercase border transition-all duration-300 flex items-center gap-1.5 ${
                   isSelected
-                    ? "bg-[#e8667a] text-white border-[#e8667a] shadow-sm shadow-[#e8667a]/25"
-                    : "bg-white text-gray-500 border-gray-200 hover:border-rose-300 hover:text-[#e8667a]"
+                    ? "bg-[#e8667a] text-white border-[#e8667a] shadow-soft shadow-[#e8667a]/25"
+                    : "bg-white text-gray-500 border-gray-200 hover:border-rose-300 hover:text-[#e8667a] hover:scale-[1.04]"
                 }`}
               >
                 <span>{theme.emoji}</span>
@@ -370,14 +378,14 @@ const DecorPage = () => {
             );
           })}
         </div>
-      </section>
+      </RevealSection>
 
       {/* ── GALLERY ──────────────────────────────────── */}
-      <section className="py-24 px-6 bg-white">
+      <RevealSection className="py-24 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <span className="text-xs font-bold tracking-widest text-[#e8667a] uppercase font-inter">Portfolio</span>
-            <h2 className="font-serif-display text-3xl sm:text-4xl font-black text-[#0D1F0F] mt-2">Explore Our Work</h2>
+            <h2 className="font-serif-display text-3xl sm:text-4xl font-black text-[#14301F] mt-2">Explore Our Work</h2>
             <p className="text-gray-400 text-sm mt-3 font-light">Each venue setup is custom-designed. Hover to view theme tags.</p>
           </div>
 
@@ -390,7 +398,7 @@ const DecorPage = () => {
               {filteredGallery.map((item, i) => (
                 <div
                   key={i}
-                  className="break-inside-avoid relative rounded-[20px] overflow-hidden cursor-pointer group shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 bg-rose-50/20"
+                  className="break-inside-avoid relative rounded-2xl overflow-hidden cursor-pointer group shadow-soft border border-gray-100 hover:shadow-soft-lg hover:scale-[1.02] transition-all duration-300 bg-[#F4C9D1]/20"
                   onMouseEnter={() => setHoveredGallery(i)}
                   onMouseLeave={() => setHoveredGallery(null)}
                 >
@@ -415,14 +423,14 @@ const DecorPage = () => {
             </div>
           )}
         </div>
-      </section>
+      </RevealSection>
 
       {/* ── PROCESS ──────────────────────────────────── */}
-      <section className="py-24 px-6 bg-[#faf7f2]/70 border-y border-gray-100">
+      <RevealSection className="py-24 px-6 bg-[#faf7f2]/70 border-y border-gray-100">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-20">
             <span className="text-xs font-bold tracking-widest text-[#e8667a] uppercase font-inter">Flawless Delivery</span>
-            <h2 className="font-serif-display text-3xl sm:text-4xl font-black text-slate-900 mt-2">
+            <h2 className="font-serif-display text-3xl sm:text-4xl font-black text-[#14301F] mt-2">
               From Idea to Execution
             </h2>
             <p className="text-gray-400 text-sm mt-3 font-light">A structured design process so nothing is left to chance</p>
@@ -436,7 +444,7 @@ const DecorPage = () => {
                   key={i}
                   className="flex flex-col sm:flex-row items-center sm:items-start gap-6 relative"
                 >
-                  <div className="shrink-0 flex items-center justify-center w-14 h-14 rounded-2xl bg-white border border-gray-100 shadow-sm relative z-10">
+                  <div className="shrink-0 flex items-center justify-center w-14 h-14 rounded-2xl bg-white border border-gray-100 shadow-soft relative z-10">
                     <Icon size={22} className={step.color} />
                   </div>
                   
@@ -444,7 +452,7 @@ const DecorPage = () => {
                     <span className={`text-[9px] font-black uppercase tracking-widest ${step.color}`}>
                       Step 0{i + 1}
                     </span>
-                    <h3 className="font-serif-display text-lg font-bold text-slate-900 mt-1 mb-2">
+                    <h3 className="font-serif-display text-lg font-bold text-[#14301F] mt-1 mb-2">
                       {step.title}
                     </h3>
                     <p className="text-gray-500 text-xs sm:text-sm leading-relaxed font-light font-inter max-w-xl">
@@ -459,10 +467,10 @@ const DecorPage = () => {
             })}
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* ── CONTACT FORM ─────────────────────────────── */}
-      <section id="contact" className="py-24 px-6 bg-[#111] relative overflow-hidden">
+      <RevealSection id="contact" className="py-24 px-6 bg-[#111] relative overflow-hidden">
         {/* Glow Effects */}
         <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-[#c9a96e]/5 blur-[80px] pointer-events-none" />
         <div className="absolute -bottom-24 -left-24 w-80 h-80 rounded-full bg-[#e8667a]/5 blur-[70px] pointer-events-none" />
@@ -525,18 +533,18 @@ const DecorPage = () => {
               <div className="flex flex-col sm:flex-row gap-3 mt-2">
                 <button
                   type="submit"
-                  className="flex-1 flex items-center justify-center gap-2 bg-[#e8667a] hover:bg-[#d4546a] text-white border-none rounded-xl py-4 font-bold text-xs tracking-widest uppercase cursor-pointer hover:-translate-y-0.5 transition-all duration-200"
+                  className="group flex-1 flex items-center justify-center gap-2 bg-[#e8667a] hover:bg-[#d4546a] text-white border-none rounded-xl py-4 font-bold text-xs tracking-widest uppercase cursor-pointer hover:shadow-soft-lg hover:shadow-rose-950/30 hover:scale-[1.04] transition-all duration-300"
                 >
-                  <Send size={13} />
+                  <Send size={13} className="icon-wiggle" />
                   Submit Request
                 </button>
                 <a
                   href={WHATSAPP_DECOR_LINK}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-2 border border-[#25d366] text-[#25d366] hover:bg-[#25d366]/5 rounded-xl py-4 font-bold text-xs tracking-widest uppercase hover:-translate-y-0.5 transition-all duration-200"
+                  className="group flex-1 flex items-center justify-center gap-2 border border-[#25d366] text-[#25d366] hover:bg-[#25d366]/5 rounded-xl py-4 font-bold text-xs tracking-widest uppercase hover:shadow-soft-lg hover:shadow-[#25d366]/20 hover:scale-[1.04] transition-all duration-300"
                 >
-                  <MessageCircle size={13} />
+                  <MessageCircle size={13} className="icon-wiggle" />
                   WhatsApp Consult
                 </a>
               </div>
@@ -547,14 +555,14 @@ const DecorPage = () => {
             </form>
           )}
         </div>
-      </section>
+      </RevealSection>
 
       {/* ── FAQ ──────────────────────────────────────── */}
-      <section className="py-24 px-6 bg-[#faf7f2]/70">
+      <RevealSection className="py-24 px-6 bg-[#faf7f2]/70">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-16">
             <span className="text-xs font-bold tracking-widest text-[#e8667a] uppercase font-inter">Help Desk</span>
-            <h2 className="font-serif-display text-3xl sm:text-4xl font-black text-[#0D1F0F] mt-2">Frequently Asked Questions</h2>
+            <h2 className="font-serif-display text-3xl sm:text-4xl font-black text-[#14301F] mt-2">Frequently Asked Questions</h2>
           </div>
 
           <div className="flex flex-col gap-3">
@@ -563,11 +571,11 @@ const DecorPage = () => {
               return (
                 <div
                   key={i}
-                  className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm transition-all duration-300"
+                  className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-soft transition-all duration-300"
                 >
                   <button
                     onClick={() => setOpenFaq(isSelected ? null : i)}
-                    className="w-full text-left px-5 py-4 flex items-center justify-between gap-4 font-bold text-slate-800 focus:outline-none"
+                    className="w-full text-left px-5 py-4 flex items-center justify-between gap-4 font-bold text-[#14301F] focus:outline-none"
                   >
                     <span className="font-serif-display text-sm leading-snug">{faq.q}</span>
                     <span className="text-[#e8667a] shrink-0">
@@ -593,13 +601,13 @@ const DecorPage = () => {
             })}
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* ── FINAL CTA STRIP ──────────────────────────── */}
-      <section className="py-14 px-6 bg-white border-t border-gray-100">
+      <RevealSection className="py-14 px-6 bg-white border-t border-gray-100">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
-            <h3 className="font-serif-display text-xl sm:text-2xl font-bold text-[#0D1F0F]">
+            <h3 className="font-serif-display text-xl sm:text-2xl font-bold text-[#14301F]">
               Ready to transform your venue?
             </h3>
             <p className="text-gray-400 text-xs sm:text-sm mt-1 font-light">
@@ -609,27 +617,27 @@ const DecorPage = () => {
           <div className="flex gap-3 w-full sm:w-auto shrink-0">
             <a
               href={`tel:${CONTACT_PHONE_1}`}
-              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 border border-slate-800 text-slate-800 hover:bg-slate-50 px-6 py-3.5 rounded-full font-bold text-xs tracking-widest uppercase transition-all duration-300 hover:-translate-y-0.5"
+              className="group flex-1 sm:flex-none inline-flex items-center justify-center gap-2 border border-slate-800 text-[#14301F] hover:bg-slate-50 px-6 py-3.5 rounded-2xl font-bold text-xs tracking-widest uppercase transition-all duration-300 hover:shadow-soft-lg hover:scale-[1.04]"
             >
-              <Phone size={12} />
+              <Phone size={12} className="icon-wiggle" />
               Call us
             </a>
             <a
               href="#contact"
-              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 bg-[#e8667a] hover:bg-[#d4546a] text-white px-6 py-3.5 rounded-full font-bold text-xs tracking-widest uppercase shadow-md shadow-rose-950/10 transition-all duration-300 hover:-translate-y-0.5"
+              className="group flex-1 sm:flex-none inline-flex items-center justify-center gap-2 bg-[#e8667a] hover:bg-[#d4546a] text-white px-6 py-3.5 rounded-2xl font-bold text-xs tracking-widest uppercase shadow-soft shadow-rose-950/10 hover:shadow-soft-lg hover:shadow-rose-950/30 hover:scale-[1.04] transition-all duration-300"
             >
-              Get Free Quote <ArrowRight size={12} />
+              Get Free Quote <ArrowRight size={12} className="icon-wiggle" />
             </a>
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* WhatsApp Floating Button */}
       <a
         href={WHATSAPP_LINK}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25d366] flex items-center justify-center shadow-xl shadow-emerald-400/30 hover:bg-[#20ba59] transition-transform hover:scale-105 duration-200"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25d366] flex items-center justify-center shadow-soft-lg shadow-emerald-400/30 hover:bg-[#20ba59] hover:shadow-2xl hover:shadow-emerald-400/50 transition-all duration-300 hover:scale-105"
         aria-label="WhatsApp"
       >
         <MessageCircle size={26} color="white" fill="white" />

@@ -25,7 +25,7 @@ const policyLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0D1F0F] text-[#F7F0E8] font-inter border-t border-white/5">
+    <footer className="bg-[#14301F] text-[#FBF6EF] font-inter border-t border-white/5">
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16">
@@ -33,10 +33,10 @@ export default function Footer() {
           <div className="flex flex-col gap-6">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
-                <Flower2 size={18} className="text-[#C8A882]" />
+                <Flower2 size={18} className="text-[#C9A15A]" />
               </div>
-              <h2 className="font-serif-display font-black text-lg md:text-xl text-[#F7F0E8] tracking-tight">
-                {BUSINESS_NAME_MAIN} <span className="text-[#C8A882] font-light">{BUSINESS_NAME_SUB}</span>
+              <h2 className="font-serif-display font-black text-lg md:text-xl text-[#FBF6EF] tracking-tight">
+                {BUSINESS_NAME_MAIN} <span className="text-[#C9A15A] font-light">{BUSINESS_NAME_SUB}</span>
               </h2>
             </div>
             
@@ -50,7 +50,7 @@ export default function Footer() {
                 href={FACEBOOK_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl bg-white/5 hover:bg-[#C8A882] border border-white/10 hover:border-[#C8A882] hover:text-[#0D1F0F] flex items-center justify-center text-lg transition-all duration-300 hover:-translate-y-1"
+                className="w-10 h-10 rounded-xl bg-white/5 hover:bg-[#C9A15A] border border-white/10 hover:border-[#C9A15A] hover:text-[#14301F] flex items-center justify-center text-lg transition-all duration-300 hover:-translate-y-1"
                 aria-label="Facebook"
               >
                 <FaFacebook />
@@ -59,7 +59,7 @@ export default function Footer() {
                 href={INSTAGRAM_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl bg-white/5 hover:bg-[#C8A882] border border-white/10 hover:border-[#C8A882] hover:text-[#0D1F0F] flex items-center justify-center text-lg transition-all duration-300 hover:-translate-y-1"
+                className="w-10 h-10 rounded-xl bg-white/5 hover:bg-[#C9A15A] border border-white/10 hover:border-[#C9A15A] hover:text-[#14301F] flex items-center justify-center text-lg transition-all duration-300 hover:-translate-y-1"
                 aria-label="Instagram"
               >
                 <FaInstagram />
@@ -69,7 +69,7 @@ export default function Footer() {
 
           {/* Quick Links Column */}
           <div>
-            <h3 className="text-xs font-bold tracking-widest uppercase text-[#C8A882] mb-6">
+            <h3 className="text-xs font-bold tracking-widest uppercase text-[#C9A15A] mb-6">
               Information
             </h3>
             <ul className="flex flex-col gap-3 font-light text-sm">
@@ -77,7 +77,7 @@ export default function Footer() {
                 <li key={item.name}>
                   <Link
                     to={item.path}
-                    className="text-gray-400 hover:text-[#C8A882] transition-colors duration-200 block py-1"
+                    className="text-gray-400 hover:text-[#C9A15A] transition-colors duration-200 block py-1"
                   >
                     {item.name}
                   </Link>
@@ -88,7 +88,7 @@ export default function Footer() {
 
           {/* Policies Column */}
           <div>
-            <h3 className="text-xs font-bold tracking-widest uppercase text-[#C8A882] mb-6">
+            <h3 className="text-xs font-bold tracking-widest uppercase text-[#C9A15A] mb-6">
               Policies
             </h3>
             <ul className="flex flex-col gap-3 font-light text-sm">
@@ -96,7 +96,7 @@ export default function Footer() {
                 <li key={item.name}>
                   <Link
                     to={item.path}
-                    className="text-gray-400 hover:text-[#C8A882] transition-colors duration-200 block py-1"
+                    className="text-gray-400 hover:text-[#C9A15A] transition-colors duration-200 block py-1"
                   >
                     {item.name}
                   </Link>
@@ -107,19 +107,19 @@ export default function Footer() {
 
           {/* Contact Column */}
           <div>
-            <h3 className="text-xs font-bold tracking-widest uppercase text-[#C8A882] mb-6">
+            <h3 className="text-xs font-bold tracking-widest uppercase text-[#C9A15A] mb-6">
               Contact Us
             </h3>
             <div className="flex flex-col gap-4 font-light text-sm">
               <a
                 href={`tel:${CONTACT_PHONE_1}`}
-                className="text-gray-400 hover:text-[#C8A882] flex items-center gap-3 transition-colors duration-200 py-1"
+                className="text-gray-400 hover:text-[#C9A15A] flex items-center gap-3 transition-colors duration-200 py-1"
               >
                 <span className="text-base select-none">📞</span> {CONTACT_PHONE_1}
               </a>
               <a
                 href={`tel:${CONTACT_PHONE_2}`}
-                className="text-gray-400 hover:text-[#C8A882] flex items-center gap-3 transition-colors duration-200 py-1"
+                className="text-gray-400 hover:text-[#C9A15A] flex items-center gap-3 transition-colors duration-200 py-1"
               >
                 <span className="text-base select-none">📞</span> {CONTACT_PHONE_2}
               </a>
@@ -127,7 +127,7 @@ export default function Footer() {
                 href={WHATSAPP_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-[#C8A882] flex items-center gap-3 transition-colors duration-200 py-1"
+                className="text-gray-400 hover:text-[#C9A15A] flex items-center gap-3 transition-colors duration-200 py-1"
               >
                 <span className="text-base text-emerald-400">
                   <FaWhatsapp />
@@ -138,7 +138,7 @@ export default function Footer() {
 
             {/* Same Day Delivery Badge */}
             <div className="mt-6 bg-white/5 border border-white/10 rounded-xl p-4 max-w-[220px]">
-              <p className="text-[10px] text-[#C8A882] font-bold tracking-widest uppercase flex items-center gap-2">
+              <p className="text-[10px] text-[#C9A15A] font-bold tracking-widest uppercase flex items-center gap-2">
                 <span>🚚</span> Same-Day Delivery
               </p>
               <p className="text-xs text-gray-400 mt-1 font-light leading-snug">

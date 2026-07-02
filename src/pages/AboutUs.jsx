@@ -15,6 +15,7 @@ import {
   Award,
   Users,
 } from "lucide-react";
+import FloatingDecoration from "../components/FloatingDecoration";
 
 // ─── Animated counter on scroll ───────────────────
 const AnimatedCounter = ({ target, suffix = "", duration = 1600 }) => {
@@ -142,6 +143,13 @@ const AboutUs = () => {
           to   { transform: translate(-50%,-50%) rotate(360deg); }
         }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes icon-wiggle {
+          0%,100% { transform: rotate(0deg) scale(1); }
+          20%     { transform: rotate(-12deg) scale(1.2); }
+          40%     { transform: rotate(10deg) scale(1.2); }
+          60%     { transform: rotate(-6deg) scale(1.1); }
+          80%     { transform: rotate(4deg) scale(1.05); }
+        }
 
         .float-slow { animation: floatPetal 9s ease-in-out infinite; }
         .float-med  { animation: floatPetal 7s 1.5s ease-in-out infinite; }
@@ -163,31 +171,33 @@ const AboutUs = () => {
 
         /* ─ value card hover ─ */
         .val-card { transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.35s ease; }
-        .val-card:hover { transform: translateY(-6px); box-shadow: 0 22px 52px rgba(0,0,0,0.09); }
+        .val-card:hover { transform: translateY(-6px) scale(1.03); box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
 
         /* ─ team card hover ─ */
         .tm-card { transition: transform 0.3s ease; }
-        .tm-card:hover { transform: translateY(-4px); }
+        .tm-card:hover { transform: translateY(-4px) scale(1.03); }
         .tm-avatar { transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1); }
         .tm-card:hover .tm-avatar { transform: scale(1.07); }
 
         /* ─ primary cta ─ */
         .cta-pri {
           background: linear-gradient(135deg,#e8667a,#d4546a);
-          transition: transform 0.25s, box-shadow 0.25s;
+          transition: transform 0.3s, box-shadow 0.3s;
           display: inline-flex; align-items: center; gap: 8px;
-          color:#fff; border-radius:100px; text-decoration:none;
+          color:#fff; border-radius:18px; text-decoration:none;
           font-size:14px; font-weight:700; border:none; cursor:pointer;
         }
-        .cta-pri:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(232,102,122,0.4); }
+        .cta-pri:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 8px 30px rgba(232,102,122,0.35); }
+        .cta-pri:hover .btn-icon { animation: icon-wiggle 0.5s ease-in-out; }
 
         /* ─ ghost cta ─ */
         .cta-ghost {
           display: inline-flex; align-items: center; gap: 8px;
-          border-radius: 100px; text-decoration:none; font-weight:700;
-          transition: transform 0.25s, background 0.25s;
+          border-radius: 18px; text-decoration:none; font-weight:700;
+          transition: transform 0.3s, background 0.3s;
         }
-        .cta-ghost:hover { transform: translateY(-2px); }
+        .cta-ghost:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+        .cta-ghost:hover .btn-icon { animation: icon-wiggle 0.5s ease-in-out; }
 
         /* scrollbar-hide */
         .sh::-webkit-scrollbar { display:none; }
@@ -286,7 +296,13 @@ const AboutUs = () => {
         }
       `}</style>
 
-      <div className="abp">     
+      <div className="abp relative">     
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <FloatingDecoration type="leaf" side="left" top="4%" size={28} opacity={0.1} delay={0} duration={14} animation="sway3" color="#d1bca8" />
+          <FloatingDecoration type="petal6" side="right" top="3%" size={24} opacity={0.1} delay={1.2} duration={13} animation="sway2" color="#d1bca8" />
+          <FloatingDecoration type="petal5" side="left" bottom="8%" size={32} opacity={0.1} delay={0.5} duration={12} animation="sway1" color="#d1bca8" />
+          <FloatingDecoration type="petal" side="right" bottom="6%" size={22} opacity={0.1} delay={1.8} duration={15} animation="sway2" color="#d1bca8" />
+        </div>
         <section style={{
           background: "linear-gradient(135deg,#0d0805 0%,#1a0f0a 40%,#120c08 100%)",
           position: "relative", overflow: "hidden",
@@ -298,28 +314,18 @@ const AboutUs = () => {
             background:"linear-gradient(180deg,transparent,#c9a96e 30%,#f0d5a0 60%,#c9a96e 85%,transparent)"
           }} />
 
-          {/* Floating petals */}
-          <div className="float-slow" style={{ position:"absolute",top:"12%",right:"5%",opacity:0.13,pointerEvents:"none" }}>
-            <svg width="100" height="100" viewBox="0 0 100 100">
-              {[0,72,144,216,288].map(a=>(
-                <ellipse key={a} cx="50" cy="25" rx="11" ry="22" fill="#c9a96e" transform={`rotate(${a} 50 50)`}/>
-              ))}
-              <circle cx="50" cy="50" r="8" fill="#f0d5a0"/>
-            </svg>
-          </div>
-          <div className="float-med" style={{ position:"absolute",bottom:"18%",right:"20%",opacity:0.08,pointerEvents:"none" }}>
-            <svg width="64" height="64" viewBox="0 0 100 100">
-              {[0,60,120,180,240,300].map(a=>(
-                <ellipse key={a} cx="50" cy="25" rx="10" ry="20" fill="#e8667a" transform={`rotate(${a} 50 50)`}/>
-              ))}
-            </svg>
-          </div>
-          {/* Radial glow */}
-          <div style={{
-            position:"absolute",top:"35%",left:"38%",width:"500px",height:"350px",
-            borderRadius:"50%",pointerEvents:"none",
-            background:"radial-gradient(ellipse,rgba(201,169,110,0.07) 0%,transparent 70%)"
-          }}/>
+          {/* Bokeh light elements */}
+          <BokehLights spots={[
+            { color: "from-rose-400/15 to-transparent", size: 300, top: "-8%", right: "-5%", anim: "bk-drift1", delay: 0, duration: 30 },
+            { color: "from-amber-300/12 to-transparent", size: 260, bottom: "-10%", left: "5%", anim: "bk-drift2", delay: 2, duration: 35 },
+            { color: "from-purple-400/10 to-transparent", size: 240, top: "40%", left: "30%", anim: "bk-float", delay: 4, duration: 28 },
+            { color: "from-pink-400/12 to-transparent", size: 220, top: "15%", left: "45%", anim: "bk-drift3", delay: 1, duration: 32 },
+          ]} />
+          {/* Floating decorative elements */}
+          <FloatingDecoration type="petal5" side="right" top="12%" size={90} opacity={0.13} delay={0} duration={12} color="#C9A15A" />
+          <FloatingDecoration type="petal6" side="right" top="auto" bottom="18%" size={60} opacity={0.08} delay={1.5} duration={10} animation="sway2" color="#e8667a" />
+          <FloatingDecoration type="leaf" side="left" top="20%" size={55} opacity={0.1} delay={2} duration={14} animation="sway3" color="#C9A15A" />
+          <FloatingDecoration type="petal" side="left" top="auto" bottom="12%" size={42} opacity={0.12} delay={0.5} duration={11} animation="sway2" color="#e8667a" />
 
           <div className="inner hero-inner" style={{ width:"100%" }}>
             <div ref={heroRef}>
@@ -362,7 +368,7 @@ const AboutUs = () => {
               {/* CTAs */}
               <div className={`hero-cta-row ${heroVisible ? "ru3":""}`}>
                 <a href="/decor" className="cta-pri" style={{ padding:"14px 28px" }}>
-                  <Sparkles size={14}/> See Our Work
+                  <Sparkles size={14} className="btn-icon"/> See Our Work
                 </a>
                 <a href="https://wa.me/919999999999" target="_blank" rel="noopener noreferrer"
                   className="cta-ghost"
@@ -375,7 +381,7 @@ const AboutUs = () => {
                   onMouseEnter={e=>{e.currentTarget.style.background="rgba(255,255,255,0.12)";e.currentTarget.style.borderColor="rgba(255,255,255,0.32)";}}
                   onMouseLeave={e=>{e.currentTarget.style.background="rgba(255,255,255,0.06)";e.currentTarget.style.borderColor="rgba(255,255,255,0.2)";}}
                 >
-                  <MessageCircle size={14}/> Chat with Us
+                  <MessageCircle size={14} className="btn-icon"/> Chat with Us
                 </a>
               </div>
 
@@ -403,12 +409,11 @@ const AboutUs = () => {
           <div style={{ position:"absolute",bottom:0,left:0,right:0,height:"1px",
             background:"linear-gradient(90deg,transparent,rgba(201,169,110,0.25),transparent)"}}/>
           {/* center glow */}
-          <div style={{
-            position:"absolute",top:"50%",left:"50%",
-            width:"500px",height:"180px",
-            transform:"translate(-50%,-50%)",borderRadius:"50%",pointerEvents:"none",
-            background:"radial-gradient(ellipse,rgba(201,169,110,0.1) 0%,transparent 70%)"
-          }}/>
+          <BokehLights spots={[
+            { color: "from-amber-300/10 to-transparent", size: 320, top: "50%", left: "50%", anim: "bk-float", delay: 0, duration: 25 },
+            { color: "from-rose-400/8 to-transparent", size: 240, top: "-8%", right: "10%", anim: "bk-drift1", delay: 2, duration: 30 },
+            { color: "from-violet-400/6 to-transparent", size: 200, bottom: "-6%", left: "15%", anim: "bk-drift2", delay: 4, duration: 28 },
+          ]} />
 
           <div className="inner stats-wrap" style={{ padding:"0 24px" }}>
             {stats.map(({value,suffix,label},i)=>(
@@ -496,7 +501,7 @@ const AboutUs = () => {
                   {["Farm-to-door freshness","Design-led always","India's first farm-direct model"].map((tag,i)=>(
                     <span key={i} style={{
                       background:"#fff",border:"1px solid #e8d5c0",
-                      color:"#9a6b4b",borderRadius:"100px",
+                      color:"#9a6b4b",borderRadius:"18px",
                       padding:"6px 16px",fontSize:"12px",fontWeight:600
                     }}>✓ {tag}</span>
                   ))}
@@ -507,7 +512,10 @@ const AboutUs = () => {
         </section>
 
         {/* ── VALUES ───────────────────────────────────── */}
-        <section className="sp" style={{ background:"#fff" }}>
+        <section className="sp" style={{ background:"#fff", position:"relative", overflow:"hidden" }}>
+          <FloatingDecoration type="petal6" side="left" top="10%" size={55} opacity={0.1} delay={0} duration={13} animation="sway2" color="#C9A15A" />
+          <FloatingDecoration type="petal5" side="right" top="15%" size={50} opacity={0.08} delay={2} duration={14} color="#e8667a" />
+          <FloatingDecoration type="leaf" side="left" top="auto" bottom="8%" size={44} opacity={0.12} delay={1} duration={11} animation="sway3" color="#14301F" />
           <div className="inner">
             <div style={{textAlign:"center",marginBottom:"52px"}}>
               <div style={{display:"flex",justifyContent:"center",alignItems:"center",gap:"14px",marginBottom:"14px"}}>
@@ -531,11 +539,11 @@ const AboutUs = () => {
             <div className="vals-grid" ref={valuesRef}>
               {values.map(({icon:Icon,title,desc,color,bg},i)=>(
                 <div key={i} className="val-card" style={{
-                  background:bg,borderRadius:"20px",padding:"clamp(24px,4vw,36px) clamp(20px,3vw,32px)",
+                  background:bg,borderRadius:"18px",padding:"clamp(24px,4vw,36px) clamp(20px,3vw,32px)",
                   border:`1px solid ${color}22`
                 }}>
                   <div style={{
-                    width:"48px",height:"48px",borderRadius:"14px",
+                    width:"48px",height:"48px",borderRadius:"18px",
                     background:"#fff",display:"flex",alignItems:"center",justifyContent:"center",
                     marginBottom:"18px",boxShadow:`0 4px 16px ${color}22`,flexShrink:0
                   }}>
@@ -573,7 +581,7 @@ const AboutUs = () => {
             <div className="testi-grid">
               {testimonials.map(({text,name,occasion,rating},i)=>(
                 <div key={i} style={{
-                  background:"#fff",borderRadius:"20px",
+                  background:"#fff",borderRadius:"18px",
                   padding:"clamp(22px,3vw,32px)",
                   border:"1px solid #f0e8e0",
                   display:"flex",flexDirection:"column",gap:"14px"
@@ -638,7 +646,7 @@ const AboutUs = () => {
                       display:"inline-block",
                       background:color+"18",color:color,
                       fontSize:"11px",fontWeight:700,letterSpacing:"0.1em",
-                      borderRadius:"100px",padding:"3px 12px",marginBottom:"8px"
+                      borderRadius:"18px",padding:"3px 12px",marginBottom:"8px"
                     }}>{year}</span>
                     <h3 className="dp" style={{fontSize:"1.3rem",fontWeight:700,color:"#1a0f0a",marginBottom:"6px"}}>
                       {title}
@@ -655,6 +663,15 @@ const AboutUs = () => {
 
         {/* ── TEAM ─────────────────────────────────────── */}
         <section className="sp" style={{ background:"#1a0f0a",position:"relative",overflow:"hidden" }}>
+          <BokehLights spots={[
+            { color: "from-rose-400/12 to-transparent", size: 280, top: "-6%", right: "-4%", anim: "bk-drift1", delay: 0, duration: 30 },
+            { color: "from-amber-300/10 to-transparent", size: 240, bottom: "-8%", left: "8%", anim: "bk-drift4", delay: 3, duration: 32 },
+            { color: "from-purple-400/8 to-transparent", size: 200, top: "35%", left: "40%", anim: "bk-float", delay: 1, duration: 28 },
+            { color: "from-pink-400/10 to-transparent", size: 220, top: "10%", left: "50%", anim: "bk-drift2", delay: 2, duration: 35 },
+          ]} />
+          <FloatingDecoration type="petal5" side="left" top="8%" size={64} opacity={0.08} delay={0} duration={15} color="#C9A15A" />
+          <FloatingDecoration type="petal6" side="right" top="12%" size={52} opacity={0.06} delay={1.5} duration={13} animation="sway2" color="#e8667a" />
+          <FloatingDecoration type="leaf" side="right" top="auto" bottom="10%" size={48} opacity={0.1} delay={2} duration={12} animation="sway3" color="#C9A15A" />
           {/* Ambient glows */}
           <div style={{position:"absolute",top:"-80px",right:"-80px",width:"360px",height:"360px",borderRadius:"50%",
             background:"radial-gradient(circle,rgba(201,169,110,0.09) 0%,transparent 70%)",pointerEvents:"none"}}/>
@@ -685,7 +702,7 @@ const AboutUs = () => {
                 <div key={i} className="tm-card" style={{
                   background:"rgba(255,255,255,0.04)",
                   border:"1px solid rgba(255,255,255,0.08)",
-                  borderRadius:"20px",padding:"clamp(22px,3vw,32px) clamp(18px,2vw,24px)",
+                  borderRadius:"18px",padding:"clamp(22px,3vw,32px) clamp(18px,2vw,24px)",
                   textAlign:"center"
                 }}>
                   <div className="tm-avatar" style={{
@@ -713,7 +730,7 @@ const AboutUs = () => {
             <div className="mv-grid">
               {/* Mission */}
               <div style={{
-                background:"#1a0f0a",borderRadius:"24px",
+                background:"#1a0f0a",borderRadius:"18px",
                 padding:"clamp(32px,5vw,48px) clamp(24px,4vw,40px)",
                 position:"relative",overflow:"hidden"
               }}>
@@ -727,7 +744,7 @@ const AboutUs = () => {
                 <div style={{
                   display:"inline-block",background:"#e8667a22",color:"#e8667a",
                   fontSize:"10px",fontWeight:700,letterSpacing:"0.2em",textTransform:"uppercase",
-                  borderRadius:"100px",padding:"4px 14px",marginBottom:"18px"
+                  borderRadius:"18px",padding:"4px 14px",marginBottom:"18px"
                 }}>Our Mission</div>
                 <h3 className="dp" style={{
                   fontSize:"clamp(1.6rem,4vw,2rem)",fontWeight:700,color:"#fff",
@@ -743,7 +760,7 @@ const AboutUs = () => {
 
               {/* Vision */}
               <div style={{
-                background:"linear-gradient(135deg,#c9a96e,#a07840)",borderRadius:"24px",
+                background:"linear-gradient(135deg,#c9a96e,#a07840)",borderRadius:"18px",
                 padding:"clamp(32px,5vw,48px) clamp(24px,4vw,40px)",
                 position:"relative",overflow:"hidden"
               }}>
@@ -757,7 +774,7 @@ const AboutUs = () => {
                 <div style={{
                   display:"inline-block",background:"rgba(255,255,255,0.2)",color:"#fff",
                   fontSize:"10px",fontWeight:700,letterSpacing:"0.2em",textTransform:"uppercase",
-                  borderRadius:"100px",padding:"4px 14px",marginBottom:"18px"
+                  borderRadius:"18px",padding:"4px 14px",marginBottom:"18px"
                 }}>Our Vision</div>
                 <h3 className="dp" style={{
                   fontSize:"clamp(1.6rem,4vw,2rem)",fontWeight:700,color:"#fff",
@@ -822,7 +839,7 @@ const AboutUs = () => {
 
             <div className="cta-row">
               <a href="/decor" className="cta-pri" style={{padding:"15px 28px"}}>
-                <Sparkles size={15}/> Plan Your Décor
+                <Sparkles size={15} className="btn-icon"/> Plan Your Décor
               </a>
               <a href="https://wa.me/919540849659" target="_blank" rel="noopener noreferrer"
                 className="cta-ghost"
@@ -832,7 +849,7 @@ const AboutUs = () => {
                   background:"rgba(37,211,102,0.07)"
                 }}
               >
-                <MessageCircle size={15}/> WhatsApp Us
+                <MessageCircle size={15} className="btn-icon"/> WhatsApp Us
               </a>
               <a href="tel:+919540849659"
                 className="cta-ghost"
@@ -841,7 +858,7 @@ const AboutUs = () => {
                   border:"1px solid rgba(255,255,255,0.12)"
                 }}
               >
-                <Phone size={14}/> Call Us
+                <Phone size={14} className="btn-icon"/> Call Us
               </a>
             </div>
 

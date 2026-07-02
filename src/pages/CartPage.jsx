@@ -10,6 +10,7 @@ import {
   removeFromCart,
   clearCart,
 } from "../redux/cartSlice";
+import FloatingDecoration from "../components/FloatingDecoration";
 
 // ─── APNA QR CODE IMAGE YAHAN PASTE KARO ───────────────────────────────────
 // Agar tumhare paas QR image file hai project mein, toh import karo:
@@ -94,7 +95,7 @@ function CheckoutModal({ isOpen, onClose, grandTotal, items }) {
     >
       <style>{`
         .modal-input {
-          width: 100%; padding: 10px 14px; border-radius: 10px;
+          width: 100%; padding: 10px 14px; border-radius: 18px;
           border: 1.5px solid #e5e7eb; background: #fafaf9;
           font-family: 'Inter', sans-serif; font-size: 13px; color: #0D1F0F;
           outline: none; box-sizing: border-box; transition: border-color 0.2s;
@@ -102,7 +103,7 @@ function CheckoutModal({ isOpen, onClose, grandTotal, items }) {
         .modal-input:focus { border-color: #f43f5e; background: #fff; }
         .modal-input::placeholder { color: #9ca3af; }
         .submit-btn {
-          width: 100%; padding: 13px; border-radius: 999px; border: none;
+          width: 100%; padding: 13px; border-radius: 18px; border: none;
           background: linear-gradient(to right, #fb7185, #e11d48);
           color: #fff; font-family: 'Inter', sans-serif;
           font-size: 13px; font-weight: 700; letter-spacing: 0.08em;
@@ -110,7 +111,7 @@ function CheckoutModal({ isOpen, onClose, grandTotal, items }) {
           box-shadow: 0 6px 20px rgba(244,63,94,0.35);
           transition: transform 0.2s, opacity 0.2s;
         }
-        .submit-btn:hover:not(:disabled) { transform: translateY(-1px); }
+        .submit-btn:hover:not(:disabled) { transform: translateY(-1px) scale(1.03); box-shadow: 0 10px 28px rgba(244,63,94,0.4); }
         .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
         @media (max-width: 640px) {
           .modal-inner {
@@ -133,7 +134,7 @@ function CheckoutModal({ isOpen, onClose, grandTotal, items }) {
       `}</style>
 
       <div style={{
-        background: "#fff", borderRadius: "20px",
+        background: "#fff", borderRadius: "18px",
         overflow: "hidden", width: "100%", maxWidth: "820px",
         maxHeight: "90vh",
         boxShadow: "0 24px 80px rgba(0,0,0,0.25)",
@@ -168,7 +169,7 @@ function CheckoutModal({ isOpen, onClose, grandTotal, items }) {
 
           {/* QR Box */}
           <div style={{
-            background: "#fff", borderRadius: "16px", padding: "16px",
+            background: "#fff", borderRadius: "18px", padding: "16px",
             boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
           }}>
             <img
@@ -181,7 +182,7 @@ function CheckoutModal({ isOpen, onClose, grandTotal, items }) {
           {/* Amount */}
           <div style={{
             background: "rgba(200,168,130,0.15)", border: "1px solid rgba(200,168,130,0.3)",
-            borderRadius: "12px", padding: "14px 24px", textAlign: "center",
+            borderRadius: "18px", padding: "14px 24px", textAlign: "center",
           }}>
             <p style={{ fontSize: "10px", color: "#C8A882", letterSpacing: "0.2em", textTransform: "uppercase", margin: "0 0 4px" }}>
               Total Amount
@@ -210,7 +211,7 @@ function CheckoutModal({ isOpen, onClose, grandTotal, items }) {
                 Aapka order receive ho gaya. Hum jaldi aapse contact karenge. 🙏
               </p>
               <button onClick={onClose} style={{
-                padding: "12px 32px", borderRadius: "999px", border: "1.5px solid #0D1F0F",
+                padding: "12px 32px", borderRadius: "18px", border: "1.5px solid #0D1F0F",
                 background: "transparent", color: "#0D1F0F", cursor: "pointer",
                 fontFamily: "'Inter', sans-serif", fontSize: "13px", fontWeight: 600,
               }}>
@@ -359,7 +360,7 @@ export default function CartPage() {
         <button
           onClick={() => navigate("/gallery")}
           style={{
-            padding: "14px 36px", borderRadius: "999px", border: "none",
+            padding: "14px 36px", borderRadius: "18px", border: "none",
             background: "linear-gradient(to right, #fb7185, #e11d48)",
             color: "#fff", fontFamily: "'Inter', sans-serif",
             fontSize: "13px", fontWeight: 700, letterSpacing: "0.1em",
@@ -374,7 +375,13 @@ export default function CartPage() {
   }
 
   return (
-    <div style={{ minHeight: "80vh", background: "#fafaf9", fontFamily: "'Inter', sans-serif" }}>
+    <div style={{ minHeight: "80vh", background: "#fafaf9", fontFamily: "'Inter', sans-serif", position: "relative" }}>
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <FloatingDecoration type="leaf" side="left" top="4%" size={26} opacity={0.1} delay={0.3} duration={14} animation="sway3" color="#d1bca8" />
+        <FloatingDecoration type="petal6" side="right" top="3%" size={22} opacity={0.1} delay={1.1} duration={13} animation="sway2" color="#d1bca8" />
+        <FloatingDecoration type="petal5" side="left" bottom="10%" size={30} opacity={0.1} delay={0.6} duration={12} animation="sway1" color="#d1bca8" />
+        <FloatingDecoration type="petal" side="right" bottom="8%" size={20} opacity={0.1} delay={1.9} duration={15} animation="sway2" color="#d1bca8" />
+      </div>
       <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
       {/* Checkout Modal */}
@@ -388,11 +395,11 @@ export default function CartPage() {
       <style>{`
         .cart-row {
           display: flex; align-items: center; gap: 16px;
-          padding: 18px 20px; background: #fff; border-radius: 14px;
-          box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-          margin-bottom: 12px; transition: box-shadow 0.2s;
+          padding: 18px 20px; background: #fff; border-radius: 18px;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+          margin-bottom: 12px; transition: all 0.2s;
         }
-        .cart-row:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .cart-row:hover { box-shadow: 0 4px 20px rgba(214,83,122,0.15); transform: scale(1.01); transition: all 0.2s; }
 
         /* image + name/category/price block */
         .cart-row-top {
@@ -400,7 +407,7 @@ export default function CartPage() {
           flex: 1; min-width: 0;
         }
         .cart-row-image {
-          width: 72px; height: 72px; border-radius: 10px; overflow: hidden;
+          width: 72px; height: 72px; border-radius: 18px; overflow: hidden;
           flex-shrink: 0;
         }
         .cart-row-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -428,15 +435,15 @@ export default function CartPage() {
           display: flex; align-items: center; justify-content: center;
           color: #374151; transition: all 0.15s; flex-shrink: 0;
         }
-        .qty-btn:hover { border-color: #f43f5e; color: #f43f5e; background: #fff1f2; }
+        .qty-btn:hover { border-color: #f43f5e; color: #f43f5e; background: #fff1f2; transform: scale(1.05); }
         .remove-btn {
           background: none; border: none; cursor: pointer;
           color: #d1d5db; font-size: 18px; padding: 4px; transition: color 0.15s;
           flex-shrink: 0;
         }
-        .remove-btn:hover { color: #f43f5e; }
+        .remove-btn:hover { color: #f43f5e; transform: scale(1.1); }
         .checkout-btn {
-          width: 100%; padding: 15px; border-radius: 999px; border: none;
+          width: 100%; padding: 15px; border-radius: 18px; border: none;
           background: linear-gradient(to right, #fb7185, #e11d48);
           color: #fff; font-family: 'Inter', sans-serif;
           font-size: 14px; font-weight: 700; letter-spacing: 0.1em;
@@ -444,14 +451,14 @@ export default function CartPage() {
           box-shadow: 0 6px 20px rgba(244,63,94,0.35);
           transition: transform 0.2s, box-shadow 0.2s; margin-bottom: 12px;
         }
-        .checkout-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 28px rgba(244,63,94,0.4); }
+        .checkout-btn:hover { transform: translateY(-1px) scale(1.03); box-shadow: 0 14px 36px rgba(244,63,94,0.45); }
         .continue-btn {
-          width: 100%; padding: 13px; border-radius: 999px;
+          width: 100%; padding: 13px; border-radius: 18px;
           border: 1.5px solid #e5e7eb; background: #fff;
           color: #374151; font-family: 'Inter', sans-serif;
           font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
         }
-        .continue-btn:hover { border-color: #f43f5e; color: #f43f5e; }
+        .continue-btn:hover { border-color: #f43f5e; color: #f43f5e; transform: scale(1.03); }
         @media (min-width: 768px) {
           .cart-layout { display: grid; grid-template-columns: 1fr 360px; gap: 24px; }
         }
@@ -565,8 +572,8 @@ export default function CartPage() {
           {/* Right: order summary */}
           <div>
             <div style={{
-              background: "#fff", borderRadius: "16px",
-              boxShadow: "0 4px 24px rgba(0,0,0,0.08)", overflow: "hidden",
+              background: "#fff", borderRadius: "18px",
+              boxShadow: "0 4px 16px rgba(0,0,0,0.06)", overflow: "hidden",
               position: "sticky", top: "100px",
             }}>
               <div style={{ background: "#0D1F0F", padding: "20px 24px" }}>
@@ -602,7 +609,7 @@ export default function CartPage() {
                 {delivery > 0 && (
                   <div style={{
                     background: "#fef9c3", border: "1px solid #fde047",
-                    borderRadius: "8px", padding: "8px 12px",
+                    borderRadius: "18px", padding: "8px 12px",
                     fontSize: "11px", color: "#854d0e", marginBottom: "12px", lineHeight: 1.5,
                   }}>
                     Add ₹{(60 - total).toFixed(2)} more for FREE delivery 🚚
@@ -612,7 +619,7 @@ export default function CartPage() {
                 {delivery === 0 && (
                   <div style={{
                     background: "#f0fdf4", border: "1px solid #bbf7d0",
-                    borderRadius: "8px", padding: "8px 12px",
+                    borderRadius: "18px", padding: "8px 12px",
                     fontSize: "11px", color: "#166534", marginBottom: "12px",
                   }}>
                     ✓ You qualify for free delivery!
