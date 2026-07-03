@@ -1,6 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Flower2, ShoppingCart, Menu, X, Truck, Sparkles, Phone } from "lucide-react";
+import {
+  Flower2,
+  ShoppingCart,
+  Menu,
+  X,
+  Search,
+  MapPin,
+  Calendar,
+  Briefcase,
+  User,
+  ChevronDown,
+  IndianRupee,
+  EllipsisVertical,
+} from "lucide-react";
 import { useSelector } from "react-redux";
 import { selectCartCount } from "../redux/cartSlice";
 import { WHATSAPP_LINK, CONTACT_PHONE_1, BUSINESS_NAME_MAIN, BUSINESS_NAME_SUB } from "../constants";
@@ -13,6 +26,21 @@ const navLinks = [
   { name: "Decor", path: "/decor" },
   { name: "About", path: "/about" },
   { name: "Gallery", path: "/gallery" },
+];
+
+const megaNavLinks = [
+  { name: "Birthday", path: "/category?cat=Birthday" },
+  { name: "Occasions", path: "/occasions" },
+  { name: "Anniversary", path: "/category?cat=Anniversary" },
+  { name: "Flowers", path: "/category?cat=Bouquets" },
+  { name: "Balloon & Services", path: "/category?cat=Balloon" },
+  { name: "Wedding", path: "/category?cat=Wedding" },
+  { name: "Reception", path: "/category?cat=Reception" },
+  { name: "Haldi", path: "/category?cat=Haldi" },
+  { name: "Devotional", path: "/category?cat=Devotional" },
+  { name: "Candles & More", path: "/category?cat=Candles+%26+More" },
+  { name: "LUXE", path: "/category" },
+  { name: "Decor", path: "/decor" },
 ];
 
 export default function Header() {
@@ -30,135 +58,150 @@ export default function Header() {
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
+    return () => { document.body.style.overflow = ""; };
   }, [isOpen]);
 
   useEffect(() => {
-    const onResize = () => {
-      if (window.innerWidth >= 1024) setIsOpen(false);
-    };
+    const onResize = () => { if (window.innerWidth >= 1024) setIsOpen(false); };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full transition-all duration-300">
-        {/* Announcement Bar */}
-        <div className="announcement-bar">
-          <span className="inline-flex items-center gap-1.5">
-            <Truck size={12} />
-            Same-Day Delivery, Gurgaon & NCR
-          </span>
-          <span className="sep">✦</span>
-          <span className="inline-flex items-center gap-1.5">
-            <Sparkles size={12} />
-            Premium Floral Designs
-          </span>
-          <span className="sep">✦</span>
-          <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="gold-link">
-            <Phone size={12} />
-            {CONTACT_PHONE_1}
-          </a>
+      <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${scrolled ? "shadow-sm" : ""}`}>
+        {/* ─── TOP HEADER ROW ─── */}
+        <div className="bg-white border-b border-gray-100">
+          <div className="max-w-[1440px] mx-auto px-4 md:px-8">
+            <div className="flex items-center justify-between h-16 lg:h-[72px] gap-4">
+              {/* Logo */}
+              <Link to="/" className="flex items-center gap-2 shrink-0">
+                <motion.div
+                  whileHover={{ rotate: 15, scale: 1.05 }}
+                  className="w-9 h-9 rounded-full bg-gradient-to-br from-[#14301F] to-[#1a3d28] flex items-center justify-center"
+                >
+                  <Flower2 size={18} color="#C8A882" />
+                </motion.div>
+                <span className="hidden sm:inline-block">
+                  <h1 className="font-serif-display font-black text-lg text-[#14301F] leading-none">
+                    {BUSINESS_NAME_MAIN}
+                  </h1>
+                  <p className="text-[9px] text-[#C9A15A] font-semibold tracking-widest uppercase leading-tight">
+                    {BUSINESS_NAME_SUB}
+                  </p>
+                </span>
+              </Link>
+
+              {/* Delivery / Location Selector */}
+              <div className="hidden lg:flex items-center gap-2 border-r border-gray-200 pr-5">
+                <MapPin size={18} className="text-[#D6537A] shrink-0" />
+                <div>
+                  <div className="flex items-center gap-1">
+                    <span className="text-xs">🇮🇳</span>
+                    <span className="text-[11px] font-semibold text-gray-700">India</span>
+                    <ChevronDown size={12} className="text-gray-400" />
+                  </div>
+                  <p className="text-[9px] text-gray-400 leading-tight">Location missing</p>
+                </div>
+              </div>
+
+              {/* Search Bar */}
+              <div className="hidden md:flex flex-1 max-w-[460px] lg:max-w-[520px]">
+                <div className="relative w-full">
+                  <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <input
+                    type="text"
+                    placeholder="Search flowers, cakes, plants..."
+                    className="w-full h-10 pl-10 pr-4 rounded-full bg-gray-50 border border-gray-200 text-xs text-gray-700 placeholder-gray-400 outline-none focus:border-[#D6537A]/40 focus:bg-white focus:ring-1 focus:ring-[#D6537A]/10 transition-all"
+                  />
+                </div>
+              </div>
+
+              {/* Right Side Utility Icons */}
+              <div className="flex items-center gap-1 sm:gap-3">
+                <button className="hidden lg:flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg hover:bg-gray-50 transition-colors group" aria-label="Reminders">
+                  <Calendar size={18} className="text-gray-500 group-hover:text-[#D6537A] transition-colors" />
+                  <span className="text-[9px] text-gray-400 group-hover:text-gray-600 font-medium">Reminders</span>
+                </button>
+
+                <button className="hidden lg:flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg hover:bg-gray-50 transition-colors group" aria-label="Currency">
+                  <IndianRupee size={18} className="text-gray-500 group-hover:text-[#D6537A] transition-colors" />
+                  <span className="text-[9px] text-gray-400 group-hover:text-gray-600 font-medium">INR</span>
+                </button>
+
+                <button className="hidden lg:flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg hover:bg-gray-50 transition-colors group" aria-label="Corporate Gifting" onClick={() => navigate("/decor")}>
+                  <Briefcase size={18} className="text-gray-500 group-hover:text-[#D6537A] transition-colors" />
+                  <span className="text-[9px] text-gray-400 group-hover:text-gray-600 font-medium">Corporate</span>
+                </button>
+
+                <button onClick={() => navigate("/cart")} className="relative flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg hover:bg-gray-50 transition-colors group" aria-label="Cart">
+                  <ShoppingCart size={18} className="text-gray-500 group-hover:text-[#D6537A] transition-colors" />
+                  <span className="text-[9px] text-gray-400 group-hover:text-gray-600 font-medium">Cart</span>
+                  <AnimatePresence>
+                    {cartCount > 0 && (
+                      <motion.span
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        exit={{ scale: 0 }}
+                        className="absolute -top-0.5 -right-0.5 bg-[#D6537A] text-white text-[8px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-white"
+                      >
+                        {cartCount > 9 ? "9+" : cartCount}
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </button>
+
+                <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="hidden lg:flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg hover:bg-gray-50 transition-colors group" aria-label="Profile">
+                  <User size={18} className="text-gray-500 group-hover:text-[#D6537A] transition-colors" />
+                  <span className="text-[9px] text-gray-400 group-hover:text-gray-600 font-medium">Hi Guest</span>
+                </a>
+
+                <button className="hidden lg:flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg hover:bg-gray-50 transition-colors group" aria-label="More">
+                  <EllipsisVertical size={18} className="text-gray-500 group-hover:text-[#D6537A] transition-colors" />
+                  <span className="text-[9px] text-gray-400 group-hover:text-gray-600 font-medium">More</span>
+                </button>
+
+                {/* Mobile: Cart + Hamburger */}
+                <button
+                  onClick={() => setIsOpen(true)}
+                  className="lg:hidden p-2 text-gray-600 hover:text-[#D6537A] transition-colors"
+                  aria-label="Open menu"
+                >
+                  <Menu size={20} />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Main Nav Bar */}
-        <nav
-          className={`w-full transition-all duration-300 ${
-            scrolled
-              ? "header-glass py-3"
-              : "bg-white border-b border-gray-100 py-4"
-          }`}
-        >
-          <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
-            {/* Logo */}
-            <Link to="/" className="group flex items-center gap-3 select-none">
-              <motion.div 
-                whileHover={{ rotate: 18, rotateX: 10, rotateY: 10 }}
-                className="w-10 h-10 rounded-full bg-[#14301F] flex items-center justify-center shadow-soft group-hover:shadow-soft-lg transition-all duration-300"
-              >
-                <Flower2 size={20} color="#C8A882" className="group-hover:scale-110 transition-transform duration-300" />
-              </motion.div>
-              <h1 className="font-serif-display font-black text-xl md:text-2xl text-[#14301F] tracking-tight leading-none">
-                {BUSINESS_NAME_MAIN} <span className="text-[#C9A15A] font-light italic">{BUSINESS_NAME_SUB}</span>
-              </h1>
-            </Link>
-
-            {/* Desktop Navigation Links */}
-            <div className="hidden lg:flex items-center gap-1">
-              {navLinks.map((link) => {
-                const isActive = location.pathname === link.path;
+        {/* ─── MEGA NAV ROW ─── */}
+        <div className="hidden lg:block bg-white border-b border-gray-100">
+          <div className="max-w-[1440px] mx-auto px-4 md:px-8">
+            <nav className="flex items-center justify-between -ml-3 -mr-3 overflow-x-auto scrollbar-hide">
+              {megaNavLinks.map((link) => {
+                const isActive = location.pathname === link.path || location.search.includes(link.path.split("=")[1] || "");
                 return (
                   <Link
                     key={link.name}
                     to={link.path}
-                    className={`nav-link relative px-4 py-2 text-xs font-bold tracking-widest uppercase font-inter rounded-2xl transition-all duration-300 ${
-                      isActive
-                        ? "text-[#14301F] bg-[#F4C9D1]/40"
-                        : "text-[#374151] hover:text-[#14301F] hover:bg-[#FBF6EF]"
+                    className={`relative px-3 py-3 text-[11px] font-semibold tracking-wide whitespace-nowrap transition-colors flex items-center gap-1 ${
+                      isActive ? "text-[#D6537A]" : "text-gray-600 hover:text-[#14301F]"
                     }`}
                   >
                     {link.name}
-                    {isActive && (
-                      <motion.span
-                        layoutId="activeNavTab"
-                        className="absolute bottom-1 left-4 right-4 h-0.5 bg-[#0D1F0F] rounded-full"
-                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                      />
-                    )}
+                    <ChevronDown size={10} className="text-gray-300" />
                   </Link>
                 );
               })}
-            </div>
-
-            {/* Right Side Actions */}
-            <div className="flex items-center gap-3">
-              {/* Cart Button */}
-              <motion.button
-                whileTap={{ scale: 0.95 }}
-                onClick={() => navigate("/cart")}
-                className="relative flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-[#0D1F0F] text-[#F7F0E8] font-inter text-xs font-bold tracking-wider uppercase border border-[#0D1F0F] shadow-soft hover:bg-[#1a3320] hover:border-[#1a3320] hover:shadow-soft-lg transition-all duration-300"
-                aria-label="Cart"
-              >
-                <span key={cartCount} className="cart-bounce inline-flex">
-                  <ShoppingCart size={15} className="mr-0.5" />
-                </span>
-                <span className="hidden md:inline">Cart</span>
-                <AnimatePresence>
-                  {cartCount > 0 && (
-                    <motion.span
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      exit={{ scale: 0 }}
-                      key={cartCount}
-                       className="absolute -top-1.5 -right-1.5 bg-[#D6537A] text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-soft"
-                    >
-                      {cartCount > 99 ? "99+" : cartCount}
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-              </motion.button>
-
-              {/* Hamburger Button */}
-              <button
-                onClick={() => setIsOpen(true)}
-                className="lg:hidden p-2.5 bg-gray-50 border border-gray-100 text-[#0D1F0F] rounded-2xl hover:bg-gray-100 hover:border-gray-200 transition-all duration-200"
-                aria-label="Open menu"
-              >
-                <Menu size={20} />
-              </button>
-            </div>
+            </nav>
           </div>
-        </nav>
+        </div>
       </header>
 
-      {/* Mobile Drawer Navigation */}
+      {/* ─── MOBILE DRAWER ─── */}
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -166,8 +209,6 @@ export default function Header() {
               onClick={() => setIsOpen(false)}
               className="fixed inset-0 z-50 bg-[#14301F]/60 backdrop-blur-sm"
             />
-
-            {/* Side Drawer */}
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
@@ -175,60 +216,52 @@ export default function Header() {
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
               className="fixed top-0 right-0 bottom-0 w-full max-w-[320px] z-50 bg-white shadow-2xl flex flex-col overflow-y-auto"
             >
-              {/* Drawer Header */}
-              <div className="flex items-center justify-between p-6 bg-[#14301F] border-b border-[#C9A15A]/20">
-                <span className="font-serif-display font-black text-lg text-[#FBF6EF] tracking-tight">
+              <div className="flex items-center justify-between p-5 bg-gradient-to-br from-[#14301F] to-[#0D1F0F]">
+                <span className="font-serif-display font-black text-lg text-[#FBF6EF]">
                   {BUSINESS_NAME_MAIN} <span className="text-[#C9A15A] font-light italic">{BUSINESS_NAME_SUB}</span>
                 </span>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  aria-label="Close menu"
-                  className="p-2 bg-white/10 hover:bg-white/20 text-[#FBF6EF] border border-white/10 rounded-full transition-all duration-200"
-                >
+                <button onClick={() => setIsOpen(false)} className="p-2 bg-white/10 text-[#FBF6EF] rounded-full" aria-label="Close">
                   <X size={18} />
                 </button>
               </div>
 
-              {/* Navigation Links */}
-              <nav className="flex-1 py-6 px-6 flex flex-col gap-1">
-                {navLinks.map((link) => {
-                  const isActive = location.pathname === link.path;
-                  return (
-                    <Link
-                      key={link.name}
-                      to={link.path}
-                      onClick={() => setIsOpen(false)}
-                      className={`py-3 px-4 rounded-2xl text-xs font-bold tracking-wider uppercase font-inter border-l-4 transition-all duration-200 ${
-                        isActive
-                          ? "text-[#14301F] bg-[#F4C9D1]/40 border-[#14301F]"
-                          : "text-[#374151] hover:text-[#14301F] hover:bg-[#FBF6EF] border-transparent"
-                      }`}
-                    >
-                      {link.name}
-                    </Link>
-                  );
-                })}
+              {/* Mobile Search */}
+              <div className="p-4 border-b border-gray-100">
+                <div className="relative">
+                  <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <input
+                    type="text"
+                    placeholder="Search..."
+                    className="w-full h-9 pl-9 pr-3 rounded-full bg-gray-50 border border-gray-200 text-xs outline-none focus:border-[#D6537A]/40"
+                  />
+                </div>
+              </div>
 
-                {/* Mobile Cart Link */}
-                <Link
-                  to="/cart"
-                  onClick={() => setIsOpen(false)}
-                  className="mt-2 py-3 px-4 rounded-2xl text-xs font-bold tracking-wider uppercase font-inter border-l-4 border-transparent text-[#D6537A] bg-[#F4C9D1]/20 hover:bg-[#F4C9D1]/40 flex items-center justify-between"
-                >
-                  <span className="flex items-center gap-2.5">
-                    <ShoppingCart size={15} />
-                    Cart
-                  </span>
-                  {cartCount > 0 && (
-                    <span className="bg-[#D6537A] text-white rounded-full text-[10px] px-2.5 py-0.5 font-bold">
-                      {cartCount}
-                    </span>
-                  )}
-                </Link>
+              <nav className="flex-1 py-4 px-4 flex flex-col gap-0.5">
+                {megaNavLinks.map((link) => (
+                  <Link
+                    key={link.name}
+                    to={link.path}
+                    onClick={() => setIsOpen(false)}
+                    className="py-2.5 px-3 rounded-xl text-sm font-medium text-gray-700 hover:text-[#D6537A] hover:bg-rose-50 transition-colors"
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+                <div className="border-t border-gray-100 my-3" />
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.name}
+                    to={link.path}
+                    onClick={() => setIsOpen(false)}
+                    className="py-2.5 px-3 rounded-xl text-sm font-medium text-gray-500 hover:text-[#14301F] hover:bg-gray-50 transition-colors"
+                  >
+                    {link.name}
+                  </Link>
+                ))}
               </nav>
 
-              {/* Drawer Footer */}
-              <div className="p-6 border-t border-[#F4C9D1]/20 text-center text-[10px] text-[#C9A15A]/60 font-semibold tracking-wider font-inter">
+              <div className="p-5 border-t border-gray-100 text-center text-[10px] text-gray-400 font-semibold tracking-wider">
                 © {new Date().getFullYear()} {BUSINESS_NAME_MAIN} {BUSINESS_NAME_SUB}
               </div>
             </motion.div>

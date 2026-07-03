@@ -19,6 +19,7 @@ import flower17 from "../assets/s17.png";
 import flower18 from "../assets/s18.png";
 import flower19 from "../assets/s19.png";
 import FloatingDecoration from "../components/FloatingDecoration";
+import BokehLights from "../components/BokehLights";
 import flower20 from "../assets/s20.png";
 import flower21 from "../assets/s21.png";
 import flower22 from "../assets/s22.png";
@@ -338,10 +339,21 @@ export default function Gallery() {
         <FloatingDecoration type="petal6" side="right" top="3%" size={22} opacity={0.1} delay={1.3} duration={13} animation="sway2" color="#d1bca8" />
         <FloatingDecoration type="petal5" side="left" bottom="10%" size={30} opacity={0.1} delay={0.7} duration={12} animation="sway1" color="#d1bca8" />
         <FloatingDecoration type="petal" side="right" bottom="8%" size={20} opacity={0.1} delay={2} duration={15} animation="sway2" color="#d1bca8" />
+        <FloatingDecoration type="rose" side="right" top="6%" size={36} opacity={0.08} delay={0} duration={18} animation="bloom" color="#C8A882" />
+        <FloatingDecoration type="lotus" side="left" top="auto" bottom="15%" size={40} opacity={0.07} delay={2} duration={16} animation="drift-bloom" color="#C8A882" />
+      </div>
+
+      {/* Bokeh Lights */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true" style={{ zIndex: 0 }}>
+        <BokehLights spots={[
+          { color: "from-rose-400/10 to-transparent", size: 280, top: "-6%", right: "-4%", anim: "bk-drift1", delay: 0, duration: 30 },
+          { color: "from-amber-300/8 to-transparent", size: 240, bottom: "-8%", left: "8%", anim: "bk-drift4", delay: 3, duration: 32 },
+          { color: "from-purple-400/6 to-transparent", size: 200, top: "35%", left: "40%", anim: "bk-float", delay: 1, duration: 28 },
+        ]} />
       </div>
 
       {/* Hero */}
-      <header className="gallery-hero" style={{ textAlign: "center", borderBottom: "1px solid rgba(200,168,130,0.15)" }}>
+      <header className="gallery-hero" style={{ textAlign: "center", borderBottom: "1px solid rgba(200,168,130,0.15)", position: "relative", zIndex: 1 }}>
         <p
           style={{
             fontSize: "11px",
@@ -392,6 +404,8 @@ export default function Gallery() {
           maxWidth: "1320px",
           margin: "0 auto",
           boxSizing: "border-box",
+          position: "relative",
+          zIndex: 1,
         }}
         aria-label="Shivam Florist photo gallery"
       >
@@ -543,6 +557,8 @@ export default function Gallery() {
           borderTop: "1px solid rgba(200,168,130,0.15)",
           padding: "40px",
           textAlign: "center",
+          position: "relative",
+          zIndex: 1,
         }}
       >
         <p

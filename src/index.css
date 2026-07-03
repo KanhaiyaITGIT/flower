@@ -184,7 +184,8 @@ body {
 .fd-sway3,
 .fd-rotate {
   animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 .fd-sway1 { animation-name: fd-sway1; }
 .fd-sway2 { animation-name: fd-sway2; }
@@ -315,6 +316,17 @@ body {
   100% { background-position: 200% center; }
 }
 
+/* ─── PetalFall —— */
+.pf-petal {
+  animation: pf-fall linear infinite;
+}
+@keyframes pf-fall {
+  0%   { transform: translateY(-40px) rotate(0deg); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+
 /* ─── Hero Image Arch Frame ─── */
 .hero-arch {
   border-radius: 50% 50% 18px 18px / 60% 60% 18px 18px;
@@ -349,6 +361,7 @@ body {
   .bk-float,
   .float-card,
   .whatsapp-pulse,
+  .pf-petal,
   .gold-shimmer,
   .scroll-mouse::after,
   .cart-bounce {

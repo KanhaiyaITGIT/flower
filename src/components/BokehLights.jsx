@@ -18,7 +18,7 @@ const BokehLights = ({ spots = defaultSpots, zIndex = 0 }) => (
     {spots.map((s, i) => (
       <div
         key={i}
-        className={`bk-${s.anim}`}
+        className={s.anim}
         style={{
           position: "absolute",
           width: s.size,

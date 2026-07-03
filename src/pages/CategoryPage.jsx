@@ -107,6 +107,7 @@ import {
   Sparkles,
   Search,
   Loader2,
+  Phone,
 } from "lucide-react";
 
 const ITEMS_PER_PAGE = 12;
@@ -550,7 +551,7 @@ const CategoryPage = () => {
                       {/* Pricing Row */}
                       <div className="flex items-center justify-between mt-auto pt-2 border-t border-gray-50">
                         <div className="flex flex-col">
-                          <span className="font-bold text-[#D6537A] text-sm">Call for Price</span>
+                          <a href="tel:9540849659" className="font-bold text-[#D6537A] text-sm inline-flex items-center gap-1.5"><Phone size={14} className="icon-wiggle" /> Call for Price</a>
                         </div>
                         
                         {/* Quick Cart Button */}

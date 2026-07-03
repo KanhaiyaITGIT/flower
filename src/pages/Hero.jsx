@@ -22,6 +22,10 @@ import {
   CheckCircle2,
   ChevronDown,
   ChevronLeft,
+  Users,
+  Award,
+  Package,
+  Phone,
 } from "lucide-react";
 import { FaInstagram, FaFacebookF } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
@@ -48,7 +52,10 @@ import image26 from "../assets/s26.png";
 import image27 from "../assets/s27.png";
 import hero from "../assets/hero.png";
 import image28 from "../assets/f1.png";
-import imagef20 from "../assets/f20.png";
+import imageOcc1 from "../assets/s18.png";
+import imageOcc2 from "../assets/s34.png";
+import imageOcc3 from "../assets/s46.png";
+import imageOcc4 from "../assets/s64.png";
 
 // ─── Premium Variants ───
 const containerVariants = {
@@ -105,7 +112,7 @@ const Home = () => {
   const scrollSlider = (ref, direction) => {
     if (!ref.current) return;
     const card = ref.current.querySelector("[data-slide-card]");
-    const cardWidth = card ? card.offsetWidth + 24 : 300;
+    const cardWidth = card ? card.offsetWidth + 20 : 300;
     ref.current.scrollBy({
       left: direction === "left" ? -cardWidth : cardWidth,
       behavior: "smooth",
@@ -160,10 +167,12 @@ const Home = () => {
   const pad = (n) => String(n).padStart(2, "0");
 
   const categories = [
-    { title: "Bouquets", image: image1, products: "120+ Products", category: "Bouquets" },
-    { title: "Floral Arrangements", image: image42, products: "80+ Products", category: "All" },
-    { title: "Premium Baloons Decor", image: image16, products: "150+ Products", category: "Balloon" },
-    { title: "For Love", image: image4, products: "30+ Products", category: "Anniversary" },
+    { title: "Bouquets", image: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80", products: "120+ Products", category: "Bouquets" },
+    { title: "Floral Arrangements", image: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=600&q=80", products: "80+ Products", category: "All" },
+    { title: "Premium Balloons Decor", image: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&q=80", products: "150+ Products", category: "Balloon" },
+    { title: "For Love", image: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=600&q=80", products: "30+ Products", category: "Anniversary" },
+    { title: "Occasional Cakes & Gifts", image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80", products: "25+ Products", category: "All" },
+    { title: "Dried Florals", image: "https://images.unsplash.com/photo-1490750967868-88aa4f44baee?w=600&q=80", products: "40+ Products", category: "All" },
   ];
 
   const bestSellers = [
@@ -263,25 +272,25 @@ const Home = () => {
       title: "Marriage decor",
       desc: "Make their day extra special",
       icon: Cake,
-      image: image9,
+      image: imageOcc1,
     },
     {
       title: "Devotional",
       desc: "Celebrate your love story",
       icon: Heart,
-      image: image10,
+      image: imageOcc2,
     },
     {
       title: "Decor",
       desc: "Mark every milestone in style",
       icon: PartyPopper,
-      image: imagef20,
+      image: imageOcc3,
     },
     {
       title: "Thank You",
       desc: "Show your gratitude with blooms",
       icon: Gift,
-      image: image12,
+      image: imageOcc4,
     },
   ];
 
@@ -341,51 +350,59 @@ const Home = () => {
       {/* ═══════════════════════════════════════════════════════════════════ */}
       {/* ─── HERO SECTION: PROMOTIONAL CARD STYLE ─── */}
       {/* ═══════════════════════════════════════════════════════════════════ */}
-      <section className="relative w-full overflow-hidden bg-[#fafaf9] pt-20 lg:pt-14">
+      <section className="relative w-full overflow-hidden bg-gradient-to-b from-[#fff8f2] via-[#fef6ee] to-[#fafaf9] pt-20 lg:pt-14">
+        <BokehLights spots={[
+          { color: "from-rose-300/25 to-transparent", size: 280, top: "2%", right: "6%", anim: "bk-drift2", delay: 0, duration: 26 },
+          { color: "from-amber-200/25 to-transparent", size: 240, top: "35%", left: "2%", anim: "bk-drift1", delay: 2, duration: 30 },
+          { color: "from-emerald-200/20 to-transparent", size: 220, bottom: "8%", right: "20%", anim: "bk-float", delay: 4, duration: 28 },
+          { color: "from-purple-200/15 to-transparent", size: 180, top: "12%", left: "35%", anim: "bk-drift3", delay: 1, duration: 24 },
+        ]} />
 
-        {/* ─── Category Shortcuts Row ─── */}
-        <div className="w-full overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pb-2 lg:pb-4">
-          <div className="flex gap-5 lg:gap-8 justify-start lg:justify-center px-6 lg:px-8 max-w-7xl mx-auto">
-            {[
-              { label: "All Flowers", image: image1, link: "/category" },
-              { label: "Rose Love", image: image4, link: "/category?cat=Anniversary" },
-              { label: "Birthdays", image: image5, link: "/category?cat=Birthday" },
-              { label: "Anniversaries", image: image6, link: "/category?cat=Anniversary" },
-              { label: "Weddings", image: image7, link: "/category?cat=Wedding" },
-              { label: "Luxury", icon: "flower", link: "/category" },
-              { label: "Balloons", image: image16, link: "/category?cat=Balloon" },
-              { label: "Devotional", image: image9, link: "/category?cat=Devotional" },
-              { label: "Gifts", icon: "gift", link: "/category" },
-            ].map((cat, i) => (
-              <Link
-                key={i}
-                to={cat.link}
-                className="flex flex-col items-center gap-2 shrink-0 group"
-              >
-                <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full overflow-hidden border-2 border-transparent group-hover:border-[#C9A15A] group-hover:shadow-lg transition-all duration-300">
-                  {cat.icon ? (
-                    <div className={`w-full h-full flex items-center justify-center ${cat.icon === "flower" ? "bg-[#F4C9D1]/30" : "bg-[#C9A15A]/20"}`}>
-                      {cat.icon === "flower" ? <Flower2 size={28} className="text-[#D6537A]" /> : <Gift size={28} className="text-[#C9A15A]" />}
-                    </div>
-                  ) : (
+        {/* ─── FnP-Style Category Shortcuts Row ─── */}
+        <div className="relative w-full pb-2 lg:pb-4">
+          <div className="overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="flex gap-6 md:gap-8 justify-start md:justify-center px-6 md:px-8 max-w-[1440px] mx-auto">
+              {[
+                { label: "Birthday", image: image1, link: "/category?cat=Birthday", discount: null },
+                { label: "Anniversary", image: image4, link: "/category?cat=Anniversary", discount: null },
+                { label: "Wedding", image: image7, link: "/category?cat=Wedding", discount: null },
+                { label: "Balloons", image: image16, link: "/category?cat=Balloon", discount: "Up to 30% Off" },
+                { label: "Devotional", image: image9, link: "/category?cat=Devotional", discount: null },
+                { label: "Luxury", image: image26, link: "/category", discount: null },
+                { label: "Gifts", image: image27, link: "/category", discount: "10% Off" },
+                { label: "Roses", image: image6, link: "/category?cat=Anniversary", discount: null },
+                { label: "Plants", image: image5, link: "/category?cat=Birthday", discount: null },
+                { label: "Cakes", image: image8, link: "/category", discount: "Flat 15%" },
+              ].map((cat, i) => (
+                <Link
+                  key={i}
+                  to={cat.link}
+                  className="flex flex-col items-center gap-2.5 shrink-0 group"
+                >
+                  <div className="relative w-[84px] h-[84px] md:w-24 md:h-24 rounded-full overflow-hidden border-[2.5px] border-white shadow-[0_4px_14px_rgba(0,0,0,0.08)] group-hover:shadow-[0_8px_24px_rgba(0,0,0,0.15)] transition-all duration-300">
                     <LazyImage
                       src={cat.image}
                       alt={cat.label}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
-                  )}
-                </div>
-                <span className="text-[11px] lg:text-xs font-bold text-gray-600 group-hover:text-[#14301F] transition-colors whitespace-nowrap">
-                  {cat.label}
-                </span>
-              </Link>
-            ))}
+                    {cat.discount && (
+                      <div className="absolute -top-1 -right-1 bg-[#D6537A] text-white text-[8px] md:text-[9px] font-bold px-1.5 py-0.5 rounded-full shadow-md whitespace-nowrap">
+                        {cat.discount}
+                      </div>
+                    )}
+                  </div>
+                  <span className="text-xs md:text-sm font-semibold text-gray-600 group-hover:text-[#14301F] transition-colors whitespace-nowrap">
+                    {cat.label}
+                  </span>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
 
         {/* ─── Hero Promotional Card ─── */}
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-6 lg:pb-10">
-          <div className="relative bg-[#F5EFE6] rounded-[28px] overflow-hidden shadow-lg">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-8 pb-4 lg:pb-6">
+          <div className="relative bg-[#F5EFE6] rounded-[28px] overflow-hidden shadow-[0_20px_60px_-15px_rgba(214,83,122,0.25),0_10px_30px_-10px_rgba(201,161,90,0.2)] ring-1 ring-[#C9A15A]/20">
 
             {/* Top-right decorative accent button */}
             <div className="absolute top-4 right-4 z-20 w-11 h-11 lg:w-12 lg:h-12 rounded-full bg-[#14301F] flex items-center justify-center shadow-md cursor-default">
@@ -434,7 +451,7 @@ const Home = () => {
             </div>
 
             {/* Grid: content left, image right */}
-            <div className="grid lg:grid-cols-2 min-h-[360px] lg:min-h-[460px]">
+            <div className="grid lg:grid-cols-2 min-h-[380px] lg:min-h-[520px]">
               {/* ─── LEFT: TEXT CONTENT ─── */}
               <div className="flex flex-col justify-center px-7 lg:px-12 py-10 lg:py-12 order-2 lg:order-1">
                 <span className="inline-flex items-center gap-1.5 text-[10px] font-bold tracking-[0.2em] uppercase text-[#7a8c6b] font-inter mb-3">
@@ -444,40 +461,40 @@ const Home = () => {
 
                 <h1 className="font-inter font-bold text-4xl sm:text-5xl lg:text-6xl xl:text-7xl text-[#1a1a1a] leading-[1.08] tracking-tight">
                   Luxury
-                  <span className="block text-[#C9A15A]">Blooms</span>
+                  <span className="block bg-gradient-to-r from-[#D6537A] via-[#C9A15A] to-[#e8a03d] bg-clip-text text-transparent">Blooms</span>
                 </h1>
 
                 <p className="text-gray-500 text-sm lg:text-base mt-3 max-w-md leading-relaxed font-inter">
                   Handpicked fresh every morning. Artisan bouquets, premium arrangements and thoughtful gifts — curated for life's most beautiful moments.
                 </p>
 
-                {/* CTA Buttons — dark pill shape */}
+                {/* CTA Buttons — gradient + outline pill shape */}
                 <div className="flex flex-col sm:flex-row gap-3 mt-7 lg:mt-8">
                   <Link
                     to="/category"
-                    className="group inline-flex items-center justify-center gap-2 px-7 lg:px-8 py-3.5 lg:py-4 bg-[#1a1a1a] text-white font-bold text-xs lg:text-sm tracking-wider uppercase rounded-full hover:bg-[#333] hover:shadow-lg hover:scale-[1.03] transition-all duration-300"
+                    className="group inline-flex items-center justify-center gap-2 px-7 lg:px-8 py-3.5 lg:py-4 bg-gradient-to-r from-[#14301F] to-[#1f4a30] text-white font-bold text-xs lg:text-sm tracking-wider uppercase rounded-full shadow-md hover:shadow-[0_8px_30px_rgba(201,161,90,0.45)] hover:scale-[1.04] transition-all duration-300"
                   >
                     <ShoppingBag size={16} className="group-hover:scale-110 transition-transform icon-wiggle" />
                     <span>Shop Collection</span>
                   </Link>
                   <Link
                     to="/occasions"
-                    className="group inline-flex items-center justify-center gap-2 px-7 lg:px-8 py-3.5 lg:py-4 bg-white text-[#1a1a1a] font-bold text-xs lg:text-sm tracking-wider uppercase rounded-full border-2 border-[#1a1a1a]/15 hover:bg-[#1a1a1a] hover:text-white hover:border-[#1a1a1a] hover:shadow-lg hover:scale-[1.03] transition-all duration-300"
+                    className="group inline-flex items-center justify-center gap-2 px-7 lg:px-8 py-3.5 lg:py-4 bg-white text-[#1a1a1a] font-bold text-xs lg:text-sm tracking-wider uppercase rounded-full border-2 border-[#D6537A]/30 hover:bg-gradient-to-r hover:from-[#D6537A] hover:to-[#C9A15A] hover:text-white hover:border-transparent hover:shadow-[0_8px_30px_rgba(214,83,122,0.35)] hover:scale-[1.04] transition-all duration-300"
                   >
-                    <Flower2 size={16} className="text-[#C9A15A] group-hover:rotate-12 transition-transform icon-wiggle" />
+                    <Flower2 size={16} className="text-[#C9A15A] group-hover:text-white group-hover:rotate-12 transition-all icon-wiggle" />
                     <span>Explore Occasions</span>
                   </Link>
                 </div>
               </div>
 
-              {/* ─── RIGHT: HERO IMAGE (bleeding off edge) ─── */}
-              <div className="relative order-1 lg:order-2 min-h-[260px] lg:min-h-full overflow-hidden">
+              {/* ─── RIGHT: HERO IMAGE (full photo, no crop) ─── */}
+              <div className="relative order-1 lg:order-2 min-h-[380px] lg:min-h-[520px] overflow-hidden bg-gradient-to-br from-[#f0b088]/25 via-[#F5EFE6] to-[#9fd4c4]/30">
                 {/* Soft gradient overlay on left edge for smooth blend */}
-                <div className="absolute inset-y-0 left-0 w-16 lg:w-24 bg-gradient-to-r from-[#F5EFE6] to-transparent z-10 pointer-events-none" />
+                <div className="absolute inset-y-0 left-0 w-16 lg:w-24 bg-gradient-to-r from-[#F5EFE6] to-transparent z-10 pointer-events-none hidden lg:block" />
                 <LazyImage
                   src={hero}
                   alt="Luxurious fresh flower bouquet arrangement - Premium floral delivery"
-                  className="absolute right-0 top-0 h-full w-auto min-w-[120%] lg:min-w-[130%] max-w-none object-cover object-left"
+                  className="absolute inset-0 w-full h-full object-contain object-center"
                 />
                 {/* Bottom fade */}
                 <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-[#F5EFE6] to-transparent pointer-events-none lg:hidden" />
@@ -487,65 +504,121 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ─── Shop By Category ─── */}
-      <RevealSection className="relative pt-16 pb-24 bg-white border-b border-gray-100 overflow-hidden">
+      {/* ─── Trust Stats Strip ─── */}
+      <section className="relative bg-gradient-to-r from-[#14301F] via-[#1f4a30] to-[#14301F] py-8 lg:py-10 overflow-hidden">
         <BokehLights spots={[
-          { color: "from-rose-200/15 to-transparent", size: 260, top: "-6%", right: "-4%", anim: "bk-drift2", delay: 0, duration: 32 },
-          { color: "from-amber-100/12 to-transparent", size: 200, bottom: "-8%", left: "5%", anim: "bk-drift1", delay: 3, duration: 28 },
-          { color: "from-purple-200/10 to-transparent", size: 220, top: "40%", left: "40%", anim: "bk-float", delay: 1, duration: 30 },
+          { color: "from-rose-400/15 to-transparent", size: 200, top: "-20%", left: "10%", anim: "bk-drift1", delay: 0, duration: 26 },
+          { color: "from-amber-300/12 to-transparent", size: 180, bottom: "-20%", right: "15%", anim: "bk-drift3", delay: 2, duration: 24 },
         ]} />
-        <FloatingDecoration type="petal5" side="left" top="20%" size={60} opacity={0.12} delay={0} duration={13} />
-        <FloatingDecoration type="leaf" side="right" top="30%" size={50} opacity={0.15} delay={1} duration={11} animation="sway2" />
-        <FloatingDecoration type="petal6" side="left" top="auto" bottom="10%" size={44} opacity={0.1} delay={2} duration={14} animation="sway3" color="#C9A15A" />
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">
-              Curated Collections
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[#0d1f0f] mt-3">
+        <div className="max-w-[1440px] mx-auto px-6 relative grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          {[
+            { icon: Users, value: "10,000+", label: "Happy Customers" },
+            { icon: Package, value: "50,000+", label: "Orders Delivered" },
+            { icon: Award, value: "5+ Years", label: "Trusted Experience" },
+            { icon: Clock, value: "24/7", label: "Support Available" },
+          ].map((stat, i) => {
+            const Icon = stat.icon;
+            return (
+              <div key={i} className="group flex items-center gap-3 lg:gap-4 justify-center lg:justify-start">
+                <div className="w-11 h-11 lg:w-12 lg:h-12 shrink-0 rounded-2xl bg-white/10 border border-white/10 flex items-center justify-center group-hover:bg-[#C9A15A]/20 group-hover:scale-110 transition-all duration-300">
+                  <Icon size={20} className="text-[#C9A15A]" />
+                </div>
+                <div>
+                  <p className="text-white font-serif-display font-bold text-lg lg:text-xl leading-none">{stat.value}</p>
+                  <p className="text-white/50 text-[10px] lg:text-xs mt-1.5 uppercase tracking-wider font-semibold">{stat.label}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ─── Shop By Category ─── */}
+      <RevealSection className="relative pt-16 lg:pt-20 pb-28 bg-gradient-to-b from-[#faf6f0] via-[#f5ede4] to-[#e8ddd0] border-b border-[#C9A15A]/10 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNDOUExNUEiIGZpbGwtb3BhY2l0eT0iMC4wNCI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-60" />
+        <BokehLights spots={[
+          { color: "from-rose-300/20 to-transparent", size: 300, top: "-8%", right: "-4%", anim: "bk-drift2", delay: 0, duration: 32 },
+          { color: "from-amber-200/18 to-transparent", size: 240, bottom: "-10%", left: "5%", anim: "bk-drift1", delay: 3, duration: 28 },
+          { color: "from-[#C9A15A]/10 to-transparent", size: 280, top: "50%", left: "50%", anim: "bk-float", delay: 1, duration: 30 },
+          { color: "from-rose-200/15 to-transparent", size: 200, top: "20%", left: "10%", anim: "bk-drift3", delay: 2, duration: 26 },
+        ]} />
+        <FloatingDecoration type="rose" side="left" top="12%" size={72} opacity={0.1} delay={0} duration={16} animation="bloom" color="#D6537A" />
+        <FloatingDecoration type="leaf" side="right" top="20%" size={60} opacity={0.15} delay={1.5} duration={12} animation="sway2" color="#14301F" />
+        <FloatingDecoration type="lotus" side="right" top="auto" bottom="12%" size={56} opacity={0.08} delay={2} duration={18} animation="drift-bloom" color="#C9A15A" />
+        <FloatingDecoration type="petal5" side="left" top="auto" bottom="8%" size={48} opacity={0.1} delay={2.5} duration={14} animation="sway3" color="#C9A15A" />
+        <FloatingDecoration type="petal6" side="left" top="35%" size={40} opacity={0.08} delay={1} duration={15} animation="sway1" color="#D6537A" />
+        <FloatingDecoration type="leaf" side="right" top="55%" size={44} opacity={0.12} delay={3} duration={10} animation="sway3" color="#C9A15A" />
+        <div className="max-w-[1440px] mx-auto px-4 lg:px-6 relative">
+          <div className="text-center mb-10 lg:mb-12">
+            <div className="inline-flex items-center gap-3 mb-4">
+              <span className="w-8 h-px bg-gradient-to-r from-transparent to-[#C9A15A]/60" />
+              <span className="text-[11px] font-bold tracking-[0.25em] text-[#C9A15A] uppercase font-inter">
+                Curated Collections
+              </span>
+              <span className="w-8 h-px bg-gradient-to-l from-transparent to-[#C9A15A]/60" />
+            </div>
+            <h2 className="text-4xl sm:text-5xl font-serif-display font-black text-[#1a0f0a] mt-2 leading-tight">
               Shop By Category
             </h2>
-            <p className="text-gray-400 text-sm mt-3 font-light">
+            <p className="text-[#8a7a6e] text-sm mt-3 font-light max-w-lg mx-auto">
               Find the perfect arrangements designed for your special moments
             </p>
           </div>
 
-          <div className="relative">
+          <div className="relative px-1">
             <button
               onClick={() => scrollSlider(categorySliderRef, "left")}
-              className="absolute -left-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-2xl bg-white border border-gray-100 shadow-md flex items-center justify-center text-slate-700 hover:bg-gray-50 hover:shadow-soft-lg hover:scale-[1.04] transition-all duration-300"
+              className="absolute -left-2 lg:-left-3 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/90 backdrop-blur-sm border border-[#C9A15A]/20 shadow-lg flex items-center justify-center text-[#1a0f0a] hover:bg-white hover:border-[#C9A15A]/40 hover:shadow-xl hover:scale-105 transition-all duration-300"
               aria-label="Scroll left"
             >
-              <ChevronLeft size={18} className="icon-wiggle" />
+              <ChevronLeft size={16} />
             </button>
 
             <div
               ref={categorySliderRef}
-              className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 scrollbar-hide"
+              className="flex gap-4 lg:gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-6 scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
               {categories.map((item, index) => (
                 <div
                   key={index}
                   data-slide-card
                   onClick={() => navigate(`/category?cat=${encodeURIComponent(item.category)}`)}
-                  className="group rounded-3xl overflow-hidden bg-white border border-gray-100/80 shadow-soft hover:shadow-soft-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer shrink-0 w-[80vw] sm:w-[280px]"
+                  className="group rounded-[20px] overflow-hidden bg-white shadow-[0_8px_30px_-6px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_50px_-12px_rgba(214,83,122,0.25)] hover:scale-[1.02] hover:-translate-y-1.5 transition-all duration-500 cursor-pointer shrink-0 w-[75vw] sm:w-[210px] lg:w-[240px]"
                 >
-                  <div className="h-64 overflow-hidden relative bg-[#F4C9D1]/20">
-                    <LazyImage
+                  <div className="h-56 lg:h-64 overflow-hidden relative bg-[#f5ede4]">
+                    <img
                       src={item.image}
                       alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                      loading="lazy"
+                      className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300" />
-                    <span className="absolute bottom-4 left-1/2 -translate-x-1/2 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 bg-white text-xs font-bold text-[#14301F] px-4 py-2 rounded-2xl flex items-center gap-1">
-                      Shop Now <ArrowRight size={12} />
-                    </span>
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f0a]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute top-4 left-4 z-10">
+                      <span className="inline-block px-3 py-1.5 bg-white/90 backdrop-blur-sm rounded-full text-[9px] font-bold tracking-widest uppercase text-[#C9A15A] shadow-sm border border-[#C9A15A]/20">
+                        Featured
+                      </span>
+                    </div>
+                    <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-white/85 backdrop-blur-sm rounded-full text-[8px] font-bold tracking-wider text-[#C9A15A] shadow-sm border border-[#C9A15A]/20">
+                        <Gift size={10} className="text-[#D6537A]" />
+                        Gift Wrap
+                      </span>
+                    </div>
+                    <div className="absolute bottom-5 left-1/2 -translate-x-1/2 translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400 z-10">
+                      <span className="inline-flex items-center gap-1.5 bg-gradient-to-r from-[#D6537A] to-rose-500 text-white text-[10px] font-bold tracking-widest uppercase px-5 py-2.5 rounded-full shadow-lg shadow-rose-500/25 hover:shadow-rose-500/40">
+                        Shop Now <ArrowRight size={11} />
+                      </span>
+                    </div>
                   </div>
-                  <div className="p-6">
-                    <h3 className="font-serif-display font-bold text-lg text-[#14301F]">
+                  <div className="p-5 lg:p-6 text-center">
+                    <h3 className="font-serif-display font-bold text-base lg:text-lg text-[#1a0f0a] group-hover:text-[#D6537A] transition-colors duration-300">
                       {item.title}
                     </h3>
-                    <p className="text-gray-400 text-xs mt-1">{item.products}</p>
+                    <div className="flex items-center justify-center gap-2 mt-2">
+                      <span className="w-6 h-px bg-[#C9A15A]/40" />
+                      <p className="text-[#8a7a6e] text-xs font-medium tracking-wide">{item.products}</p>
+                      <span className="w-6 h-px bg-[#C9A15A]/40" />
+                    </div>
                   </div>
                 </div>
               ))}
@@ -553,18 +626,18 @@ const Home = () => {
 
             <button
               onClick={() => scrollSlider(categorySliderRef, "right")}
-              className="absolute -right-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-2xl bg-white border border-gray-100 shadow-md flex items-center justify-center text-slate-700 hover:bg-gray-50 hover:shadow-soft-lg hover:scale-[1.04] transition-all duration-300"
+              className="absolute -right-2 lg:-right-3 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/90 backdrop-blur-sm border border-[#C9A15A]/20 shadow-lg flex items-center justify-center text-[#1a0f0a] hover:bg-white hover:border-[#C9A15A]/40 hover:shadow-xl hover:scale-105 transition-all duration-300"
               aria-label="Scroll right"
             >
-              <ArrowRight size={18} className="icon-wiggle" />
+              <ArrowRight size={16} />
             </button>
           </div>
         </div>
       </RevealSection>
 
       {/* ─── Best Sellers ─── */}
-      <RevealSection className="py-24 bg-[#fafaf9]/60">
-        <div className="max-w-7xl mx-auto px-6">
+      <RevealSection className="py-24 bg-gradient-to-b from-[#fdf6f0] via-[#faf3ec] to-[#fdf6f0]">
+        <div className="max-w-[1440px] mx-auto px-6">
           <div className="flex justify-between items-end mb-12 flex-wrap gap-4">
             <div>
               <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">
@@ -599,7 +672,7 @@ const Home = () => {
                 <div
                   key={item.id}
                   data-slide-card
-                  className="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-soft hover:shadow-soft-lg hover:scale-[1.02] transition-all duration-300 shrink-0 w-[80vw] sm:w-[280px] snap-start flex flex-col"
+                  className="bg-white rounded-3xl overflow-hidden ring-1 ring-gray-100 hover:ring-[#C9A15A]/40 shadow-soft hover:shadow-[0_20px_40px_-10px_rgba(214,83,122,0.25)] hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300 shrink-0 w-[80vw] sm:w-[280px] snap-start flex flex-col"
                 >
                   <div className="overflow-hidden h-72 relative bg-[#F4C9D1]/20">
                     {item.badge && (
@@ -627,7 +700,7 @@ const Home = () => {
                     </div>
                     <div className="flex items-center gap-2 mt-3">
                       <p className="text-[#D6537A] font-black text-base">
-                        {item.price === "acceptable" ? "Call for Price" : item.price}
+                        {item.price === "acceptable" ? <a href="tel:9540849659" className="inline-flex items-center gap-1.5"><Phone size={14} className="icon-wiggle" /> Call for Price</a> : item.price}
                       </p>
                     </div>
 
@@ -654,7 +727,7 @@ const Home = () => {
       </RevealSection>
 
       {/* ─── Deal of the Day ─── */}
-      <RevealSection className="py-24 bg-[#0d1f0f] relative overflow-hidden">
+      <RevealSection className="py-24 bg-gradient-to-br from-[#0d1f0f] via-[#14301F] to-[#0d1f0f] relative overflow-hidden">
         <BokehLights spots={[
           { color: "from-rose-400/20 to-transparent", size: 300, top: "-8%", right: "-5%", anim: "bk-drift1", delay: 0, duration: 28 },
           { color: "from-amber-300/15 to-transparent", size: 250, bottom: "-10%", left: "-4%", anim: "bk-drift2", delay: 2, duration: 32 },
@@ -662,7 +735,7 @@ const Home = () => {
           { color: "from-violet-400/10 to-transparent", size: 260, top: "15%", right: "25%", anim: "bk-drift3", delay: 1, duration: 30 },
         ]} />
 
-        <div className="max-w-7xl mx-auto px-6 relative">
+        <div className="max-w-[1440px] mx-auto px-6 relative">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative">
               <div className="rounded-2xl overflow-hidden shadow-2xl">
@@ -739,7 +812,7 @@ const Home = () => {
       </RevealSection>
 
       {/* ─── How It Works ─── */}
-      <RevealSection className="relative py-24 bg-white border-b border-gray-100 overflow-hidden">
+      <RevealSection className="relative py-24 bg-gradient-to-b from-white via-[#fdf6f0] to-white border-b border-gray-100 overflow-hidden">
         <BokehLights spots={[
           { color: "from-rose-200/12 to-transparent", size: 240, top: "-5%", left: "20%", anim: "bk-drift3", delay: 0, duration: 30 },
           { color: "from-amber-100/10 to-transparent", size: 200, bottom: "-6%", right: "5%", anim: "bk-drift1", delay: 2, duration: 28 },
@@ -749,7 +822,7 @@ const Home = () => {
         <FloatingDecoration type="petal5" side="right" top="12%" size={70} opacity={0.1} delay={2} duration={15} animation="sway1" />
         <FloatingDecoration type="petal6" side="left" top="auto" bottom="8%" size={48} opacity={0.12} delay={1} duration={12} animation="sway2" color="#C9A15A" />
         <FloatingDecoration type="leaf" side="right" top="auto" bottom="15%" size={44} opacity={0.15} delay={3} duration={9} animation="sway3" />
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-[1440px] mx-auto px-6">
           <div className="text-center mb-20">
             <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">
               Simple Process
@@ -790,11 +863,11 @@ const Home = () => {
       </RevealSection>
 
       {/* ─── Why Choose Us ─── */}
-      <RevealSection className="relative py-24 bg-[#fafaf9]/60 overflow-hidden">
+      <RevealSection className="relative py-24 bg-gradient-to-b from-[#fdf6f0] via-[#faf3ec] to-[#fdf6f0] overflow-hidden">
         <FloatingDecoration type="petal5" side="left" top="15%" size={56} opacity={0.12} delay={1} duration={14} color="#D6537A" />
         <FloatingDecoration type="leaf" side="right" top="25%" size={60} opacity={0.18} delay={0} duration={11} animation="sway2" color="#14301F" />
         <FloatingDecoration type="petal6" side="left" top="auto" bottom="12%" size={42} opacity={0.1} delay={2.5} duration={13} animation="sway3" color="#C9A15A" />
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-[1440px] mx-auto px-6">
           <div className="text-center mb-20">
             <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">
               Our Standards
@@ -830,12 +903,12 @@ const Home = () => {
       </RevealSection>
 
       {/* ─── Perfect For Every Occasion ─── */}
-      <RevealSection className="relative py-24 bg-white border-b border-gray-100 overflow-hidden">
+      <RevealSection className="relative py-24 bg-gradient-to-b from-white via-[#fdf6f0] to-white border-b border-gray-100 overflow-hidden">
         <FloatingDecoration type="petal5" side="left" top="10%" size={72} opacity={0.1} delay={0} duration={15} animation="sway2" />
         <FloatingDecoration type="petal" side="right" top="18%" size={44} opacity={0.15} delay={1.5} duration={10} animation="sway3" color="#D6537A" />
         <FloatingDecoration type="leaf" side="right" top="auto" bottom="10%" size={52} opacity={0.14} delay={2} duration={12} animation="sway1" color="#C9A15A" />
         <FloatingDecoration type="petal6" side="left" top="auto" bottom="5%" size={48} opacity={0.1} delay={3} duration={11} animation="rotate" color="#C9A15A" />
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-[1440px] mx-auto px-6">
           <div className="text-center mb-20">
             <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">
               Life Milestones
@@ -883,7 +956,7 @@ const Home = () => {
       </RevealSection>
 
       {/* ─── Testimonials ─── */}
-      <RevealSection className="relative py-24 bg-[#fafaf9]/60 overflow-hidden">
+      <RevealSection className="relative py-24 bg-gradient-to-b from-[#fdf6f0] via-[#faf3ec] to-[#fdf6f0] overflow-hidden">
         <BokehLights spots={[
           { color: "from-rose-300/12 to-transparent", size: 240, top: "-6%", right: "-3%", anim: "bk-drift2", delay: 0, duration: 32 },
           { color: "from-amber-200/10 to-transparent", size: 200, bottom: "-8%", left: "8%", anim: "bk-drift4", delay: 3, duration: 28 },
@@ -892,7 +965,7 @@ const Home = () => {
         <FloatingDecoration type="petal5" side="left" top="8%" size={56} opacity={0.1} delay={0.5} duration={13} color="#C9A15A" />
         <FloatingDecoration type="petal6" side="right" top="12%" size={60} opacity={0.12} delay={0} duration={14} animation="sway2" />
         <FloatingDecoration type="leaf" side="right" top="auto" bottom="8%" size={48} opacity={0.16} delay={2} duration={11} animation="sway3" color="#14301F" />
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-[1440px] mx-auto px-6">
           <div className="text-center mb-16">
             <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">
               Customer Reviews
@@ -954,8 +1027,8 @@ const Home = () => {
       </RevealSection>
 
       {/* ─── Instagram Gallery ─── */}
-      <RevealSection className="py-24 bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6">
+      <RevealSection className="py-24 bg-gradient-to-b from-white via-[#fdf6f0] to-white border-b border-gray-100">
+        <div className="max-w-[1440px] mx-auto px-6">
           <div className="text-center mb-12">
             <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">
               Follow Us
@@ -1003,8 +1076,8 @@ const Home = () => {
       </RevealSection>
 
       {/* ─── FAQ ─── */}
-      <RevealSection className="py-24 bg-[#fafaf9]/60">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <RevealSection className="py-24 bg-gradient-to-b from-[#fdf6f0] via-[#faf3ec] to-[#fdf6f0]">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">
               Answers
@@ -1057,7 +1130,7 @@ const Home = () => {
       </RevealSection>
 
       {/* ─── Newsletter ─── */}
-      <RevealSection className="relative py-24 bg-gradient-to-r from-#F4C9D1/50 via-pink-50/30 to-purple-100/40 overflow-hidden">
+      <RevealSection className="relative py-24 bg-gradient-to-r from-[#F4C9D1]/50 via-pink-50/30 to-purple-100/40 overflow-hidden">
         <BokehLights spots={[
           { color: "from-rose-300/20 to-transparent", size: 280, top: "-8%", left: "-5%", anim: "bk-drift1", delay: 0, duration: 30 },
           { color: "from-amber-200/18 to-transparent", size: 220, bottom: "-10%", right: "10%", anim: "bk-drift4", delay: 3, duration: 28 },
@@ -1067,7 +1140,7 @@ const Home = () => {
         <FloatingDecoration type="petal6" side="right" top="10%" size={52} opacity={0.1} delay={1.5} duration={12} animation="sway2" color="#C9A15A" />
         <FloatingDecoration type="leaf" side="left" top="auto" bottom="12%" size={44} opacity={0.15} delay={2} duration={10} animation="sway3" />
         <FloatingDecoration type="petal" side="right" top="auto" bottom="8%" size={40} opacity={0.12} delay={3} duration={11} animation="sway1" color="#D6537A" />
-        <div className="max-w-7xl mx-auto text-center px-6 lg:px-8">
+        <div className="max-w-[1440px] mx-auto text-center px-6 lg:px-8">
           <div className="w-14 h-14 bg-[#D6537A]/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
             <Mail size={24} className="text-[#D6537A]" />
           </div>

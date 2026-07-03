@@ -16,6 +16,8 @@ import {
   Users,
 } from "lucide-react";
 import FloatingDecoration from "../components/FloatingDecoration";
+import BokehLights from "../components/BokehLights";
+import { WHATSAPP_LINK } from "../constants";
 
 // ─── Animated counter on scroll ───────────────────
 const AnimatedCounter = ({ target, suffix = "", duration = 1600 }) => {
@@ -72,11 +74,11 @@ const values = [
 ];
 
 const milestones = [
-  { title: "Founded", desc: "Started with one van, one vendor, and one promise — flowers that feel personal. A small studio with a big vision.", color: "#e8667a" },
-  {  title: "Décor Division Launched", desc: "Wedding and event floristry added. Our first full mandap setup led to 40 bookings in the same month.", color: "#c9a96e" },
-  { title: "Subscription Model", desc: "Weekly fresh flower subscriptions launched. Homes across the city started waking up to new blooms every Monday.", color: "#a78bfa" },
-  {  title: "Corporate Gifting", desc: "Bulk and branded floristry for offices, launches, and teams — bringing freshness to the boardroom.", color: "#34d399" },
-  {  title: "Design Studio", desc: "Full-service floral design studio opened — from concept mood boards to day-of execution for premium events.", color: "#c9a96e" },
+  { year: "2022", title: "Founded", desc: "Started with one van, one vendor, and one promise — flowers that feel personal. A small studio with a big vision.", color: "#e8667a" },
+  { year: "2023", title: "Décor Division Launched", desc: "Wedding and event floristry added. Our first full mandap setup led to 40 bookings in the same month.", color: "#c9a96e" },
+  { year: "2024", title: "Subscription Model", desc: "Weekly fresh flower subscriptions launched. Homes across the city started waking up to new blooms every Monday.", color: "#a78bfa" },
+  { year: "2025", title: "Corporate Gifting", desc: "Bulk and branded floristry for offices, launches, and teams — bringing freshness to the boardroom.", color: "#34d399" },
+  { year: "2026", title: "Design Studio", desc: "Full-service floral design studio opened — from concept mood boards to day-of execution for premium events.", color: "#c9a96e" },
 ];
 
 const team = [
@@ -370,7 +372,7 @@ const AboutUs = () => {
                 <a href="/decor" className="cta-pri" style={{ padding:"14px 28px" }}>
                   <Sparkles size={14} className="btn-icon"/> See Our Work
                 </a>
-                <a href="https://wa.me/919999999999" target="_blank" rel="noopener noreferrer"
+                <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer"
                   className="cta-ghost"
                   style={{
                     color:"#fff", padding:"13px 24px", fontSize:"14px",
@@ -438,7 +440,10 @@ const AboutUs = () => {
         </section>
 
         {/* ── STORY ────────────────────────────────────── */}
-        <section className="sp" style={{ background:"#faf7f2" }}>
+        <section className="sp" style={{ background:"#faf7f2", position:"relative", overflow:"hidden" }}>
+          <FloatingDecoration type="rose" side="left" top="6%" size={44} opacity={0.07} delay={0} duration={16} animation="breathe" color="#e8667a" />
+          <FloatingDecoration type="lotus" side="right" top="8%" size={48} opacity={0.06} delay={1.5} duration={18} animation="drift-bloom" color="#C9A15A" />
+          <FloatingDecoration type="petal6" side="left" top="auto" bottom="8%" size={36} opacity={0.08} delay={3} duration={14} animation="sway3" color="#C9A15A" />
           <div className="inner" ref={storyRef}>
             {/* Section label */}
             <div style={{display:"flex",alignItems:"center",gap:"14px",marginBottom:"52px"}}>
@@ -513,8 +518,10 @@ const AboutUs = () => {
 
         {/* ── VALUES ───────────────────────────────────── */}
         <section className="sp" style={{ background:"#fff", position:"relative", overflow:"hidden" }}>
-          <FloatingDecoration type="petal6" side="left" top="10%" size={55} opacity={0.1} delay={0} duration={13} animation="sway2" color="#C9A15A" />
-          <FloatingDecoration type="petal5" side="right" top="15%" size={50} opacity={0.08} delay={2} duration={14} color="#e8667a" />
+          <FloatingDecoration type="lotus" side="left" top="5%" size={52} opacity={0.08} delay={0} duration={18} animation="drift-bloom" color="#C9A15A" />
+          <FloatingDecoration type="petal6" side="left" top="28%" size={55} opacity={0.1} delay={1.5} duration={13} animation="sway2" color="#C9A15A" />
+          <FloatingDecoration type="rose" side="right" top="8%" size={48} opacity={0.08} delay={0.8} duration={16} animation="bloom" color="#e8667a" />
+          <FloatingDecoration type="petal5" side="right" top="35%" size={50} opacity={0.08} delay={2.5} duration={14} color="#e8667a" />
           <FloatingDecoration type="leaf" side="left" top="auto" bottom="8%" size={44} opacity={0.12} delay={1} duration={11} animation="sway3" color="#14301F" />
           <div className="inner">
             <div style={{textAlign:"center",marginBottom:"52px"}}>
@@ -560,7 +567,10 @@ const AboutUs = () => {
         </section>
 
         {/* ── TESTIMONIALS ─────────────────────────────── */}
-        <section className="sp" style={{ background:"#faf7f2" }}>
+        <section className="sp" style={{ background:"#faf7f2", position:"relative", overflow:"hidden" }}>
+          <FloatingDecoration type="lotus" side="left" top="8%" size={52} opacity={0.07} delay={0} duration={18} animation="drift-bloom" color="#C9A15A" />
+          <FloatingDecoration type="rose" side="right" top="12%" size={44} opacity={0.06} delay={1.5} duration={16} animation="breathe" color="#e8667a" />
+          <FloatingDecoration type="petal5" side="right" top="auto" bottom="10%" size={40} opacity={0.08} delay={3} duration={14} animation="sway3" color="#C9A15A" />
           <div className="inner">
             <div style={{textAlign:"center",marginBottom:"48px"}}>
               <div style={{display:"flex",justifyContent:"center",alignItems:"center",gap:"14px",marginBottom:"14px"}}>
@@ -610,7 +620,9 @@ const AboutUs = () => {
         </section>
 
         {/* ── TIMELINE ─────────────────────────────────── */}
-        <section className="sp" style={{ background:"#fff" }}>
+        <section className="sp" style={{ background:"#fff", position:"relative", overflow:"hidden" }}>
+          <FloatingDecoration type="rose" side="right" top="8%" size={48} opacity={0.06} delay={0} duration={18} animation="bloom" color="#C9A15A" />
+          <FloatingDecoration type="lotus" side="left" top="auto" bottom="10%" size={44} opacity={0.05} delay={2} duration={16} animation="drift-bloom" color="#e8667a" />
           <div className="inner-md">
             <div style={{textAlign:"center",marginBottom:"56px"}}>
               <div style={{display:"flex",justifyContent:"center",alignItems:"center",gap:"14px",marginBottom:"14px"}}>
@@ -725,7 +737,9 @@ const AboutUs = () => {
         </section>
 
         {/* ── MISSION + VISION ─────────────────────────── */}
-        <section className="sp" style={{ background:"#faf7f2" }}>
+        <section className="sp" style={{ background:"#faf7f2", position:"relative", overflow:"hidden" }}>
+          <FloatingDecoration type="lotus" side="right" top="8%" size={52} opacity={0.06} delay={0} duration={18} animation="drift-bloom" color="#C9A15A" />
+          <FloatingDecoration type="rose" side="left" top="auto" bottom="10%" size={44} opacity={0.05} delay={2} duration={16} animation="breathe" color="#e8667a" />
           <div className="inner">
             <div className="mv-grid">
               {/* Mission */}
@@ -796,6 +810,10 @@ const AboutUs = () => {
           background:"linear-gradient(135deg,#1a0f0a 0%,#2a1810 100%)",
           position:"relative",overflow:"hidden"
         }}>
+          <FloatingDecoration type="lotus" side="left" top="12%" size={68} opacity={0.08} delay={0} duration={20} animation="drift-bloom" color="#C9A15A" />
+          <FloatingDecoration type="rose" side="right" top="8%" size={56} opacity={0.07} delay={1.5} duration={18} animation="breathe" color="#e8667a" />
+          <FloatingDecoration type="petal6" side="right" top="auto" bottom="12%" size={48} opacity={0.06} delay={3} duration={14} animation="sway3" color="#C9A15A" />
+          <FloatingDecoration type="petal5" side="left" top="auto" bottom="6%" size={40} opacity={0.06} delay={4} duration={12} animation="sway2" color="#e8667a" />
           {/* Large rotating petal bg */}
           <div style={{
             position:"absolute",top:"50%",left:"50%",opacity:0.04,pointerEvents:"none",

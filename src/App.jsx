@@ -9,10 +9,14 @@ import DecorPage from "./pages/DecorPage";
 import AboutUs from "./pages/AboutUs";
 import Gallery from "./pages/Gallery";
 import CartPage from "./pages/CartPage";
+import PetalFall from "./components/PetalFall";
+import ScrollToTop from "./components/ScrollToTop";
 
 const App = () => {
   return (
     <>
+      <ScrollToTop />
+      <PetalFall />
       <Header />
       <Routes>
         <Route path="/" element={<Hero />} />

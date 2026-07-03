@@ -11,6 +11,7 @@ import {
   clearCart,
 } from "../redux/cartSlice";
 import FloatingDecoration from "../components/FloatingDecoration";
+import BokehLights from "../components/BokehLights";
 
 // ─── APNA QR CODE IMAGE YAHAN PASTE KARO ───────────────────────────────────
 // Agar tumhare paas QR image file hai project mein, toh import karo:
@@ -381,6 +382,15 @@ export default function CartPage() {
         <FloatingDecoration type="petal6" side="right" top="3%" size={22} opacity={0.1} delay={1.1} duration={13} animation="sway2" color="#d1bca8" />
         <FloatingDecoration type="petal5" side="left" bottom="10%" size={30} opacity={0.1} delay={0.6} duration={12} animation="sway1" color="#d1bca8" />
         <FloatingDecoration type="petal" side="right" bottom="8%" size={20} opacity={0.1} delay={1.9} duration={15} animation="sway2" color="#d1bca8" />
+        <FloatingDecoration type="rose" side="right" top="6%" size={34} opacity={0.08} delay={0} duration={18} animation="bloom" color="#d1bca8" />
+        <FloatingDecoration type="lotus" side="left" top="auto" bottom="15%" size={38} opacity={0.06} delay={2} duration={16} animation="drift-bloom" color="#d1bca8" />
+      </div>
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true" style={{ zIndex: 0 }}>
+        <BokehLights spots={[
+          { color: "from-rose-300/10 to-transparent", size: 260, top: "-6%", right: "-4%", anim: "bk-drift1", delay: 0, duration: 30 },
+          { color: "from-amber-200/8 to-transparent", size: 220, bottom: "-8%", left: "8%", anim: "bk-drift4", delay: 3, duration: 32 },
+          { color: "from-purple-300/6 to-transparent", size: 200, top: "35%", left: "40%", anim: "bk-float", delay: 1, duration: 28 },
+        ]} />
       </div>
       <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 

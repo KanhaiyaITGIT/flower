@@ -26,6 +26,7 @@ import image11 from "../assets/s11.png";
 import image12 from "../assets/s12.png";
 import image21 from "../assets/s21.png";
 
+import BokehLights from "../components/BokehLights";
 import {
   MessageCircle,
   Phone,
@@ -182,6 +183,17 @@ const DecorPage = () => {
       </div>
       {/* ── HERO ────────────────────────────────────── */}
       <section className="relative overflow-hidden h-[85vh] min-h-[580px] flex items-center bg-[#0a0604]">
+        {/* Bokeh Lights */}
+        <BokehLights spots={[
+          { color: "from-rose-400/15 to-transparent", size: 300, top: "-8%", right: "-5%", anim: "bk-drift1", delay: 0, duration: 30 },
+          { color: "from-amber-300/12 to-transparent", size: 260, bottom: "-10%", left: "5%", anim: "bk-drift2", delay: 2, duration: 35 },
+          { color: "from-purple-400/10 to-transparent", size: 240, top: "40%", left: "30%", anim: "bk-float", delay: 4, duration: 28 },
+          { color: "from-pink-400/12 to-transparent", size: 220, top: "15%", left: "45%", anim: "bk-drift3", delay: 1, duration: 32 },
+        ]} />
+        <FloatingDecoration type="lotus" side="right" top="12%" size={80} opacity={0.1} delay={0} duration={16} animation="drift-bloom" color="#C9A15A" />
+        <FloatingDecoration type="rose" side="left" top="18%" size={60} opacity={0.08} delay={1.5} duration={18} animation="breathe" color="#e8667a" />
+        <FloatingDecoration type="petal5" side="right" top="auto" bottom="15%" size={56} opacity={0.1} delay={2} duration={14} color="#C9A15A" />
+        <FloatingDecoration type="petal6" side="left" top="auto" bottom="8%" size={44} opacity={0.08} delay={3} duration={12} animation="sway2" color="#e8667a" />
         {/* Background Image & Overlays */}
         <div className="absolute inset-0 overflow-hidden">
           <img
@@ -274,6 +286,11 @@ const DecorPage = () => {
 
       {/* ── STATS ────────────────────────────────────── */}
       <RevealSection className="bg-[#0f0b08] py-12 px-6 relative overflow-hidden border-y border-white/5">
+        <BokehLights spots={[
+          { color: "from-amber-300/10 to-transparent", size: 300, top: "50%", left: "50%", anim: "bk-float", delay: 0, duration: 25 },
+          { color: "from-rose-400/8 to-transparent", size: 220, top: "-6%", right: "10%", anim: "bk-drift1", delay: 2, duration: 30 },
+          { color: "from-violet-400/6 to-transparent", size: 180, bottom: "-5%", left: "15%", anim: "bk-drift2", delay: 4, duration: 28 },
+        ]} />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[150px] bg-[#c9a96e]/5 blur-[70px] pointer-events-none" />
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -381,7 +398,14 @@ const DecorPage = () => {
       </RevealSection>
 
       {/* ── GALLERY ──────────────────────────────────── */}
-      <RevealSection className="py-24 px-6 bg-white">
+      <RevealSection className="py-24 px-6 bg-white relative overflow-hidden">
+        <BokehLights spots={[
+          { color: "from-rose-200/10 to-transparent", size: 240, top: "-5%", right: "-3%", anim: "bk-drift2", delay: 0, duration: 32 },
+          { color: "from-amber-100/8 to-transparent", size: 200, bottom: "-8%", left: "8%", anim: "bk-drift4", delay: 3, duration: 28 },
+          { color: "from-purple-200/6 to-transparent", size: 180, top: "40%", left: "45%", anim: "bk-float", delay: 1, duration: 26 },
+        ]} />
+        <FloatingDecoration type="rose" side="left" top="8%" size={50} opacity={0.08} delay={0} duration={16} animation="bloom" color="#e8667a" />
+        <FloatingDecoration type="lotus" side="right" top="auto" bottom="12%" size={48} opacity={0.07} delay={2} duration={18} animation="drift-bloom" color="#C9A15A" />
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <span className="text-xs font-bold tracking-widest text-[#e8667a] uppercase font-inter">Portfolio</span>
@@ -471,6 +495,15 @@ const DecorPage = () => {
 
       {/* ── CONTACT FORM ─────────────────────────────── */}
       <RevealSection id="contact" className="py-24 px-6 bg-[#111] relative overflow-hidden">
+        {/* Bokeh Lights */}
+        <BokehLights spots={[
+          { color: "from-rose-400/12 to-transparent", size: 280, top: "-8%", left: "-5%", anim: "bk-drift1", delay: 0, duration: 30 },
+          { color: "from-amber-300/10 to-transparent", size: 220, bottom: "-10%", right: "10%", anim: "bk-drift4", delay: 3, duration: 28 },
+          { color: "from-purple-300/8 to-transparent", size: 200, top: "60%", left: "40%", anim: "bk-float", delay: 1, duration: 26 },
+        ]} />
+        <FloatingDecoration type="lotus" side="left" top="12%" size={56} opacity={0.08} delay={0} duration={18} animation="drift-bloom" color="#C9A15A" />
+        <FloatingDecoration type="rose" side="right" top="8%" size={48} opacity={0.07} delay={1.5} duration={16} animation="breathe" color="#e8667a" />
+        <FloatingDecoration type="petal6" side="left" top="auto" bottom="10%" size={40} opacity={0.06} delay={3} duration={14} animation="sway3" color="#C9A15A" />
         {/* Glow Effects */}
         <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-[#c9a96e]/5 blur-[80px] pointer-events-none" />
         <div className="absolute -bottom-24 -left-24 w-80 h-80 rounded-full bg-[#e8667a]/5 blur-[70px] pointer-events-none" />
