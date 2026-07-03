@@ -52,6 +52,8 @@ import image26 from "../assets/s26.png";
 import image27 from "../assets/s27.png";
 import hero from "../assets/hero.png";
 import image28 from "../assets/f1.png";
+import imageF2 from "../assets/f2.png";
+
 import imageOcc1 from "../assets/s18.png";
 import imageOcc2 from "../assets/s34.png";
 import imageOcc3 from "../assets/s46.png";
@@ -168,12 +170,14 @@ const Home = () => {
 
   const categories = [
     { title: "Bouquets", image: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80", products: "120+ Products", category: "Bouquets" },
-    { title: "Floral Arrangements", image: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=600&q=80", products: "80+ Products", category: "All" },
+    { title: "Floral Arrangements", image: "https://images.unsplash.com/photo-1510076857177-7470076d4098?w=600&q=80", products: "80+ Products", category: "All" },
     { title: "Premium Balloons Decor", image: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&q=80", products: "150+ Products", category: "Balloon" },
-    { title: "For Love", image: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=600&q=80", products: "30+ Products", category: "Anniversary" },
+    { title: "For Love", image: image5, products: "30+ Products", category: "Anniversary" },
     { title: "Occasional Cakes & Gifts", image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80", products: "25+ Products", category: "All" },
-    { title: "Dried Florals", image: "https://images.unsplash.com/photo-1490750967868-88aa4f44baee?w=600&q=80", products: "40+ Products", category: "All" },
+    { title: "Dried Florals", image: imageF2, products: "40+ Products", category: "All" },
   ];
+
+  const cardIcons = [Flower2, Star, PartyPopper, Heart, Cake, Leaf];
 
   const bestSellers = [
     {
@@ -535,6 +539,13 @@ const Home = () => {
 
       {/* ─── Shop By Category ─── */}
       <RevealSection className="relative pt-16 lg:pt-20 pb-28 bg-gradient-to-b from-[#faf6f0] via-[#f5ede4] to-[#e8ddd0] border-b border-[#C9A15A]/10 overflow-hidden">
+        {/* Subtle cream watercolor paper texture overlay */}
+        <div className="absolute inset-0 opacity-[0.035] pointer-events-none mix-blend-multiply"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
+            backgroundSize: '200px 200px',
+          }}
+        />
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNDOUExNUEiIGZpbGwtb3BhY2l0eT0iMC4wNCI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-60" />
         <BokehLights spots={[
           { color: "from-rose-300/20 to-transparent", size: 300, top: "-8%", right: "-4%", anim: "bk-drift2", delay: 0, duration: 32 },
@@ -548,8 +559,15 @@ const Home = () => {
         <FloatingDecoration type="petal5" side="left" top="auto" bottom="8%" size={48} opacity={0.1} delay={2.5} duration={14} animation="sway3" color="#C9A15A" />
         <FloatingDecoration type="petal6" side="left" top="35%" size={40} opacity={0.08} delay={1} duration={15} animation="sway1" color="#D6537A" />
         <FloatingDecoration type="leaf" side="right" top="55%" size={44} opacity={0.12} delay={3} duration={10} animation="sway3" color="#C9A15A" />
+        {/* Extreme corner floral illustrations */}
+        <div className="absolute -top-4 -left-4 w-36 h-36 opacity-[0.07] pointer-events-none rotate-[15deg]">
+          <Flower2 size={144} strokeWidth={0.8} className="text-[#D6537A]" />
+        </div>
+        <div className="absolute -bottom-5 -right-5 w-44 h-44 opacity-[0.06] pointer-events-none -rotate-[18deg]">
+          <Leaf size={176} strokeWidth={0.7} className="text-[#C9A15A]" />
+        </div>
         <div className="max-w-[1440px] mx-auto px-4 lg:px-6 relative">
-          <div className="text-center mb-10 lg:mb-12">
+          <div className="text-center mb-6 lg:mb-8">
             <div className="inline-flex items-center gap-3 mb-4">
               <span className="w-8 h-px bg-gradient-to-r from-transparent to-[#C9A15A]/60" />
               <span className="text-[11px] font-bold tracking-[0.25em] text-[#C9A15A] uppercase font-inter">
@@ -565,71 +583,81 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="relative px-1">
+          <div className="relative px-0.5">
             <button
               onClick={() => scrollSlider(categorySliderRef, "left")}
-              className="absolute -left-2 lg:-left-3 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/90 backdrop-blur-sm border border-[#C9A15A]/20 shadow-lg flex items-center justify-center text-[#1a0f0a] hover:bg-white hover:border-[#C9A15A]/40 hover:shadow-xl hover:scale-105 transition-all duration-300"
+              className="absolute -left-1.5 lg:-left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/70 backdrop-blur-md border border-white/60 shadow-[0_4px_16px_rgba(0,0,0,0.06)] flex items-center justify-center text-gray-400 hover:bg-white/90 hover:text-[#1a0f0a] hover:shadow-[0_8px_24px_rgba(0,0,0,0.1)] hover:scale-105 transition-all duration-300"
               aria-label="Scroll left"
             >
-              <ChevronLeft size={16} />
+              <ChevronLeft size={15} />
             </button>
 
             <div
               ref={categorySliderRef}
-              className="flex gap-4 lg:gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-6 scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              className="flex gap-4 lg:gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-6 scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pr-2 lg:pr-4"
             >
-              {categories.map((item, index) => (
-                <div
-                  key={index}
-                  data-slide-card
-                  onClick={() => navigate(`/category?cat=${encodeURIComponent(item.category)}`)}
-                  className="group rounded-[20px] overflow-hidden bg-white shadow-[0_8px_30px_-6px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_50px_-12px_rgba(214,83,122,0.25)] hover:scale-[1.02] hover:-translate-y-1.5 transition-all duration-500 cursor-pointer shrink-0 w-[75vw] sm:w-[210px] lg:w-[240px]"
-                >
-                  <div className="h-56 lg:h-64 overflow-hidden relative bg-[#f5ede4]">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      loading="lazy"
-                      className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f0a]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="absolute top-4 left-4 z-10">
-                      <span className="inline-block px-3 py-1.5 bg-white/90 backdrop-blur-sm rounded-full text-[9px] font-bold tracking-widest uppercase text-[#C9A15A] shadow-sm border border-[#C9A15A]/20">
-                        Featured
-                      </span>
+              {categories.map((item, index) => {
+                const IconComponent = cardIcons[index];
+                return (
+                  <div
+                    key={index}
+                    data-slide-card
+                    onClick={() => navigate(`/category?cat=${encodeURIComponent(item.category)}`)}
+                    className="group rounded-[20px] overflow-hidden bg-white shadow-[0_4px_20px_-6px_rgba(0,0,0,0.07)] hover:shadow-[0_16px_40px_-12px_rgba(0,0,0,0.12)] hover:-translate-y-[5px] transition-all duration-300 ease-in-out cursor-pointer shrink-0 min-w-[180px] w-[180px] sm:w-[220px] lg:w-[240px]"
+                  >
+                    <div className="h-[160px] sm:h-[200px] lg:h-[250px] overflow-hidden relative bg-[#f5ede4]">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        loading="lazy"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f0a]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out" />
+                      <div className="absolute top-4 left-4 z-10">
+                        <span className="inline-block px-3 py-1.5 bg-white/90 backdrop-blur-sm rounded-full text-[9px] font-bold tracking-widest uppercase text-[#C9A15A] shadow-sm border border-[#C9A15A]/20">
+                          Featured
+                        </span>
+                      </div>
+                      <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-white/85 backdrop-blur-sm rounded-full text-[8px] font-bold tracking-wider text-[#C9A15A] shadow-sm border border-[#C9A15A]/20">
+                          <Gift size={10} className="text-[#D6537A]" />
+                          Gift Wrap
+                        </span>
+                      </div>
+                      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-in-out z-10">
+                        <span className="inline-flex items-center gap-1.5 bg-gradient-to-r from-[#D6537A] to-rose-500 text-white text-[10px] font-bold tracking-widest uppercase px-5 py-2.5 rounded-full shadow-lg shadow-rose-500/25 hover:shadow-rose-500/40">
+                          Shop Now <ArrowRight size={11} />
+                        </span>
+                      </div>
+                      {/* Circular emblem at image-text intersection */}
+                      <div className="absolute -bottom-[20px] left-1/2 -translate-x-1/2 z-20">
+                        <div className="w-9 h-9 lg:w-10 lg:h-10 rounded-full bg-white shadow-[0_4px_14px_rgba(0,0,0,0.06)] border-[2.5px] border-[#C9A15A]/20 flex items-center justify-center group-hover:border-[#C9A15A]/50 group-hover:shadow-[0_4px_18px_rgba(201,161,90,0.15)] transition-all duration-300 ease-in-out">
+                          <IconComponent size={15} className="text-[#C9A15A] group-hover:text-[#D6537A] transition-colors duration-300" />
+                        </div>
+                      </div>
                     </div>
-                    <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <span className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-white/85 backdrop-blur-sm rounded-full text-[8px] font-bold tracking-wider text-[#C9A15A] shadow-sm border border-[#C9A15A]/20">
-                        <Gift size={10} className="text-[#D6537A]" />
-                        Gift Wrap
-                      </span>
-                    </div>
-                    <div className="absolute bottom-5 left-1/2 -translate-x-1/2 translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400 z-10">
-                      <span className="inline-flex items-center gap-1.5 bg-gradient-to-r from-[#D6537A] to-rose-500 text-white text-[10px] font-bold tracking-widest uppercase px-5 py-2.5 rounded-full shadow-lg shadow-rose-500/25 hover:shadow-rose-500/40">
-                        Shop Now <ArrowRight size={11} />
-                      </span>
+                    <div className="pt-7 lg:pt-8 pb-5 lg:pb-6 px-5 lg:px-6 text-center">
+                      <h3 className="font-serif-display font-bold text-base lg:text-lg text-[#14301F] group-hover:text-[#D6537A] transition-colors duration-300">
+                        {item.title}
+                      </h3>
+                      <div className="flex items-center justify-center gap-1.5 mt-2">
+                        <span className="text-[#C9A15A]/60 text-[10px] tracking-wider">—</span>
+                        <span className="text-[#C9A15A] text-[10px]">❀</span>
+                        <span className="text-[#C9A15A]/60 text-[10px] tracking-wider">—</span>
+                        <span className="text-[#8a7a6e] text-xs font-medium tracking-wide ml-1">{item.products}</span>
+                      </div>
                     </div>
                   </div>
-                  <div className="p-5 lg:p-6 text-center">
-                    <h3 className="font-serif-display font-bold text-base lg:text-lg text-[#1a0f0a] group-hover:text-[#D6537A] transition-colors duration-300">
-                      {item.title}
-                    </h3>
-                    <div className="flex items-center justify-center gap-2 mt-2">
-                      <span className="w-6 h-px bg-[#C9A15A]/40" />
-                      <p className="text-[#8a7a6e] text-xs font-medium tracking-wide">{item.products}</p>
-                      <span className="w-6 h-px bg-[#C9A15A]/40" />
-                    </div>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             <button
               onClick={() => scrollSlider(categorySliderRef, "right")}
-              className="absolute -right-2 lg:-right-3 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/90 backdrop-blur-sm border border-[#C9A15A]/20 shadow-lg flex items-center justify-center text-[#1a0f0a] hover:bg-white hover:border-[#C9A15A]/40 hover:shadow-xl hover:scale-105 transition-all duration-300"
+              className="absolute -right-1.5 lg:-right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/70 backdrop-blur-md border border-white/60 shadow-[0_4px_16px_rgba(0,0,0,0.06)] flex items-center justify-center text-gray-400 hover:bg-white/90 hover:text-[#1a0f0a] hover:shadow-[0_8px_24px_rgba(0,0,0,0.1)] hover:scale-105 transition-all duration-300"
               aria-label="Scroll right"
             >
-              <ArrowRight size={16} />
+              <ArrowRight size={15} />
             </button>
           </div>
         </div>
