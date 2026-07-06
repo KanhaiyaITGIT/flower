@@ -537,6 +537,80 @@ const Home = () => {
         </div>
       </section>
 
+      {/* ─── Explore Our Exquisite Range ─── */}
+      <RevealSection className="relative py-24 bg-gradient-to-b from-[#faf8f5] via-[#fcf5ee] to-[#faf8f5] border-b border-[#eae4dc] overflow-hidden">
+        <BokehLights spots={[
+          { color: "from-rose-200/12 to-transparent", size: 240, top: "-5%", left: "15%", anim: "bk-drift2", delay: 0, duration: 30 },
+          { color: "from-amber-100/10 to-transparent", size: 200, bottom: "-6%", right: "10%", anim: "bk-drift1", delay: 2, duration: 26 },
+          { color: "from-[#C9A15A]/6 to-transparent", size: 180, top: "50%", left: "5%", anim: "bk-float", delay: 4, duration: 28 },
+        ]} />
+        <FloatingDecoration type="petal" side="left" top="15%" size={40} opacity={0.1} delay={0} duration={12} animation="sway3" color="#D6537A" />
+        <FloatingDecoration type="leaf" side="right" top="auto" bottom="12%" size={44} opacity={0.12} delay={2} duration={11} animation="sway2" color="#14301F" />
+        <FloatingDecoration type="petal6" side="right" top="8%" size={48} opacity={0.07} delay={1} duration={14} animation="rotate" color="#C9A15A" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-px bg-gradient-to-r from-transparent via-[#C9A15A]/30 to-transparent" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-40 h-px bg-gradient-to-r from-transparent via-[#C9A15A]/30 to-transparent" />
+        <div className="max-w-[1440px] mx-auto px-6 relative">
+          <div className="text-center mb-14">
+            <div className="inline-flex items-center gap-3 mb-4">
+              <span className="w-6 h-px bg-gradient-to-r from-transparent to-[#C9A15A]/60" />
+              <span className="text-[11px] font-bold tracking-[0.25em] text-[#C9A15A] uppercase font-inter">
+                Flower Collection
+              </span>
+              <span className="w-6 h-px bg-gradient-to-l from-transparent to-[#C9A15A]/60" />
+            </div>
+            <h2 className="text-4xl sm:text-5xl font-serif-display font-black text-[#1a0f0a] mt-2 leading-tight">
+              Explore Our Exquisite Range
+            </h2>
+            <div className="flex items-center justify-center gap-3 mt-4 mb-3">
+              <span className="text-[#C9A15A]/40 text-[10px] tracking-[0.3em] uppercase font-light">❀</span>
+              <span className="text-[#C9A15A]/40 text-[10px] tracking-[0.3em] uppercase font-light">✦</span>
+              <span className="text-[#C9A15A]/40 text-[10px] tracking-[0.3em] uppercase font-light">❀</span>
+            </div>
+            <p className="text-[#8a7a6e] text-sm mt-2 font-light max-w-xl mx-auto">
+              Handpicked blooms arranged by nature, ready for every moment that matters
+            </p>
+          </div>
+
+          <div className="w-full flex flex-row flex-nowrap md:grid md:grid-cols-6 gap-6 max-w-7xl mx-auto overflow-x-auto md:overflow-x-visible px-4 py-8 scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {[
+              { id: 1, title: "Roses", subtitle: "Soft Rose Pink", bg: "bg-gradient-to-b from-[#FFF0F2] to-[#FFE4E8]", img: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=500&q=80" },
+              { id: 2, title: "Gerberas", subtitle: "Soft Milky Cream", bg: "bg-gradient-to-b from-[#FFFDF0] to-[#FFF9D6]", img: "https://images.unsplash.com/photo-1597848212624-a19eb35e2651?auto=format&fit=crop&w=500&q=80" },
+              { id: 3, title: "Orchids", subtitle: "Soft Lilac/Lavender", bg: "bg-gradient-to-b from-[#FBF5FF] to-[#F3E5FF]", img: "https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?auto=format&fit=crop&w=500&q=80" },
+              { id: 4, title: "Lilies", subtitle: "Soft Apricot Peachy Tint", bg: "bg-gradient-to-b from-[#FFF9F2] to-[#FFEEDC]", img: "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=500&q=80" },
+              { id: 5, title: "Carnations", subtitle: "Soft Coral Bloom", bg: "bg-gradient-to-b from-[#FFF5F7] to-[#FFE6EC]", img: "https://images.unsplash.com/photo-1550950158-d0d960dff51b?auto=format&fit=crop&w=500&q=80" },
+              { id: 6, title: "Sunflowers", subtitle: "Soft Primrose Yellow", bg: "bg-gradient-to-b from-[#FFFFF2] to-[#FFFDE0]", img: "https://images.unsplash.com/photo-1596436889106-be35e843f974?auto=format&fit=crop&w=500&q=80" },
+            ].map((item) => (
+              <div
+                key={item.id}
+                className="w-[200px] sm:w-[220px] md:w-full h-[350px] sm:h-[390px] flex-shrink-0 group rounded-[24px] border border-white/70 shadow-[0_12px_40px_-15px_rgba(20,48,31,0.06)] bg-white overflow-hidden transition-all duration-500 hover:-translate-y-4 hover:shadow-[0_30px_60px_-15px_rgba(20,48,31,0.14)] flex flex-col snap-start"
+              >
+                <div className={`h-[68%] w-full ${item.bg} flex items-center justify-center p-4 relative group-hover:brightness-[1.02] transition-all duration-500`}>
+                  <img
+                    src={item.img}
+                    alt={item.title}
+                    loading="lazy"
+                    className="max-w-full max-h-full object-contain filter drop-shadow-[0_12px_20px_rgba(0,0,0,0.08)] transition-all duration-500 group-hover:scale-110 group-hover:drop-shadow-[0_16px_28px_rgba(0,0,0,0.10)]"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-b from-transparent to-white/60 pointer-events-none" />
+                </div>
+                <div className="flex-1 bg-gradient-to-b from-white via-white to-[#faf8f5] backdrop-blur-sm flex flex-col items-center justify-center px-4 border-t border-white/80">
+                  <span className="bg-white text-[#14301F] text-xs font-bold uppercase tracking-wider py-2 px-6 rounded-full shadow-sm mx-auto block max-w-max border border-gray-50 ring-1 ring-transparent hover:ring-[#C9A15A]/30 transition-all duration-300">
+                    {item.title}
+                  </span>
+                  <span className="flex items-center gap-2 mt-2.5">
+                    <span className="text-[#C9A15A]/40 text-[6px]">●</span>
+                    <span className="text-[10px] sm:text-[11px] text-[#C9A15A]/80 font-medium tracking-wide text-center block">
+                      {item.subtitle}
+                    </span>
+                    <span className="text-[#C9A15A]/40 text-[6px]">●</span>
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </RevealSection>
+
       {/* ─── Shop By Category ─── */}
       <RevealSection className="relative pt-16 lg:pt-20 pb-28 bg-gradient-to-b from-[#faf6f0] via-[#f5ede4] to-[#e8ddd0] border-b border-[#C9A15A]/10 overflow-hidden">
         {/* Subtle cream watercolor paper texture overlay */}
@@ -762,51 +836,76 @@ const Home = () => {
           { color: "from-pink-400/15 to-transparent", size: 200, top: "50%", left: "35%", anim: "bk-float", delay: 4, duration: 24 },
           { color: "from-violet-400/10 to-transparent", size: 260, top: "15%", right: "25%", anim: "bk-drift3", delay: 1, duration: 30 },
         ]} />
+        <FloatingDecoration type="rose" side="right" top="8%" size={80} opacity={0.08} delay={0} duration={18} animation="bloom" color="#D6537A" />
+        <FloatingDecoration type="leaf" side="left" top="auto" bottom="12%" size={56} opacity={0.12} delay={2} duration={14} animation="sway3" color="#C9A15A" />
+        <FloatingDecoration type="petal5" side="right" top="auto" bottom="8%" size={48} opacity={0.07} delay={3} duration={16} animation="sway1" color="#D6537A" />
+        {/* Subtle gold fleck overlay */}
+        <div className="absolute inset-0 pointer-events-none opacity-[0.03]"
+          style={{
+            backgroundImage: `radial-gradient(circle at 25% 25%, #C9A15A 1px, transparent 1px), radial-gradient(circle at 75% 75%, #C9A15A 1px, transparent 1px)`,
+            backgroundSize: '60px 60px, 80px 80px',
+          }}
+        />
+        {/* Decorative gold border accent */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-px bg-gradient-to-r from-transparent via-[#C9A15A]/30 to-transparent" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-40 h-px bg-gradient-to-r from-transparent via-[#C9A15A]/30 to-transparent" />
 
         <div className="max-w-[1440px] mx-auto px-6 relative">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="relative">
-              <div className="rounded-2xl overflow-hidden shadow-2xl">
+            <div className="relative group">
+              <div className="rounded-[24px] overflow-hidden shadow-[0_20px_60px_-20px_rgba(0,0,0,0.5)] ring-1 ring-white/10">
                 <LazyImage
                   src={image28}
                   alt="Sunset Rose Grand Bouquet - Deal of the Day"
-                  className="w-full h-[480px] object-cover hover:scale-105 transition duration-700"
+                  className="w-full h-[480px] object-cover transition-all duration-700 ease-out group-hover:scale-105"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0d1f0f]/40 via-transparent to-transparent pointer-events-none" />
               </div>
-              <div className="absolute -top-4 -left-4 bg-[#D6537A] text-white rounded-2xl px-6 py-4 shadow-xl -rotate-6">
+              <div className="absolute -top-4 -left-4 bg-gradient-to-br from-[#D6537A] to-rose-600 text-white rounded-2xl px-6 py-4 shadow-[0_8px_24px_rgba(214,83,122,0.35)] -rotate-3 hover:rotate-0 transition-all duration-300">
                 <p className="text-[10px] uppercase tracking-widest font-black flex items-center gap-1">
                   <Percent size={11} /> Today Only
                 </p>
                 <p className="text-2xl font-black mt-1 font-serif-display">40% OFF</p>
               </div>
+              {/* Gold corner flourish */}
+              <div className="absolute -bottom-3 -right-3 w-16 h-16 opacity-20 pointer-events-none">
+                <div className="w-full h-full border-r-2 border-b-2 border-[#C9A15A] rounded-br-[24px]" />
+              </div>
             </div>
 
-            <div className="text-white flex flex-col gap-6">
+            <div className="text-white flex flex-col gap-7">
               <div>
-                <span className="inline-flex items-center gap-2 bg-white/10 text-[#C9A15A] text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-full border border-white/10">
+                <span className="inline-flex items-center gap-2 bg-white/[0.06] backdrop-blur-sm text-[#C9A15A] text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-full border border-white/[0.08] shadow-sm">
                   <Clock size={12} className="animate-pulse" /> Deal of the Day
                 </span>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif-display font-black mt-6 leading-tight text-[#F7F0E8]">
+                <div className="inline-flex items-center gap-3 mt-6 mb-4">
+                  <span className="w-8 h-px bg-gradient-to-r from-transparent to-[#C9A15A]/40" />
+                  <span className="text-[#C9A15A]/50 text-[10px] tracking-[0.3em] uppercase font-light">✦</span>
+                  <span className="w-8 h-px bg-gradient-to-l from-transparent to-[#C9A15A]/40" />
+                </div>
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif-display font-black leading-tight text-[#F7F0E8]">
                   Sunset Rose Grand Bouquet
                 </h2>
-                <p className="text-gray-400 text-sm mt-4 leading-relaxed font-light">
+                <p className="text-gray-400 text-sm mt-4 leading-relaxed font-light max-w-lg">
                   A breathtaking, hand-tied arrangement of 50 premium long-stemmed roses in warm
                   sunset hues, finished with fresh eucalyptus and a signature silk ribbon.
                 </p>
               </div>
 
               <div className="flex items-center gap-4">
+                <div className="w-px h-8 bg-white/10" />
                 <a
                   href={WHATSAPP_LINK}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-2xl sm:text-3xl font-black text-[#C9A15A] hover:text-[#dfc4a3] transition-colors font-serif-display"
+                  className="text-xl sm:text-2xl font-black text-[#C9A15A] hover:text-[#dfc4a3] transition-colors font-serif-display tracking-tight"
                 >
                   Call us for best price
                 </a>
+                <div className="w-px h-8 bg-white/10" />
               </div>
 
-              <div className="flex gap-3">
+              <div className="flex gap-4">
                 {[
                   { label: "Hours", value: timeLeft.hours },
                   { label: "Minutes", value: timeLeft.minutes },
@@ -814,12 +913,12 @@ const Home = () => {
                 ].map((t) => (
                   <div
                     key={t.label}
-                    className="bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-center min-w-[76px]"
+                    className="bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] rounded-2xl px-6 py-4 text-center min-w-[82px] hover:bg-white/[0.07] transition-colors duration-300"
                   >
-                    <p className="text-2xl font-bold text-[#F7F0E8] tabular-nums leading-none">
+                    <p className="text-2xl sm:text-3xl font-bold text-[#F7F0E8] tabular-nums leading-none tracking-tight">
                       {pad(t.value)}
                     </p>
-                    <p className="text-[9px] text-[#C9A15A] uppercase tracking-wider font-bold mt-2">
+                    <p className="text-[9px] text-[#C9A15A] uppercase tracking-wider font-bold mt-2.5">
                       {t.label}
                     </p>
                   </div>
@@ -830,9 +929,9 @@ const Home = () => {
                 href={WHATSAPP_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group mt-4 inline-flex items-center justify-center gap-2 bg-[#D6537A] hover:bg-rose-600 text-white px-8 py-4 rounded-2xl font-bold text-xs tracking-widest uppercase shadow-lg shadow-rose-200/30 hover:shadow-soft-lg hover:shadow-rose-400/40 hover:scale-[1.04] transition-all duration-300 hover:-translate-y-1"
+                className="group mt-2 inline-flex items-center justify-center gap-3 bg-gradient-to-r from-[#D6537A] to-rose-500 hover:from-rose-500 hover:to-[#D6537A] text-white px-10 py-4 rounded-2xl font-bold text-xs tracking-widest uppercase shadow-lg shadow-rose-500/25 hover:shadow-rose-500/40 hover:scale-[1.03] hover:-translate-y-1 transition-all duration-300 max-w-max"
               >
-                Grab This Deal <ArrowRight size={14} className="icon-wiggle" />
+                Grab This Deal <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform duration-300" />
               </a>
             </div>
           </div>
@@ -840,7 +939,11 @@ const Home = () => {
       </RevealSection>
 
       {/* ─── How It Works ─── */}
-      <RevealSection className="relative py-24 bg-gradient-to-b from-white via-[#fdf6f0] to-white border-b border-gray-100 overflow-hidden">
+      <RevealSection className="relative py-24 bg-[radial-gradient(circle_at_top,_#FAF5EF,_#F4EDE4,_#EAE0D5)] border-b border-[#ddd5c8] overflow-hidden">
+        {/* Geometric blur blobs */}
+        <div className="pointer-events-none absolute -top-32 -left-32 w-96 h-96 bg-[#E8C4B8]/20 rounded-full blur-3xl opacity-30" />
+        <div className="pointer-events-none absolute -bottom-32 -right-32 w-80 h-80 bg-[#D4A373]/15 rounded-full blur-3xl opacity-30" />
+        <div className="pointer-events-none absolute top-1/3 right-1/4 w-64 h-64 bg-[#F4C9D1]/15 rounded-full blur-3xl opacity-20" />
         <BokehLights spots={[
           { color: "from-rose-200/12 to-transparent", size: 240, top: "-5%", left: "20%", anim: "bk-drift3", delay: 0, duration: 30 },
           { color: "from-amber-100/10 to-transparent", size: 200, bottom: "-6%", right: "5%", anim: "bk-drift1", delay: 2, duration: 28 },
@@ -850,37 +953,47 @@ const Home = () => {
         <FloatingDecoration type="petal5" side="right" top="12%" size={70} opacity={0.1} delay={2} duration={15} animation="sway1" />
         <FloatingDecoration type="petal6" side="left" top="auto" bottom="8%" size={48} opacity={0.12} delay={1} duration={12} animation="sway2" color="#C9A15A" />
         <FloatingDecoration type="leaf" side="right" top="auto" bottom="15%" size={44} opacity={0.15} delay={3} duration={9} animation="sway3" />
-        <div className="max-w-[1440px] mx-auto px-6">
+        <div className="max-w-[1440px] mx-auto px-6 relative z-10">
           <div className="text-center mb-20">
-            <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">
+            <span className="text-xs font-bold tracking-[0.2em] text-[#D6537A] uppercase font-inter">
               Simple Process
             </span>
-            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[#14301F] mt-2">
+            <h2 className="text-4xl sm:text-5xl font-serif-display font-black text-[#14301F] mt-3 tracking-tight">
               How It Works
             </h2>
-            <p className="text-gray-400 text-sm mt-3 font-light">
+            <p className="text-gray-400 text-sm mt-4 font-light max-w-xl mx-auto leading-relaxed">
               From our garden directly to your doorstep in three easy steps
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-8 lg:gap-10">
             {steps.map((step, index) => {
               const Icon = step.icon;
               return (
                 <div
                   key={index}
-                  className="group relative bg-[#fafaf9] rounded-3xl p-8 pt-12 border border-gray-100 hover:shadow-soft-lg hover:shadow-rose-500/10 hover:scale-[1.03] hover:-translate-y-1.5 transition-all duration-300 text-center"
+                  className="group relative min-h-[340px] w-full backdrop-blur-md bg-white/70 rounded-[24px] p-8 pt-14 border border-white/40 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.04)] transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-3 hover:shadow-[0_20px_40px_-15px_rgba(20,48,31,0.08)] text-center overflow-hidden"
                 >
-                  <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-6xl font-black text-#F4C9D1/50 font-serif-display select-none">
+                  {/* Hover gradient fill overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#14301F] to-[#1F4930] opacity-0 group-hover:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] rounded-[24px]" />
+
+                  {/* Number — top-left overlap */}
+                  <span className="absolute -top-6 left-4 text-8xl font-black text-[#14301F]/10 group-hover:text-[#E6C280] font-serif-display select-none leading-none tracking-tighter transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-110 group-hover:translate-x-1">
                     {pad(index + 1)}
                   </span>
-                  <div className="w-14 h-14 mx-auto rounded-2xl bg-[#D6537A]/10 flex items-center justify-center mb-6">
-                    <Icon size={24} className="text-[#D6537A] icon-wiggle" />
+
+                  {/* Icon — double-bordered circular badge */}
+                  <div className="relative z-10 w-16 h-16 mx-auto rounded-full bg-[#FDF2F4] flex items-center justify-center mb-6 ring-2 ring-[#FDF2F4]/80 shadow-inner transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-110 group-hover:bg-[#E6C280] group-hover:ring-[#E6C280]/50 group-hover:shadow-lg group-hover:shadow-[#E6C280]/20">
+                    <Icon size={24} className="text-[#D4A373] group-hover:text-white transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]" />
                   </div>
-                  <h3 className="font-serif-display font-bold text-lg text-[#14301F]">
+
+                  {/* Title */}
+                  <h3 className="relative z-10 font-serif-display font-bold text-xl text-[#14301F] group-hover:text-white transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]">
                     {step.title}
                   </h3>
-                  <p className="text-gray-400 text-xs mt-3 leading-relaxed font-light">
+
+                  {/* Description */}
+                  <p className="relative z-10 text-gray-400 group-hover:text-white/80 text-xs mt-3 leading-relaxed font-light max-w-[260px] mx-auto transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]">
                     {step.desc}
                   </p>
                 </div>
@@ -930,55 +1043,131 @@ const Home = () => {
         </div>
       </RevealSection>
 
-      {/* ─── Perfect For Every Occasion ─── */}
-      <RevealSection className="relative py-24 bg-gradient-to-b from-white via-[#fdf6f0] to-white border-b border-gray-100 overflow-hidden">
-        <FloatingDecoration type="petal5" side="left" top="10%" size={72} opacity={0.1} delay={0} duration={15} animation="sway2" />
-        <FloatingDecoration type="petal" side="right" top="18%" size={44} opacity={0.15} delay={1.5} duration={10} animation="sway3" color="#D6537A" />
-        <FloatingDecoration type="leaf" side="right" top="auto" bottom="10%" size={52} opacity={0.14} delay={2} duration={12} animation="sway1" color="#C9A15A" />
-        <FloatingDecoration type="petal6" side="left" top="auto" bottom="5%" size={48} opacity={0.1} delay={3} duration={11} animation="rotate" color="#C9A15A" />
-        <div className="max-w-[1440px] mx-auto px-6">
-          <div className="text-center mb-20">
-            <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">
-              Life Milestones
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[#14301F] mt-2">
-              Perfect For Every Occasion
+      {/* ─── Plan The Perfect Surprise ─── */}
+      <RevealSection className="relative py-24 bg-gradient-to-b from-[#faf8f5] via-[#fdf6f0] to-[#faf8f5] border-b border-[#eae4dc] overflow-hidden">
+        <BokehLights spots={[
+          { color: "from-rose-200/10 to-transparent", size: 220, top: "-4%", left: "8%", anim: "bk-drift2", delay: 0, duration: 30 },
+          { color: "from-amber-100/8 to-transparent", size: 180, bottom: "-6%", right: "10%", anim: "bk-drift1", delay: 2, duration: 26 },
+          { color: "from-[#C9A15A]/6 to-transparent", size: 200, top: "40%", right: "30%", anim: "bk-float", delay: 3, duration: 28 },
+        ]} />
+        <FloatingDecoration type="petal5" side="left" top="12%" size={56} opacity={0.08} delay={0} duration={14} animation="sway2" color="#C9A15A" />
+        <FloatingDecoration type="leaf" side="right" top="auto" bottom="10%" size={44} opacity={0.1} delay={2} duration={12} animation="sway3" color="#14301F" />
+        <FloatingDecoration type="petal6" side="left" top="auto" bottom="6%" size={40} opacity={0.07} delay={1.5} duration={11} animation="rotate" color="#D6537A" />
+        <div className="max-w-[1440px] mx-auto px-6 relative">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-3 mb-4">
+              <span className="w-6 h-px bg-gradient-to-r from-transparent to-[#C9A15A]/60" />
+              <span className="text-[11px] font-bold tracking-[0.25em] text-[#C9A15A] uppercase font-inter">
+                Surprise Someone Special
+              </span>
+              <span className="w-6 h-px bg-gradient-to-l from-transparent to-[#C9A15A]/60" />
+            </div>
+            <h2 className="text-4xl sm:text-5xl font-serif-display font-black text-[#1a0f0a] mt-2 leading-tight">
+              Plan The Perfect Surprise
             </h2>
-            <p className="text-gray-400 text-sm mt-3 font-light">
-              Handcrafted flowers designed for all of life's beautiful moments
+            <div className="flex items-center justify-center gap-3 mt-4 mb-3">
+              <span className="text-[#C9A15A]/40 text-[10px] tracking-[0.3em] uppercase font-light">❀</span>
+              <span className="text-[#C9A15A]/40 text-[10px] tracking-[0.3em] uppercase font-light">✦</span>
+              <span className="text-[#C9A15A]/40 text-[10px] tracking-[0.3em] uppercase font-light">❀</span>
+            </div>
+            <p className="text-[#8a7a6e] text-sm mt-2 font-light max-w-xl mx-auto">
+              Thoughtfully crafted floral gifts for every kind of love
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {occasions.map((item, index) => {
-              const Icon = item.icon;
-              return (
-                <div
-                  key={index}
-                  onClick={() => navigate("/occasions")}
-                  className="group relative h-80 rounded-3xl overflow-hidden cursor-pointer shadow-soft hover:shadow-soft-lg hover:shadow-rose-500/15 hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300"
-                >
-                  <LazyImage
-                    src={item.image}
-                    alt={item.title}
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
-                  <div className="absolute inset-0 p-6 flex flex-col justify-end text-white">
-                    <div className="w-11 h-11 rounded-full bg-white/20 backdrop-blur-md border border-white/10 flex items-center justify-center mb-4">
-                      <Icon size={18} />
-                    </div>
-                    <h3 className="text-lg font-serif-display font-bold text-[#F7F0E8]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-5xl mx-auto">
+            {[
+              { id: 1, title: 'For Him', bg: 'bg-[#EBF3FC]', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80' },
+              { id: 2, title: 'For Her', bg: 'bg-[#FCEBEB]', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80' },
+              { id: 3, title: 'For Them', bg: 'bg-[#FCF5EB]', img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80' },
+            ].map((item) => (
+              <div key={item.id} className="group text-center">
+                <div className="relative mb-7">
+                  <div className={`${item.bg} aspect-square rounded-[40%_60%_70%_30%_/_40%_50%_60%_50%] overflow-hidden shadow-[0_8px_28px_-6px_rgba(0,0,0,0.06)] transition-all duration-500 ease-out hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.12)] hover:-translate-y-1.5`}>
+                    <div className="absolute inset-0 ring-1 ring-inset ring-black/[0.04] rounded-[inherit] pointer-events-none" />
+                    <img
+                      src={item.img}
+                      alt={item.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                    />
+                  </div>
+                  <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 z-10">
+                    <button className="bg-[#14301F] text-white text-[11px] font-bold tracking-[0.15em] uppercase px-7 py-3 rounded-full inline-flex items-center justify-center gap-2.5 hover:bg-[#1f472e] shadow-[0_4px_16px_rgba(20,48,31,0.15)] hover:shadow-[0_8px_24px_rgba(20,48,31,0.25)] transition-all duration-300 hover:-translate-y-0.5">
                       {item.title}
-                    </h3>
-                    <p className="text-white/60 text-xs mt-1.5 font-light">{item.desc}</p>
-                    <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold tracking-wider uppercase opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 text-white">
-                      Explore <ArrowRight size={12} />
-                    </span>
+                      <span className="w-5 h-5 rounded-full bg-white/15 flex items-center justify-center text-white text-[10px] leading-none backdrop-blur-sm">→</span>
+                    </button>
                   </div>
                 </div>
-              );
-            })}
+                <p className="text-[#8a7a6e]/60 text-[10px] tracking-[0.2em] uppercase font-medium mt-1">
+                  Shop {item.title}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </RevealSection>
+
+      {/* ─── Choose a Favourite Colour ─── */}
+      <RevealSection className="relative py-20 bg-gradient-to-b from-[#faf8f5] via-white to-[#faf8f5] border-b border-[#eae4dc] overflow-hidden">
+        <BokehLights spots={[
+          { color: "from-rose-200/8 to-transparent", size: 180, top: "-3%", right: "15%", anim: "bk-drift2", delay: 1, duration: 28 },
+          { color: "from-amber-100/8 to-transparent", size: 200, bottom: "-5%", left: "5%", anim: "bk-drift4", delay: 3, duration: 24 },
+          { color: "from-violet-200/6 to-transparent", size: 160, top: "50%", left: "40%", anim: "bk-float", delay: 2, duration: 26 },
+        ]} />
+        <FloatingDecoration type="petal6" side="left" top="10%" size={48} opacity={0.07} delay={0} duration={13} animation="sway1" color="#C9A15A" />
+        <FloatingDecoration type="leaf" side="right" top="auto" bottom="8%" size={44} opacity={0.09} delay={2.5} duration={11} animation="sway3" color="#14301F" />
+        <div className="max-w-[1440px] mx-auto px-6 relative">
+          <div className="text-center mb-14">
+            <div className="inline-flex items-center gap-3 mb-4">
+              <span className="w-6 h-px bg-gradient-to-r from-transparent to-[#C9A15A]/60" />
+              <span className="text-[11px] font-bold tracking-[0.25em] text-[#C9A15A] uppercase font-inter">
+                Pick Your Palette
+              </span>
+              <span className="w-6 h-px bg-gradient-to-l from-transparent to-[#C9A15A]/60" />
+            </div>
+            <h2 className="text-4xl sm:text-5xl font-serif-display font-black text-[#1a0f0a] mt-2 leading-tight">
+              Choose a Favourite Colour
+            </h2>
+            <div className="flex items-center justify-center gap-3 mt-4 mb-3">
+              <span className="text-[#C9A15A]/40 text-[10px] tracking-[0.3em] uppercase font-light">✦</span>
+              <span className="text-[#C9A15A]/40 text-[10px] tracking-[0.3em] uppercase font-light">❀</span>
+              <span className="text-[#C9A15A]/40 text-[10px] tracking-[0.3em] uppercase font-light">✦</span>
+            </div>
+            <p className="text-[#8a7a6e] text-sm mt-2 font-light max-w-xl mx-auto">
+              Browse our blooms sorted by your favourite shade
+            </p>
+          </div>
+
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-y-8 gap-x-6 max-w-4xl mx-auto">
+            {[
+              { label: 'Red', img: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=150' },
+              { label: 'Purple', img: 'https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=150' },
+              { label: 'Pink', img: 'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=150' },
+              { label: 'Peach', img: 'https://images.unsplash.com/photo-1508747703725-719777637510?w=150' },
+              { label: 'Warm', img: 'https://images.unsplash.com/photo-1596436889106-be35e843f974?w=150' },
+              { label: 'Pastel', img: 'https://images.unsplash.com/photo-1550950158-d0d960dff51b?w=150' },
+              { label: 'Orange', img: 'https://images.unsplash.com/photo-1597848212624-a19eb35e2651?w=150' },
+              { label: 'Blue', img: 'https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?w=150' },
+              { label: 'White', img: 'https://images.unsplash.com/photo-1533616688419-b7a585564566?w=150' },
+              { label: 'Yellow', img: 'https://images.unsplash.com/photo-1597848212624-a19eb35e2651?w=150' },
+              { label: 'Cool', img: 'https://images.unsplash.com/photo-1494972308805-463bc619d34e?w=150' },
+              { label: 'Mixed', img: 'https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?w=150' },
+            ].map((color) => (
+              <div key={color.label} className="text-center group">
+                <div className="w-[82px] h-[82px] rounded-full overflow-hidden border-[3px] border-white/80 shadow-[0_4px_16px_rgba(0,0,0,0.05)] cursor-pointer transition-all duration-500 ease-out hover:scale-110 hover:shadow-[0_12px_32px_-8px_rgba(20,48,31,0.12)] hover:border-[#C9A15A]/40 mx-auto">
+                  <img
+                    src={color.img}
+                    alt={color.label}
+                    loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
+                  />
+                </div>
+                <span className="text-xs text-[#14301F] font-medium tracking-wide mt-3 text-center block transition-colors duration-300 group-hover:text-[#C9A15A]">
+                  {color.label}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </RevealSection>
