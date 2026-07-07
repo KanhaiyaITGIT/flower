@@ -89,6 +89,8 @@ const animClasses = {
   bloom: "fd-bloom",
   breathe: "fd-breathe",
   "drift-bloom": "fd-drift-bloom",
+  "float-up": "fd-float-up",
+  "spin-slow": "fd-spin-slow",
 };
 
 const FloatingDecoration = ({

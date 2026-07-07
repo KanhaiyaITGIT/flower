@@ -1,6 +1,7 @@
-import { Flower2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Flower2, ArrowUpToLine } from "lucide-react";
 import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   BUSINESS_NAME_MAIN,
   BUSINESS_NAME_SUB,
@@ -10,6 +11,7 @@ import {
   INSTAGRAM_LINK,
   FACEBOOK_LINK,
 } from "../constants";
+import { motion, AnimatePresence } from "framer-motion";
 
 const infoLinks = [
   { name: "About Us", path: "/about" },
@@ -24,6 +26,19 @@ const policyLinks = [
 ];
 
 export default function Footer() {
+  const [showBackToTop, setShowBackToTop] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const onScroll = () => setShowBackToTop(window.scrollY > 600);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <footer className="bg-gradient-to-b from-[#14301F] to-[#0D1F0F] text-[#FBF6EF] font-inter border-t border-white/5 relative overflow-hidden">
       {/* Subtle top glow */}
@@ -33,14 +48,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16">
           {/* Brand Column */}
           <div className="flex flex-col gap-6">
-            <div className="flex items-center gap-3">
+            <Link to="/" className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center gold-glow">
                 <Flower2 size={18} className="text-[#C9A15A]" />
               </div>
               <h2 className="font-serif-display font-black text-lg md:text-xl text-[#FBF6EF] tracking-tight">
                 {BUSINESS_NAME_MAIN} <span className="gold-gradient">{BUSINESS_NAME_SUB}</span>
               </h2>
-            </div>
+            </Link>
             
             <p className="text-sm text-gray-400 leading-relaxed max-w-xs font-light">
               Bringing fresh premium blooms, bespoke flower arrangements, and exquisite venue styling to Gurgaon and Delhi NCR. Same-day delivery available.
@@ -48,24 +63,22 @@ export default function Footer() {
             
             {/* Social Icons */}
             <div className="flex items-center gap-3.5">
-              <a
-                href={FACEBOOK_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl bg-white/5 hover:bg-[#C9A15A] border border-white/10 hover:border-[#C9A15A] hover:text-[#14301F] flex items-center justify-center text-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-                aria-label="Facebook"
-              >
-                <FaFacebook />
-              </a>
-              <a
-                href={INSTAGRAM_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl bg-white/5 hover:bg-[#C9A15A] border border-white/10 hover:border-[#C9A15A] hover:text-[#14301F] flex items-center justify-center text-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-                aria-label="Instagram"
-              >
-                <FaInstagram />
-              </a>
+              {[
+                { href: FACEBOOK_LINK, icon: FaFacebook, label: "Facebook" },
+                { href: INSTAGRAM_LINK, icon: FaInstagram, label: "Instagram" },
+              ].map(({ href, icon: Icon, label }) => (
+                <motion.a
+                  key={label}
+                  whileHover={{ y: -3, scale: 1.1 }}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-xl bg-white/5 hover:bg-[#C9A15A] border border-white/10 hover:border-[#C9A15A] hover:text-[#14301F] flex items-center justify-center text-lg transition-all duration-300"
+                  aria-label={label}
+                >
+                  <Icon />
+                </motion.a>
+              ))}
             </div>
           </div>
 
@@ -79,7 +92,9 @@ export default function Footer() {
                 <li key={item.name}>
                   <Link
                     to={item.path}
-                    className="text-gray-400 hover:text-[#C9A15A] transition-colors duration-200 block py-1"
+                    className={`text-gray-400 hover:text-[#C9A15A] transition-all duration-200 block py-1 hover:translate-x-1 ${
+                      location.pathname === item.path ? "text-[#C9A15A]" : ""
+                    }`}
                   >
                     {item.name}
                   </Link>
@@ -98,7 +113,7 @@ export default function Footer() {
                 <li key={item.name}>
                   <Link
                     to={item.path}
-                    className="text-gray-400 hover:text-[#C9A15A] transition-colors duration-200 block py-1"
+                    className="text-gray-400 hover:text-[#C9A15A] transition-all duration-200 block py-1 hover:translate-x-1"
                   >
                     {item.name}
                   </Link>
@@ -113,40 +128,46 @@ export default function Footer() {
               Contact Us
             </h3>
             <div className="flex flex-col gap-4 font-light text-sm">
-              <a
+              <motion.a
+                whileHover={{ x: 4 }}
                 href={`tel:${CONTACT_PHONE_1}`}
-                className="text-gray-400 hover:text-[#C9A15A] flex items-center gap-3 transition-all duration-200 py-1 hover:translate-x-1"
+                className="text-gray-400 hover:text-[#C9A15A] flex items-center gap-3 transition-all duration-200 py-1"
               >
                 <span className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 text-base">📞</span> {CONTACT_PHONE_1}
-              </a>
-              <a
+              </motion.a>
+              <motion.a
+                whileHover={{ x: 4 }}
                 href={`tel:${CONTACT_PHONE_2}`}
-                className="text-gray-400 hover:text-[#C9A15A] flex items-center gap-3 transition-all duration-200 py-1 hover:translate-x-1"
+                className="text-gray-400 hover:text-[#C9A15A] flex items-center gap-3 transition-all duration-200 py-1"
               >
                 <span className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 text-base">📞</span> {CONTACT_PHONE_2}
-              </a>
-              <a
+              </motion.a>
+              <motion.a
+                whileHover={{ x: 4 }}
                 href={WHATSAPP_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-[#C9A15A] flex items-center gap-3 transition-all duration-200 py-1 hover:translate-x-1"
+                className="text-gray-400 hover:text-[#C9A15A] flex items-center gap-3 transition-all duration-200 py-1"
               >
                 <span className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 text-base text-emerald-400">
                   <FaWhatsapp />
                 </span>
                 WhatsApp Support
-              </a>
+              </motion.a>
             </div>
 
             {/* Same Day Delivery Badge */}
-            <div className="mt-6 bg-gradient-to-br from-white/5 to-white/[0.02] border border-[#C9A15A]/20 rounded-xl p-4 max-w-[220px] gold-glow">
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="mt-6 bg-gradient-to-br from-white/5 to-white/[0.02] border border-[#C9A15A]/20 rounded-xl p-4 max-w-[220px] gold-glow"
+            >
               <p className="text-[10px] text-[#C9A15A] font-bold tracking-widest uppercase flex items-center gap-2">
                 <span>🚚</span> Same-Day Delivery
               </p>
               <p className="text-xs text-gray-400 mt-1 font-light leading-snug">
                 Gurgaon & NCR wide delivery available for orders placed before 4:00 PM.
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
@@ -163,6 +184,24 @@ export default function Footer() {
           </p>
         </div>
       </div>
+
+      {/* Back to Top */}
+      <AnimatePresence>
+        {showBackToTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.5, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.5, y: 20 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={scrollToTop}
+            className="fixed bottom-24 right-6 z-50 w-12 h-12 rounded-full bg-[#14301F] border border-[#C9A15A]/30 flex items-center justify-center shadow-xl shadow-black/20 hover:border-[#C9A15A]/60 transition-all duration-300"
+            aria-label="Back to top"
+          >
+            <ArrowUpToLine size={18} className="text-[#C9A15A]" />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </footer>
   );
 }

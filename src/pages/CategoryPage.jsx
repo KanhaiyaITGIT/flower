@@ -5,6 +5,7 @@ import LazyImage from "../components/ui/LazyImage";
 import RevealSection from "../components/RevealSection";
 import FloatingDecoration from "../components/FloatingDecoration";
 import { WHATSAPP_LINK } from "../constants";
+import TiltCard from "../components/TiltCard";
 import { motion, AnimatePresence } from "framer-motion";
 
 // s1 - s45
@@ -306,7 +307,7 @@ const CategoryPage = () => {
   };
 
   return (
-    <div className="w-full bg-[#fafaf9] min-h-screen pb-12 relative">
+    <div className="w-full bg-app min-h-screen pb-12 relative">
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <FloatingDecoration type="leaf" side="left" top="4%" size={28} opacity={0.1} delay={0.2} duration={14} animation="sway3" color="#d1bca8" />
         <FloatingDecoration type="petal6" side="right" top="3%" size={24} opacity={0.1} delay={1} duration={13} animation="sway2" color="#d1bca8" />
@@ -353,7 +354,7 @@ const CategoryPage = () => {
       </section>
 
       {/* ── Sticky Filter / Search Bar ── */}
-      <div className="sticky top-[80px] z-40 bg-white/85 backdrop-blur-md border-b border-gray-100 shadow-sm py-4">
+      <div className="sticky top-[80px] z-40 bg-app-card/85 backdrop-blur-md border-b border-app shadow-sm py-4">
         <div className="max-w-6xl mx-auto px-6 flex flex-col gap-4">
           {/* Scrollable Categories List */}
           <div className="flex gap-2.5 overflow-x-auto scrollbar-hide py-1">
@@ -365,8 +366,8 @@ const CategoryPage = () => {
                   onClick={() => setActiveCategory(cat)}
                   className={`shrink-0 rounded-2xl px-5 py-2 text-xs font-bold tracking-widest uppercase transition-all duration-300 border ${
                     isSelected
-                      ? "bg-[#14301F] text-white border-[#14301F] shadow-soft shadow-[#14301F]/20"
-                      : "bg-white text-gray-500 border-gray-200 hover:border-gray-300 hover:text-[#14301F] hover:scale-[1.04]"
+                      ? "bg-primary text-cream border-primary shadow-soft shadow-primary/20"
+                      : "bg-app-card text-app-secondary border-app hover:border-app/60 hover:text-app-primary hover:scale-[1.04]"
                   }`}
                 >
                   {cat}
@@ -385,7 +386,7 @@ const CategoryPage = () => {
                 placeholder="Search catalog..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-11 pr-10 py-2.5 rounded-2xl bg-gray-50/50 border border-gray-200 text-xs text-[#14301F] placeholder-gray-400 outline-none focus:border-rose-300 focus:bg-white focus:ring-1 focus:ring-rose-300/10 transition-all duration-300 font-inter font-medium"
+                className="w-full pl-11 pr-10 py-2.5 rounded-2xl bg-app-secondary/50 border border-app text-xs text-app-primary placeholder-app-muted outline-none focus:border-accent/30 focus:bg-app-card focus:ring-1 focus:ring-accent/10 transition-all duration-300 font-inter font-medium"
               />
               <AnimatePresence>
                 {searchQuery && (
@@ -410,7 +411,7 @@ const CategoryPage = () => {
             <div className="relative ml-auto shrink-0 select-none">
               <button
                 onClick={() => setShowSortDropdown((v) => !v)}
-                className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-2xl px-5 py-2.5 text-xs font-bold text-gray-700 hover:border-gray-300 transition-all duration-300"
+                className="flex items-center gap-2 bg-app-secondary border border-app rounded-2xl px-5 py-2.5 text-xs font-bold text-app-secondary hover:border-app/60 transition-all duration-300"
               >
                 <SlidersHorizontal size={12} className="text-gray-500" />
                 <span>{sortOptions.find((s) => s.value === sortBy)?.label}</span>
@@ -461,14 +462,14 @@ const CategoryPage = () => {
               className="text-center py-24 flex flex-col items-center gap-4"
             >
               <div className="text-5xl select-none">🌸</div>
-              <h3 className="font-serif-display text-2xl font-bold text-[#14301F]">No Blooms Found</h3>
-              <p className="text-gray-400 text-sm max-w-xs font-light">Try adjusting your filters or search query to find the perfect flower arrangement.</p>
+              <h3 className="font-heading text-2xl font-bold text-app-primary">No Blooms Found</h3>
+              <p className="text-app-muted text-sm max-w-xs font-light">Try adjusting your filters or search query to find the perfect flower arrangement.</p>
               <button
                 onClick={() => {
                   setActiveCategory("All");
                   setSearchQuery("");
                 }}
-                className="mt-2 bg-[#14301F] text-white rounded-2xl px-6 py-2.5 text-xs font-bold tracking-wider uppercase hover:bg-[#1a3320] hover:shadow-soft-lg hover:shadow-[#14301F]/30 hover:scale-[1.04] transition-all duration-300"
+                className="mt-2 bg-primary text-cream rounded-2xl px-6 py-2.5 text-xs font-bold tracking-wider uppercase hover:bg-primary/90 hover:shadow-soft-lg hover:shadow-primary/30 hover:scale-[1.04] transition-all duration-300"
               >
                 Reset Filters
               </button>
@@ -479,17 +480,18 @@ const CategoryPage = () => {
                 layout
                 className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6"
               >
-                {visibleProducts.map((product) => (
+                {visibleProducts.map((product, idx) => (
                   <motion.div
                     layout
-                    initial={{ opacity: 0, y: 15 }}
+                    initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4 }}
+                    transition={{ duration: 0.4, delay: idx * 0.03 }}
                     key={product.id}
-                    className="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-soft-lg hover:shadow-rose-500/10 hover:scale-[1.02] transition-all duration-300 cursor-pointer relative flex flex-col"
                   >
+                  <TiltCard tiltDegree={4} scale={1.01} glare={false}>
+                    <div className="group bg-app-card rounded-2xl overflow-hidden border border-app hover:shadow-app-hover transition-all duration-300 cursor-pointer relative flex flex-col">
                     {/* Image Block */}
-                    <div className="relative overflow-hidden bg-[#F4C9D1]/20 aspect-[4/3] w-full">
+                    <div className="relative overflow-hidden bg-accent/10 aspect-[4/3] w-full">
                       <LazyImage
                         src={product.image}
                         alt={product.name}
@@ -514,7 +516,7 @@ const CategoryPage = () => {
                             handleAddToCart(product);
                           }}
                           className={`w-full py-3 text-xs font-bold tracking-widest uppercase transition-all duration-300 flex items-center justify-center gap-1.5 ${
-                            addedToCart[product.id] ? "bg-emerald-500 text-white" : "bg-slate-900 text-white hover:bg-[#D6537A] hover:scale-[1.02]"
+                            addedToCart[product.id] ? "bg-emerald-500 text-white" : "bg-slate-900 text-white hover:bg-[#D6537A]"
                           }`}
                         >
                           {addedToCart[product.id] ? "✓ Added" : "Quick Add"}
@@ -524,9 +526,9 @@ const CategoryPage = () => {
 
                     {/* Meta Details Block */}
                     <div className="p-5 flex flex-col flex-1">
-                      <p className="text-[9px] font-bold text-rose-400 tracking-widest uppercase mb-1">{product.category}</p>
-                      <h3 className="font-serif-display text-sm font-bold text-[#14301F] leading-snug mb-1 line-clamp-2">{product.name}</h3>
-                      <p className="text-gray-400 text-xs mb-3 line-clamp-1 font-light">{product.desc}</p>
+                      <p className="text-[9px] font-bold text-accent tracking-widest uppercase mb-1">{product.category}</p>
+                      <h3 className="font-heading text-sm font-bold text-app-primary leading-snug mb-1 line-clamp-2">{product.name}</h3>
+                      <p className="text-app-muted text-xs mb-3 line-clamp-1 font-light">{product.desc}</p>
                       
                       {/* Review row */}
                       <div className="flex items-center gap-1.5 mb-4">
@@ -549,9 +551,9 @@ const CategoryPage = () => {
                       </div>
 
                       {/* Pricing Row */}
-                      <div className="flex items-center justify-between mt-auto pt-2 border-t border-gray-50">
+                      <div className="flex items-center justify-between mt-auto pt-2 border-t border-app">
                         <div className="flex flex-col">
-                          <a href="tel:9540849659" className="font-bold text-[#D6537A] text-sm inline-flex items-center gap-1.5"><Phone size={14} className="icon-wiggle" /> Call for Price</a>
+                          <a href="tel:9540849659" className="font-bold text-accent text-sm inline-flex items-center gap-1.5"><Phone size={14} className="icon-wiggle" /> Call for Price</a>
                         </div>
                         
                         {/* Quick Cart Button */}
@@ -560,10 +562,10 @@ const CategoryPage = () => {
                             e.stopPropagation();
                             handleAddToCart(product);
                           }}
-                          className={`group w-9 h-9 rounded-full flex items-center justify-center border transition-all duration-300 shadow-soft ${
+                          className={`group w-9 h-9 rounded-full flex items-center justify-center border transition-all duration-300 shadow-app ${
                             addedToCart[product.id]
                               ? "bg-emerald-500 border-emerald-500"
-                              : "bg-[#14301F] border-[#14301F] hover:bg-[#D6537A] hover:border-rose-500 hover:scale-105"
+                              : "bg-primary border-primary hover:bg-accent hover:border-accent hover:scale-105"
                           }`}
                           aria-label="Add to cart"
                         >
@@ -571,6 +573,8 @@ const CategoryPage = () => {
                         </button>
                       </div>
                     </div>
+                    </div>
+                  </TiltCard>
                   </motion.div>
                 ))}
               </motion.div>
@@ -579,14 +583,14 @@ const CategoryPage = () => {
               {hasMore && (
                 <div ref={loaderRef} className="flex flex-col items-center gap-4 mt-12">
                   {loadingMore ? (
-                    <div className="flex items-center gap-2 text-[#D6537A]">
+                    <div className="flex items-center gap-2 text-accent">
                       <Loader2 size={16} className="animate-spin" />
                       <span className="text-xs font-bold tracking-widest uppercase font-inter">Loading more blooms...</span>
                     </div>
                   ) : (
                     <button
                       onClick={handleShowMore}
-                      className="group inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-700 hover:text-[#D6537A] hover:border-rose-300 rounded-2xl px-8 py-3 text-xs font-bold tracking-wider uppercase transition-all duration-300 shadow-soft hover:shadow-soft-lg hover:scale-[1.03]"
+                      className="group inline-flex items-center gap-2 bg-app-card border border-app text-app-secondary hover:text-accent hover:border-accent/30 rounded-2xl px-8 py-3 text-xs font-bold tracking-wider uppercase transition-all duration-300 shadow-app hover:shadow-app-hover hover:scale-[1.03]"
                     >
                       <span>Show More ({filtered.length - visibleCount} remaining)</span>
                       <ChevronDown size={14} className="icon-wiggle" />
@@ -600,20 +604,20 @@ const CategoryPage = () => {
       </RevealSection>
 
       {/* ── Bottom Custom Order Banner ── */}
-      <RevealSection className="py-20 px-6 bg-gradient-to-r from-rose-50 via-pink-50/50 to-amber-50/50 border-t border-gray-100">
+      <RevealSection className="py-20 px-6 bg-accent/5 border-t border-app">
         <div className="max-w-3xl mx-auto text-center flex flex-col items-center gap-6">
-          <p className="text-[10px] font-bold tracking-widest text-rose-400 uppercase font-inter">Custom Arrangements</p>
-          <h2 className="font-serif-display text-3xl md:text-4xl font-black text-[#14301F] leading-tight">
+          <p className="text-[10px] font-bold tracking-widest text-accent uppercase font-inter">Custom Arrangements</p>
+          <h2 className="font-heading text-3xl md:text-4xl font-black text-app-primary leading-tight">
             Can't find exactly what you want?
           </h2>
-          <p className="text-gray-500 text-sm max-w-sm leading-relaxed font-light font-inter">
+          <p className="text-app-secondary text-sm max-w-sm leading-relaxed font-light font-inter">
             Tell us your budget, occasion, and favorite blooms. Our master florists will craft a bespoke arrangement just for you.
           </p>
           <a
             href={WHATSAPP_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 bg-[#14301F] text-white rounded-2xl px-8 py-4 text-xs font-bold tracking-widest uppercase hover:bg-[#1a3320] hover:shadow-soft-lg hover:shadow-[#14301F]/30 hover:scale-[1.04] transition-all duration-300 shadow-soft"
+            className="group inline-flex items-center gap-2 bg-primary text-cream rounded-2xl px-8 py-4 text-xs font-bold tracking-widest uppercase hover:bg-primary/90 hover:shadow-soft-lg hover:shadow-primary/30 hover:scale-[1.04] transition-all duration-300 shadow-app"
           >
             💬 Custom Order WhatsApp
           </a>

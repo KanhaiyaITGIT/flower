@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   selectCartItems,
   selectCartTotal,
@@ -77,7 +78,7 @@ function CheckoutModal({ isOpen, onClose, grandTotal, items }) {
         }),
       });
       setSubmitted(true);
-    } catch (err) {
+    } catch {
       setError("Kuch galat hua. Dobara try karo.");
     } finally {
       setSubmitting(false);
@@ -347,15 +348,15 @@ export default function CartPage() {
       <div style={{
         minHeight: "80vh", display: "flex", flexDirection: "column",
         alignItems: "center", justifyContent: "center",
-        background: "#fafaf9", fontFamily: "'Inter', sans-serif",
+        background: "var(--bg-primary)", fontFamily: "'Inter', sans-serif",
         padding: "40px 20px", textAlign: "center",
       }}>
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
         <div style={{ fontSize: "72px", marginBottom: "20px" }}>🌸</div>
-        <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "2rem", fontWeight: 400, color: "#0D1F0F", margin: "0 0 12px" }}>
+        <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "2rem", fontWeight: 400, color: "var(--text-primary)", margin: "0 0 12px" }}>
           Your cart is empty
         </h2>
-        <p style={{ fontSize: "14px", color: "#9ca3af", lineHeight: 1.7, maxWidth: "320px", margin: "0 0 32px" }}>
+        <p style={{ fontSize: "14px", color: "var(--text-secondary)", lineHeight: 1.7, maxWidth: "320px", margin: "0 0 32px" }}>
           Explore our beautiful collection and add your favourite blooms.
         </p>
         <button
@@ -376,7 +377,7 @@ export default function CartPage() {
   }
 
   return (
-    <div style={{ minHeight: "80vh", background: "#fafaf9", fontFamily: "'Inter', sans-serif", position: "relative" }}>
+    <div style={{ minHeight: "80vh", background: "var(--bg-primary)", fontFamily: "'Inter', sans-serif", position: "relative" }}>
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <FloatingDecoration type="leaf" side="left" top="4%" size={26} opacity={0.1} delay={0.3} duration={14} animation="sway3" color="#d1bca8" />
         <FloatingDecoration type="petal6" side="right" top="3%" size={22} opacity={0.1} delay={1.1} duration={13} animation="sway2" color="#d1bca8" />
@@ -405,8 +406,8 @@ export default function CartPage() {
       <style>{`
         .cart-row {
           display: flex; align-items: center; gap: 16px;
-          padding: 18px 20px; background: #fff; border-radius: 18px;
-          box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+          padding: 18px 20px; background: var(--bg-card); border-radius: 18px;
+          box-shadow: var(--card-shadow);
           margin-bottom: 12px; transition: all 0.2s;
         }
         .cart-row:hover { box-shadow: 0 4px 20px rgba(214,83,122,0.15); transform: scale(1.01); transition: all 0.2s; }
@@ -424,10 +425,10 @@ export default function CartPage() {
         .cart-row-info { flex: 1; min-width: 0; }
         .cart-row-name {
           font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 400;
-          color: #0D1F0F; margin: 0 0 4px;
+          color: var(--text-primary); margin: 0 0 4px;
           white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
-        .cart-row-meta { font-size: 11px; color: #9ca3af; margin: 0; }
+        .cart-row-meta { font-size: 11px; color: var(--text-muted); margin: 0; }
 
         /* qty controls + line total + remove button */
         .cart-row-controls {
@@ -435,20 +436,20 @@ export default function CartPage() {
         }
         .qty-group { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
         .cart-row-total {
-          font-family: 'Playfair Display', serif; font-size: 1.05rem; color: #0D1F0F;
+          font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--text-primary);
           flex-shrink: 0; min-width: 48px; text-align: right;
         }
 
         .qty-btn {
-          width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid #e5e7eb;
-          background: #fff; cursor: pointer; font-size: 16px;
+          width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--border-color);
+          background: var(--bg-card); cursor: pointer; font-size: 16px;
           display: flex; align-items: center; justify-content: center;
-          color: #374151; transition: all 0.15s; flex-shrink: 0;
+          color: var(--text-secondary); transition: all 0.15s; flex-shrink: 0;
         }
         .qty-btn:hover { border-color: #f43f5e; color: #f43f5e; background: #fff1f2; transform: scale(1.05); }
         .remove-btn {
           background: none; border: none; cursor: pointer;
-          color: #d1d5db; font-size: 18px; padding: 4px; transition: color 0.15s;
+          color: var(--text-muted); font-size: 18px; padding: 4px; transition: color 0.15s;
           flex-shrink: 0;
         }
         .remove-btn:hover { color: #f43f5e; transform: scale(1.1); }
@@ -464,8 +465,8 @@ export default function CartPage() {
         .checkout-btn:hover { transform: translateY(-1px) scale(1.03); box-shadow: 0 14px 36px rgba(244,63,94,0.45); }
         .continue-btn {
           width: 100%; padding: 13px; border-radius: 18px;
-          border: 1.5px solid #e5e7eb; background: #fff;
-          color: #374151; font-family: 'Inter', sans-serif;
+          border: 1.5px solid var(--border-color); background: var(--bg-card);
+          color: var(--text-secondary); font-family: 'Inter', sans-serif;
           font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
         }
         .continue-btn:hover { border-color: #f43f5e; color: #f43f5e; transform: scale(1.03); }
@@ -504,7 +505,7 @@ export default function CartPage() {
       `}</style>
 
       {/* Page header */}
-      <div style={{ background: "#0D1F0F", padding: "48px 24px 40px", textAlign: "center", marginBottom: "32px" }}>
+      <div style={{ background: "var(--color-primary, #0D1F0F)", padding: "48px 24px 40px", textAlign: "center", marginBottom: "32px" }}>
         <p style={{ fontSize: "10px", letterSpacing: "0.3em", textTransform: "uppercase", color: "#C8A882", margin: "0 0 12px" }}>
           Your Selection
         </p>
@@ -522,57 +523,92 @@ export default function CartPage() {
           {/* Left: items */}
           <div>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
-              <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.2rem", fontWeight: 400, color: "#0D1F0F" }}>
+              <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.2rem", fontWeight: 400, color: "var(--text-primary)" }}>
                 Your Blooms
               </h2>
               <button
                 onClick={() => dispatch(clearCart())}
                 style={{
                   background: "none", border: "none", cursor: "pointer",
-                  fontSize: "12px", color: "#9ca3af", letterSpacing: "0.06em",
+                  fontSize: "12px", color: "var(--text-muted)", letterSpacing: "0.06em",
                   textTransform: "uppercase", transition: "color 0.15s",
                 }}
                 onMouseEnter={e => e.currentTarget.style.color = "#f43f5e"}
-                onMouseLeave={e => e.currentTarget.style.color = "#9ca3af"}
+                onMouseLeave={e => e.currentTarget.style.color = "var(--text-muted)"}
               >
                 Clear all
               </button>
             </div>
 
-            {items.map((item) => (
-              <div key={item.id} className="cart-row">
-                <div className="cart-row-top">
-                  <div className="cart-row-image" style={{ background: item.bg }}>
-                    <img src={item.image} alt={item.name} />
-                  </div>
-                  <div className="cart-row-info">
-                    <div style={{ fontSize: "9px", letterSpacing: "0.18em", textTransform: "uppercase", color: item.color, marginBottom: "2px" }}>
-                      {item.category}
+            <AnimatePresence mode="popLayout">
+              {items.map((item) => (
+                <motion.div
+                  layout
+                  key={item.id}
+                  initial={{ opacity: 0, x: -20, scale: 0.95 }}
+                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                  exit={{ opacity: 0, x: 20, scale: 0.95 }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  className="cart-row"
+                >
+                  <div className="cart-row-top">
+                    <div className="cart-row-image" style={{ background: item.bg }}>
+                      <img src={item.image} alt={item.name} />
                     </div>
-                    <h3 className="cart-row-name">
-                      {item.name}
-                    </h3>
-                    <p className="cart-row-meta">
-                      {item.season} · ₹{item.price} each
-                    </p>
+                    <div className="cart-row-info">
+                      <div style={{ fontSize: "9px", letterSpacing: "0.18em", textTransform: "uppercase", color: item.color, marginBottom: "2px" }}>
+                        {item.category}
+                      </div>
+                      <h3 className="cart-row-name">
+                        {item.name}
+                      </h3>
+                      <p className="cart-row-meta">
+                        {item.season} · ₹{item.price} each
+                      </p>
+                    </div>
                   </div>
-                </div>
 
-                <div className="cart-row-controls">
-                  <div className="qty-group">
-                    <button className="qty-btn" onClick={() => dispatch(decrementQty(item.id))}>−</button>
-                    <span style={{ fontSize: "14px", fontWeight: 600, color: "#0D1F0F", minWidth: "20px", textAlign: "center" }}>
-                      {item.quantity}
-                    </span>
-                    <button className="qty-btn" onClick={() => dispatch(incrementQty(item.id))}>+</button>
+                  <div className="cart-row-controls">
+                    <div className="qty-group">
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="qty-btn"
+                        onClick={() => dispatch(decrementQty(item.id))}
+                      >−</motion.button>
+                      <motion.span
+                        key={item.quantity}
+                        initial={{ scale: 1.3, opacity: 0.5 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        style={{ fontSize: "14px", fontWeight: 600, color: "var(--text-primary)", minWidth: "20px", textAlign: "center" }}
+                      >
+                        {item.quantity}
+                      </motion.span>
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="qty-btn"
+                        onClick={() => dispatch(incrementQty(item.id))}
+                      >+</motion.button>
+                    </div>
+                    <motion.div
+                      key={`${item.id}-${item.quantity}`}
+                      initial={{ scale: 1.1 }}
+                      animate={{ scale: 1 }}
+                      className="cart-row-total"
+                    >
+                      ₹{(item.price * item.quantity).toFixed(2)}
+                    </motion.div>
+                    <motion.button
+                      whileHover={{ scale: 1.2, color: "#f43f5e" }}
+                      className="remove-btn"
+                      onClick={() => dispatch(removeFromCart(item.id))}
+                      aria-label="Remove"
+                    >✕</motion.button>
                   </div>
-                  <div className="cart-row-total">
-                    ₹{(item.price * item.quantity).toFixed(2)}
-                  </div>
-                  <button className="remove-btn" onClick={() => dispatch(removeFromCart(item.id))} aria-label="Remove">✕</button>
-                </div>
-              </div>
-            ))}
+                </motion.div>
+              ))}
+            </AnimatePresence>
 
             <button className="continue-btn" onClick={() => navigate("/gallery")} style={{ marginTop: "8px" }}>
               ← Continue Shopping
@@ -582,8 +618,8 @@ export default function CartPage() {
           {/* Right: order summary */}
           <div>
             <div style={{
-              background: "#fff", borderRadius: "18px",
-              boxShadow: "0 4px 16px rgba(0,0,0,0.06)", overflow: "hidden",
+              background: "var(--bg-card)", borderRadius: "18px",
+              boxShadow: "var(--card-shadow)", overflow: "hidden",
               position: "sticky", top: "100px",
             }}>
               <div style={{ background: "#0D1F0F", padding: "20px 24px" }}>
@@ -592,26 +628,26 @@ export default function CartPage() {
                 </h3>
               </div>
 
-              <div style={{ padding: "20px 24px" }}>
+                <div style={{ padding: "20px 24px" }}>
                 {items.map((item) => (
                   <div key={item.id} style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px", fontSize: "13px" }}>
-                    <span style={{ color: "#6b7280" }}>
-                      {item.name} <span style={{ color: "#d1d5db" }}>×{item.quantity}</span>
+                    <span style={{ color: "var(--text-secondary)" }}>
+                      {item.name} <span style={{ color: "var(--text-muted)" }}>×{item.quantity}</span>
                     </span>
-                    <span style={{ color: "#0D1F0F", fontWeight: 500 }}>₹{(item.price * item.quantity).toFixed(2)}</span>
+                    <span style={{ color: "var(--text-primary)", fontWeight: 500 }}>₹{(item.price * item.quantity).toFixed(2)}</span>
                   </div>
                 ))}
 
-                <div style={{ height: "1px", background: "#f3f4f6", margin: "16px 0" }} />
+                <div style={{ height: "1px", background: "var(--border-color)", margin: "16px 0" }} />
 
                 <div style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", marginBottom: "8px" }}>
-                  <span style={{ color: "#6b7280" }}>Subtotal</span>
-                  <span style={{ color: "#0D1F0F", fontWeight: 500 }}>₹{total.toFixed(2)}</span>
+                  <span style={{ color: "var(--text-secondary)" }}>Subtotal</span>
+                  <span style={{ color: "var(--text-primary)", fontWeight: 500 }}>₹{total.toFixed(2)}</span>
                 </div>
 
                 <div style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", marginBottom: "8px" }}>
-                  <span style={{ color: "#6b7280" }}>Delivery</span>
-                  <span style={{ color: delivery === 0 ? "#16a34a" : "#0D1F0F", fontWeight: 500 }}>
+                  <span style={{ color: "var(--text-secondary)" }}>Delivery</span>
+                  <span style={{ color: delivery === 0 ? "#16a34a" : "var(--text-primary)", fontWeight: 500 }}>
                     {delivery === 0 ? "FREE" : `₹${delivery.toFixed(2)}`}
                   </span>
                 </div>
@@ -636,19 +672,23 @@ export default function CartPage() {
                   </div>
                 )}
 
-                <div style={{ height: "1px", background: "#f3f4f6", margin: "12px 0 16px" }} />
+                <div style={{ height: "1px", background: "var(--border-color)", margin: "12px 0 16px" }} />
 
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
-                  <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.05rem", color: "#0D1F0F" }}>Total</span>
-                  <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.3rem", color: "#0D1F0F", fontWeight: 400 }}>
+                  <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.05rem", color: "var(--text-primary)" }}>Total</span>
+                  <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.3rem", color: "var(--text-primary)", fontWeight: 400 }}>
                     ₹{grandTotal.toFixed(2)}
                   </span>
                 </div>
 
-                {/*  YE BUTTON AB MODAL OPEN KAREGA */}
-                <button className="checkout-btn" onClick={() => setShowCheckout(true)}>
+                <motion.button
+                  whileHover={{ scale: 1.03, y: -1 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="checkout-btn"
+                  onClick={() => setShowCheckout(true)}
+                >
                   Proceed to Checkout →
-                </button>
+                </motion.button>
 
                 <div style={{ display: "flex", justifyContent: "center", gap: "16px", flexWrap: "wrap", marginTop: "12px" }}>
                   {["🔒 Secure", "🌿 Fresh", "🚚 Fast"].map((b) => (

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   Flower2,
@@ -13,10 +13,13 @@ import {
   ChevronDown,
   IndianRupee,
   EllipsisVertical,
+  Moon,
+  Sun,
 } from "lucide-react";
 import { useSelector } from "react-redux";
 import { selectCartCount } from "../redux/cartSlice";
-import { WHATSAPP_LINK, CONTACT_PHONE_1, BUSINESS_NAME_MAIN, BUSINESS_NAME_SUB } from "../constants";
+import { WHATSAPP_LINK, BUSINESS_NAME_MAIN, BUSINESS_NAME_SUB } from "../constants";
+import { useTheme } from "../context/ThemeContext";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
@@ -45,13 +48,19 @@ const megaNavLinks = [
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [shrink, setShrink] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const cartCount = useSelector(selectCartCount);
   const navigate = useNavigate();
   const location = useLocation();
+  const { dark, toggle } = useTheme();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 20);
+      setShrink(y > 120);
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -71,9 +80,13 @@ export default function Header() {
     <>
       <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${scrolled ? "shadow-sm" : ""}`}>
         {/* ─── TOP HEADER ROW ─── */}
-        <div className="bg-white border-b border-gray-100">
+        <div className="bg-white border-b border-gray-100 transition-all duration-300"
+          style={{ minHeight: shrink ? "56px" : "64px" }}
+        >
           <div className="max-w-[1440px] mx-auto px-4 md:px-8">
-            <div className="flex items-center justify-between h-16 lg:h-[72px] gap-4">
+            <div className="flex items-center justify-between transition-all duration-300"
+              style={{ minHeight: shrink ? "56px" : "72px" }}
+            >
               {/* Logo */}
               <Link to="/" className="flex items-center gap-2 shrink-0">
                 <motion.div
@@ -83,10 +96,14 @@ export default function Header() {
                   <Flower2 size={18} color="#C8A882" />
                 </motion.div>
                 <span className="hidden sm:inline-block">
-                  <h1 className="font-serif-display font-black text-lg text-[#14301F] leading-none">
+                  <h1 className="font-serif-display font-black leading-none transition-all duration-300"
+                    style={{ fontSize: shrink ? "14px" : "18px" }}
+                  >
                     {BUSINESS_NAME_MAIN}
                   </h1>
-                  <p className="text-[9px] text-[#C9A15A] font-semibold tracking-widest uppercase leading-tight">
+                  <p className="text-[#C9A15A] font-semibold tracking-widest uppercase leading-tight transition-all duration-300"
+                    style={{ fontSize: shrink ? "7px" : "9px" }}
+                  >
                     {BUSINESS_NAME_SUB}
                   </p>
                 </span>
@@ -140,6 +157,7 @@ export default function Header() {
                   <AnimatePresence>
                     {cartCount > 0 && (
                       <motion.span
+                        key={cartCount}
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         exit={{ scale: 0 }}
@@ -161,6 +179,23 @@ export default function Header() {
                   <span className="text-[9px] text-gray-400 group-hover:text-gray-600 font-medium">More</span>
                 </button>
 
+                {/* Theme Toggle */}
+                <button
+                  onClick={toggle}
+                  className="p-2 rounded-lg hover:bg-gray-50 transition-colors text-gray-500 hover:text-[#D6537A]"
+                  aria-label="Toggle theme"
+                >
+                  <motion.div
+                    key={dark ? 'moon' : 'sun'}
+                    initial={{ rotate: -90, opacity: 0, scale: 0.5 }}
+                    animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                    exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {dark ? <Sun size={18} /> : <Moon size={18} />}
+                  </motion.div>
+                </button>
+
                 {/* Mobile: Cart + Hamburger */}
                 <button
                   onClick={() => setIsOpen(true)}
@@ -175,7 +210,12 @@ export default function Header() {
         </div>
 
         {/* ─── MEGA NAV ROW ─── */}
-        <div className="hidden lg:block bg-white border-b border-gray-100">
+        <motion.div
+          className="hidden lg:block bg-white border-b border-gray-100"
+          animate={{ height: shrink ? 0 : "auto", opacity: shrink ? 0 : 1 }}
+          transition={{ duration: 0.3 }}
+          style={{ overflow: "hidden" }}
+        >
           <div className="max-w-[1440px] mx-auto px-4 md:px-8">
             <nav className="flex items-center justify-between -ml-3 -mr-3 overflow-x-auto scrollbar-hide">
               {megaNavLinks.map((link) => {
@@ -195,7 +235,7 @@ export default function Header() {
               })}
             </nav>
           </div>
-        </div>
+        </motion.div>
       </header>
 
       {/* ─── MOBILE DRAWER ─── */}
